@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet the Team — SHRI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom right, #ffcc70, #ff6f61); /* Rising sun theme */
+      color: #333;
+    }
+    header {
+      background: #fff;
+      padding: 10px 20px;
+      text-align: center;
+      border-bottom: 2px solid #ff6f61;
+    }
+    header img {
+      height: 50px;
+    }
+    .team-section {
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .team-section h1 {
+      margin-bottom: 40px;
+      color: #222;
+    }
+    .team-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .team-member {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .team-member:hover {
+      transform: translateY(-5px);
+    }
+    .team-member img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid #ff6f61;
+    }
+    .team-member h3 {
+      margin: 10px 0 5px;
+      color: #ff6f61;
+    }
+    .team-member p {
+      font-size: 14px;
+      color: #666;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      margin-top: 40px;
+      border-top: 2px solid #ff6f61;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="images/shriapp.png" alt="SHRI Logo">
+  </header>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <h1>Meet the Team</h1>
+    <div class="team-container">
+      
+      <!-- Member 1 -->
+      <div class="team-member">
+        <img src="images/sachin.jpg" alt="Sachin Khare">
+        <h3>Sachin Khare</h3>
+        <p>Managing Director</p>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="team-member">
+        <img src="images/ashok.jpg" alt="Ashok Rai">
+        <h3>Ashok Rai</h3>
+        <p>Director</p>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="team-member">
+        <img src="images/suraj.jpg" alt="Suraj Sahani">
+        <h3>Suraj Sahani</h3>
+        <p>Manager</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </footer>
+
+</body>
+  </html>
