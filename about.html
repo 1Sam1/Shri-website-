@@ -11,7 +11,7 @@
     }
     /* Navbar */
     .navbar {
-      background: linear-gradient(to right, #ff512f, #f09819); /* rising sun */
+      background: linear-gradient(to right, #ff512f, #f09819);
     }
     .navbar-brand img {
       height: 50px;
@@ -28,17 +28,16 @@
     }
     .about h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
       font-weight: bold;
       color: #333;
     }
     .about p {
       font-size: 1.1rem;
       line-height: 1.6;
-      text-align: justify;
       color: #444;
     }
-    .about .highlight {
+    .highlight {
       color: #ff512f;
       font-weight: 600;
     }
@@ -49,6 +48,11 @@
       text-align: center;
       padding: 15px;
       margin-top: 40px;
+    }
+    /* Image styling */
+    .about img {
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -80,23 +84,52 @@
 <section class="about">
   <div class="container">
     <h1>About Us</h1>
-    <p>
-      Welcome to <span class="highlight">SHRI Manpower Services</span>, your trusted partner for reliable and skilled manpower solutions in Mumbai. 
-      With years of experience in the <span class="highlight">catering, hospitality, and event management</span> industry, we pride ourselves on delivering 
-      professional and trained staff to meet the diverse needs of our clients.
-    </p>
-    <p>
-      At SHRI, we understand that every event and business operation requires dedicated people who ensure seamless execution. 
-      That’s why we carefully recruit and train our staff to maintain the highest standards of professionalism, discipline, 
-      and customer service.
-    </p>
-    <p>
-      Whether you need staff for a <span class="highlight">wedding, corporate event, or long-term business support</span>, our team ensures that your manpower 
-      requirements are fulfilled with efficiency and reliability.
-    </p>
-    <p>
-      Our mission is simple — <strong>to empower businesses and events with trustworthy manpower, making your success our priority.</strong>
-    </p>
+
+    <!-- Row 1 -->
+    <div class="row align-items-center mb-5">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <img src="images/about-company.jpg" class="img-fluid" alt="Our Company">
+      </div>
+      <div class="col-lg-6">
+        <p>
+          Welcome to <span class="highlight">SHRI Manpower Services</span>, your trusted partner for reliable and skilled manpower solutions in Mumbai. 
+          With years of experience in <span class="highlight">catering, hospitality, and event management</span>, we pride ourselves on delivering 
+          professional and trained staff to meet the diverse needs of our clients.
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row align-items-center mb-5">
+      <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+        <img src="images/about-services.jpg" class="img-fluid" alt="Our Services">
+      </div>
+      <div class="col-lg-6 order-lg-1">
+        <p>
+          At SHRI, we understand that every event and business requires dedicated people who ensure seamless execution. 
+          Our staff is carefully recruited and trained to maintain the highest standards of professionalism, discipline, 
+          and customer service.
+        </p>
+        <p>
+          Whether you need manpower for <span class="highlight">weddings, corporate events, or long-term business support</span>, 
+          our team ensures your requirements are fulfilled with efficiency and reliability.
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <img src="images/about-vision.jpg" class="img-fluid" alt="Our Vision">
+      </div>
+      <div class="col-lg-6">
+        <p>
+          Our mission is simple — <strong>to empower businesses and events with trustworthy manpower, making your success our priority.</strong> 
+          With SHRI, you don’t just hire staff, you hire a partner who ensures your event or business runs smoothly, every single time.
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
 
