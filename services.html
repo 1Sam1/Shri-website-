@@ -3,51 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHRI — Coming Soon</title>
+  <title>Our Services — SHRI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ff512f, #f09819); /* rising sun */
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(to right, #ff512f, #f09819);
+    }
+    .navbar-brand img {
+      height: 50px;
+    }
+    .navbar-nav .nav-link {
+      color: white !important;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    /* Services Section */
+    .services {
+      padding: 60px 20px;
+      background: #fff8f0;
+    }
+    .services h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: bold;
+      color: #333;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+    }
+    .card img {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      height: 220px;
+      object-fit: cover;
+    }
+    .card-body {
+      text-align: center;
+    }
+    .card-title {
+      font-weight: 600;
+      color: #ff512f;
+    }
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, #ff512f, #f09819);
       color: white;
       text-align: center;
-    }
-    .logo img {
-      height: 80px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin: 10px 0;
-    }
-    p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-    footer {
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.9rem;
-      opacity: 0.8;
+      padding: 15px;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
-  <div class="logo">
-    <img src="images/shriapp.png" alt="SHRI Logo">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/shriapp.png" alt="SHRI Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link active" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://1sam1.github.io/login-page/">My Account</a></li>
+      </ul>
+    </div>
   </div>
-  <h1>Coming Soon</h1>
-  <p>Our website is under construction. Stay tuned!</p>
-  <footer>
-    &copy; 2025 SHRI. All Rights Reserved.
-  </footer>
+</nav>
+
+<!-- Services Section -->
+<section class="services">
+  <div class="container">
+    <h1>Our Services</h1>
+    <div class="row g-4">
+      
+      <!-- Service 1 -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="images/service-catering.jpg" alt="Catering Staff">
+          <div class="card-body">
+            <h5 class="card-title">Catering Staff</h5>
+            <p class="card-text">Experienced waiters, servers, and helpers for weddings, receptions, and private parties.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="images/service-hospitality.jpg" alt="Hospitality Support">
+          <div class="card-body">
+            <h5 class="card-title">Hospitality Support</h5>
+            <p class="card-text">Trained staff for hotels, banquets, and corporate events to ensure smooth guest experiences.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="images/service-event.jpg" alt="Event Management Assistance">
+          <div class="card-body">
+            <h5 class="card-title">Event Assistance</h5>
+            <p class="card-text">Reliable manpower for stage setup, logistics, and behind-the-scenes event support.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="images/service-cleaning.jpg" alt="Cleaning & Maintenance">
+          <div class="card-body">
+            <h5 class="card-title">Cleaning & Maintenance</h5>
+            <p class="card-text">Housekeeping and cleaning staff available for events, offices, and long-term contracts.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 5 -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="images/service-security.jpg" alt="Security Personnel">
+          <div class="card-body">
+            <h5 class="card-title">Security Personnel</h5>
+            <p class="card-text">Disciplined and reliable guards for events, offices, and personal security.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 6 -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="images/service-custom.jpg" alt="Custom Staffing">
+          <div class="card-body">
+            <h5 class="card-title">Custom Staffing</h5>
+            <p class="card-text">Tailored manpower solutions based on your unique requirements and event needs.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
