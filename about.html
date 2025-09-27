@@ -3,51 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHRI — Coming Soon</title>
+  <title>About Us — SHRI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    /* Navbar */
+    .navbar {
       background: linear-gradient(to right, #ff512f, #f09819); /* rising sun */
+    }
+    .navbar-brand img {
+      height: 50px;
+    }
+    .navbar-nav .nav-link {
+      color: white !important;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    /* About Section */
+    .about {
+      padding: 60px 20px;
+      background: #fff8f0;
+    }
+    .about h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: bold;
+      color: #333;
+    }
+    .about p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: justify;
+      color: #444;
+    }
+    .about .highlight {
+      color: #ff512f;
+      font-weight: 600;
+    }
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, #ff512f, #f09819);
       color: white;
       text-align: center;
-    }
-    .logo img {
-      height: 80px;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin: 10px 0;
-    }
-    p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-    footer {
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.9rem;
-      opacity: 0.8;
+      padding: 15px;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
-  <div class="logo">
-    <img src="images/shriapp.png" alt="SHRI Logo">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/shriapp.png" alt="SHRI Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="team.html">Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://1sam1.github.io/login-page/">My Account</a></li>
+      </ul>
+    </div>
   </div>
-  <h1>Coming Soon</h1>
-  <p>Our website is under construction. Stay tuned!</p>
-  <footer>
-    &copy; 2025 SHRI. All Rights Reserved.
-  </footer>
+</nav>
+
+<!-- About Section -->
+<section class="about">
+  <div class="container">
+    <h1>About Us</h1>
+    <p>
+      Welcome to <span class="highlight">SHRI Manpower Services</span>, your trusted partner for reliable and skilled manpower solutions in Mumbai. 
+      With years of experience in the <span class="highlight">catering, hospitality, and event management</span> industry, we pride ourselves on delivering 
+      professional and trained staff to meet the diverse needs of our clients.
+    </p>
+    <p>
+      At SHRI, we understand that every event and business operation requires dedicated people who ensure seamless execution. 
+      That’s why we carefully recruit and train our staff to maintain the highest standards of professionalism, discipline, 
+      and customer service.
+    </p>
+    <p>
+      Whether you need staff for a <span class="highlight">wedding, corporate event, or long-term business support</span>, our team ensures that your manpower 
+      requirements are fulfilled with efficiency and reliability.
+    </p>
+    <p>
+      Our mission is simple — <strong>to empower businesses and events with trustworthy manpower, making your success our priority.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
