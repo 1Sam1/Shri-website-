@@ -2,262 +2,227 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHRI — My Account</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <title>My Account</title>
   <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #fff8f0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    /* Sticky Navbar */
-    .navbar {
-      background: linear-gradient(to right, #ff512f, #f09819);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .navbar-brand img {
-      height: 50px;
-    }
-    .navbar-nav .nav-link {
-      color: white !important;
-      margin: 0 10px;
-      font-weight: 500;
-    }
-    /* Main content flex */
-    main {
-      flex: 1;
-      padding: 20px;
-    }
-    /* Login box */
-    .login-container {
-      max-width: 400px;
-      margin: 60px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .login-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #ff512f;
-    }
-    /* Summary cards */
-    .summary {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
-    .summary .card {
-      flex: 1 1 200px;
-      text-align: center;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .summary .card h3 {
-      margin: 10px 0;
-      color: #ff512f;
-    }
-    /* Detail table */
-    table {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    th, td {
-      text-align: center !important;
-    }
-    /* Footer always at bottom */
-    footer {
-      background: linear-gradient(to right, #ff512f, #f09819);
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: auto;
-    }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    header, footer { background:#333; color:white; text-align:center; padding:10px; position:sticky; top:0; }
+    footer { position:fixed; bottom:0; width:100%; }
+    .container { padding:20px; margin-bottom:60px; }
+    .hidden { display:none; }
+    .summary { display:flex; gap:20px; margin-bottom:20px; }
+    .summary div { flex:1; background:#f4f4f4; padding:15px; border-radius:5px; text-align:center; }
+    table { width:100%; border-collapse:collapse; margin-bottom:40px; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:center; }
+    th { background:#eee; }
+    .login-box { max-width:300px; margin:50px auto; padding:20px; border:1px solid #ccc; border-radius:5px; }
+    .login-box input { width:100%; padding:8px; margin:5px 0; }
+    .login-box button { width:100%; padding:10px; background:#333; color:white; border:none; cursor:pointer; }
+    select { padding:8px; margin-bottom:20px; }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">
-      <img src="images/shriapp.png" alt="SHRI Logo">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
-        <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<header>
+  <h1>My Account</h1>
+</header>
 
-<main>
+<div class="container">
   <!-- Login Form -->
-  <div class="login-container" id="loginBox">
-    <h2>My Account</h2>
-    <form id="loginForm">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-warning w-100">Login</button>
-    </form>
+  <div id="login-section" class="login-box">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
   </div>
 
-  <!-- User Dashboard -->
-  <div id="dashboard" class="d-none">
-    <!-- Summary -->
-    <div class="summary mb-4">
-      <div class="card p-3">
-        <h5>Pali (Shifts)</h5>
-        <h3 id="totalShifts">0</h3>
-      </div>
-      <div class="card p-3">
-        <h5>Upad</h5>
-        <h3 id="totalUpad">0</h3>
-      </div>
-      <div class="card p-3">
-        <h5>Balance</h5>
-        <h3 id="totalBalance">0</h3>
-      </div>
+  <!-- Employee/Senior Dashboard -->
+  <div id="dashboard" class="hidden">
+    <h2 id="welcome"></h2>
+    <div id="senior-select" class="hidden">
+      <label for="employeeSelect">View Employee: </label>
+      <select id="employeeSelect" onchange="renderDashboard(this.value)"></select>
     </div>
-
-    <!-- Details Table -->
-    <div class="table-responsive">
-      <table class="table table-striped" id="detailsTable">
-        <thead class="table-warning">
-          <tr>
-            <th>Date</th>
-            <th>Shift</th>
-            <th>Customer</th>
-            <th>Detail</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <div class="summary">
+      <div><h3>Pali</h3><p id="pali">0</p></div>
+      <div><h3>Upad</h3><p id="upad">0</p></div>
+      <div><h3>Balance</h3><p id="balance">0</p></div>
     </div>
-
-    <button class="btn btn-danger w-100 mt-3" id="logoutBtn">Logout</button>
+    <h3>Details</h3>
+    <table id="detail-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Shift</th>
+          <th>Customer</th>
+          <th>Detail</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
-</main>
+
+  <!-- Customer Dashboard -->
+  <div id="customer-dashboard" class="hidden">
+    <h2 id="welcome-customer"></h2>
+    <div class="summary">
+      <div><h3>Total Shifts</h3><p id="cust-shifts">0</p></div>
+      <div><h3>Total Amount</h3><p id="cust-amount">0</p></div>
+    </div>
+    <h3>Bill Details</h3>
+    <table id="customer-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Employee</th>
+          <th>Shift</th>
+          <th>Detail</th>
+          <th>Rate</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
 
 <footer>
-  <div class="container">
-    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
-  </div>
+  <p>&copy; 2025 Shri Website</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 <script>
-const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?output=csv";
+const registrationCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=0&single=true&output=csv";
+const dailyInputCSV   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=123456789&single=true&output=csv"; 
+// ⚠️ Replace gid=123456789 with actual GID of Dailyinput tab
 
-const loginBox = document.getElementById("loginBox");
-const dashboard = document.getElementById("dashboard");
-const logoutBtn = document.getElementById("logoutBtn");
-const totalShiftsEl = document.getElementById("totalShifts");
-const totalUpadEl = document.getElementById("totalUpad");
-const totalBalanceEl = document.getElementById("totalBalance");
-const detailsTableBody = document.querySelector("#detailsTable tbody");
+let users = [];
+let dailyData = [];
+let currentUser = null;
 
-let csvData = [];
-
-function parseCSV(text) {
-  const rows = text.trim().split("\n");
-  return rows.map(r => r.split(","));
+async function loadCSV(url) {
+  const res = await fetch(url);
+  const text = await res.text();
+  return Papa.parse(text, { header: true }).data;
 }
 
-// Fetch CSV data
-fetch(sheetUrl)
-  .then(resp => resp.text())
-  .then(text => {
-    csvData = parseCSV(text);
-  });
+async function init() {
+  users = await loadCSV(registrationCSV);
+  dailyData = await loadCSV(dailyInputCSV);
+}
+init();
 
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
+  currentUser = users.find(u => u.Username === username && u.Password === password);
 
-  const headers = csvData[0];
-  const rows = csvData.slice(1);
-
-  // Find user
-  const userRow = rows.find(r => r[0] === username && r[1] === password);
-  if(!userRow) return alert("Username or password incorrect!");
-
-  const role = userRow[2];
-  const userName = userRow[3];
-  const rate = parseFloat(userRow[4]);
-
-  // Filter data for this user or for seniors (if role=senior, show others too)
-  let userData;
-  if(role === "employee") {
-    userData = rows.filter(r => r[3] === userName); // show only employee's own rows
-  } else if(role === "senior") {
-    userData = rows.filter(r => r[2] === "employee"); // show all employees
-  } else if(role === "customer") {
-    userData = rows.filter(r => r[0] === username); // customer's own rows
+  if (!currentUser) {
+    alert("Incorrect Username or Password");
+    return;
   }
 
-  // Calculate summary
-  let totalShifts = 0, totalUpad = 0, totalBalance = 0;
-  detailsTableBody.innerHTML = "";
+  document.getElementById("login-section").classList.add("hidden");
 
-  userData.forEach(r => {
-    const date = r[8];
-    const morning = parseInt(r[9]) || 0;
-    const evening = parseInt(r[10]) || 0;
-    const night = parseInt(r[11]) || 0;
-    const customer = r[12];
-    const detail = r[13];
-    const amount = parseFloat(r[14]) || 0;
+  if (currentUser.Role === "Employee") {
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("welcome").innerText = "Welcome, " + currentUser.Name;
+    renderDashboard(username);
 
-    const shiftCount = morning + evening + night;
-    totalShifts += shiftCount;
-    totalUpad += amount;
-    totalBalance += shiftCount * rate - amount;
+  } else if (currentUser.Role === "Senior") {
+    document.getElementById("dashboard").classList.remove("hidden");
+    document.getElementById("welcome").innerText = "Welcome Senior, " + currentUser.Name;
+    document.getElementById("senior-select").classList.remove("hidden");
 
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${date}</td><td>${shiftCount}</td><td>${customer}</td><td>${detail}</td><td>${amount}</td>`;
-    detailsTableBody.appendChild(tr);
+    // Fill dropdown with employees
+    const employeeSelect = document.getElementById("employeeSelect");
+    employeeSelect.innerHTML = "";
+    users.filter(u => u.Role === "Employee").forEach(emp => {
+      const opt = document.createElement("option");
+      opt.value = emp.Username;
+      opt.textContent = emp.Name;
+      employeeSelect.appendChild(opt);
+    });
+
+    renderDashboard(employeeSelect.value);
+
+  } else if (currentUser.Role === "Customer") {
+    document.getElementById("customer-dashboard").classList.remove("hidden");
+    document.getElementById("welcome-customer").innerText = "Welcome, " + currentUser.Name;
+    renderCustomerBill(currentUser.Username);
+  }
+}
+
+function renderDashboard(username) {
+  const user = users.find(u => u.Username === username);
+  const employeeData = dailyData.filter(row => row["Employee Username"] === username);
+
+  let pali = 0, upad = 0;
+  const tbody = document.querySelector("#detail-table tbody");
+  tbody.innerHTML = "";
+
+  employeeData.forEach(row => {
+    ["Morning","Evening","Night"].forEach(shift => {
+      if (row[shift] && row[shift].trim() !== "") {
+        pali++;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.Date}</td>
+          <td>${shift}</td>
+          <td>${row.Customer}</td>
+          <td>${row.Detail}</td>
+          <td>${row.Amount || ""}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    });
+    if (row.Amount) {
+      upad += parseFloat(row.Amount) || 0;
+    }
   });
 
-  totalShiftsEl.textContent = totalShifts;
-  totalUpadEl.textContent = totalUpad;
-  totalBalanceEl.textContent = totalBalance;
+  const rate = parseFloat(user.Rate) || 0;
+  const balance = (pali * rate) - upad;
 
-  loginBox.classList.add("d-none");
-  dashboard.classList.remove("d-none");
-});
+  document.getElementById("pali").innerText = pali;
+  document.getElementById("upad").innerText = upad;
+  document.getElementById("balance").innerText = balance;
+}
 
-logoutBtn.addEventListener("click", () => {
-  dashboard.classList.add("d-none");
-  loginBox.classList.remove("d-none");
-  document.getElementById("loginForm").reset();
-});
+function renderCustomerBill(customerUsername) {
+  const tbody = document.querySelector("#customer-table tbody");
+  tbody.innerHTML = "";
+  let totalShifts = 0, totalAmount = 0;
+
+  dailyData.forEach(row => {
+    if (row.Customer === customerUsername) {
+      const emp = users.find(u => u.Username === row["Employee Username"]);
+      const rate = emp ? parseFloat(emp.Rate) || 0 : 0;
+
+      ["Morning","Evening","Night"].forEach(shift => {
+        if (row[shift] && row[shift].trim() !== "") {
+          totalShifts++;
+          totalAmount += rate;
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.Date}</td>
+            <td>${emp ? emp.Name : row["Employee Username"]}</td>
+            <td>${shift}</td>
+            <td>${row.Detail}</td>
+            <td>${rate}</td>
+            <td>${rate}</td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+    }
+  });
+
+  document.getElementById("cust-shifts").innerText = totalShifts;
+  document.getElementById("cust-amount").innerText = totalAmount;
+}
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
