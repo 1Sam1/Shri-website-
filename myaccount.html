@@ -28,16 +28,9 @@
       margin: 0 10px;
       font-weight: 500;
     }
-    .navbar-nav .nav-link.active {
-      font-weight: bold;
-      text-decoration: underline;
-    }
-    /* Main content */
+    /* Main content flex */
     main {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       padding: 20px;
     }
     /* Login box */
@@ -54,16 +47,34 @@
       margin-bottom: 20px;
       color: #ff512f;
     }
-    /* User card */
-    .user-card {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 25px;
+    /* Summary cards */
+    .summary {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .summary .card {
+      flex: 1 1 200px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .summary .card h3 {
+      margin: 10px 0;
+      color: #ff512f;
+    }
+    /* Detail table */
+    table {
       background: white;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    /* Footer at bottom */
+    th, td {
+      text-align: center !important;
+    }
+    /* Footer always at bottom */
     footer {
       background: linear-gradient(to right, #ff512f, #f09819);
       color: white;
@@ -91,7 +102,7 @@
         <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
-        <li class="nav-item"><a class="nav-link" href="myaccount.html">My Account</a></li>
+        <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
       </ul>
     </div>
   </div>
@@ -114,80 +125,139 @@
     </form>
   </div>
 
-  <!-- User Data -->
-  <div class="user-card d-none" id="userCard">
-    <h3 class="mb-3">Welcome, <span id="displayUsername"></span></h3>
-    <ul class="list-group mb-3">
-      <li class="list-group-item"><strong>Pali:</strong> <span id="pali"></span></li>
-      <li class="list-group-item"><strong>Upad:</strong> <span id="upad"></span></li>
-      <li class="list-group-item"><strong>Balance:</strong> <span id="balance"></span></li>
-      <li class="list-group-item"><strong>Rate:</strong> <span id="rate"></span></li>
-    </ul>
-    <button class="btn btn-danger w-100" id="logoutBtn">Logout</button>
+  <!-- User Dashboard -->
+  <div id="dashboard" class="d-none">
+    <!-- Summary -->
+    <div class="summary mb-4">
+      <div class="card p-3">
+        <h5>Pali (Shifts)</h5>
+        <h3 id="totalShifts">0</h3>
+      </div>
+      <div class="card p-3">
+        <h5>Upad</h5>
+        <h3 id="totalUpad">0</h3>
+      </div>
+      <div class="card p-3">
+        <h5>Balance</h5>
+        <h3 id="totalBalance">0</h3>
+      </div>
+    </div>
+
+    <!-- Details Table -->
+    <div class="table-responsive">
+      <table class="table table-striped" id="detailsTable">
+        <thead class="table-warning">
+          <tr>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Customer</th>
+            <th>Detail</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <button class="btn btn-danger w-100 mt-3" id="logoutBtn">Logout</button>
   </div>
 </main>
 
-<!-- Footer -->
 <footer>
   <div class="container">
     <p>&copy; 2025 SHRI. All Rights Reserved.</p>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_X0OeIPk6jLG19sQN6ks6QhTpj62Qv7ujwb3fk-clgbFP2iVOO1q8GO-i7t90-8Hp23PkpUNiYbs/pub?output=csv";
+const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?output=csv";
 
 const loginBox = document.getElementById("loginBox");
-const userCard = document.getElementById("userCard");
+const dashboard = document.getElementById("dashboard");
 const logoutBtn = document.getElementById("logoutBtn");
+const totalShiftsEl = document.getElementById("totalShifts");
+const totalUpadEl = document.getElementById("totalUpad");
+const totalBalanceEl = document.getElementById("totalBalance");
+const detailsTableBody = document.querySelector("#detailsTable tbody");
+
+let csvData = [];
+
+function parseCSV(text) {
+  const rows = text.trim().split("\n");
+  return rows.map(r => r.split(","));
+}
+
+// Fetch CSV data
+fetch(sheetUrl)
+  .then(resp => resp.text())
+  .then(text => {
+    csvData = parseCSV(text);
+  });
 
 document.getElementById("loginForm").addEventListener("submit", function(e) {
   e.preventDefault();
-  
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  fetch(sheetUrl)
-    .then(response => response.text())
-    .then(data => {
-      const rows = data.split("\n").map(r => r.split(","));
-      const userRow = rows.find((row, i) => i > 0 && row[0] === username && row[1] === password);
+  const headers = csvData[0];
+  const rows = csvData.slice(1);
 
-      if (userRow) {
-        loginBox.classList.add("d-none");
-        userCard.classList.remove("d-none");
+  // Find user
+  const userRow = rows.find(r => r[0] === username && r[1] === password);
+  if(!userRow) return alert("Username or password incorrect!");
 
-        document.getElementById("displayUsername").innerText = username;
-        document.getElementById("pali").innerText = userRow[2];
-        document.getElementById("upad").innerText = userRow[3];
-        document.getElementById("balance").innerText = userRow[4];
-        document.getElementById("rate").innerText = userRow[5];
-      } else {
-        alert("Invalid username or password!");
-      }
-    });
+  const role = userRow[2];
+  const userName = userRow[3];
+  const rate = parseFloat(userRow[4]);
+
+  // Filter data for this user or for seniors (if role=senior, show others too)
+  let userData;
+  if(role === "employee") {
+    userData = rows.filter(r => r[3] === userName); // show only employee's own rows
+  } else if(role === "senior") {
+    userData = rows.filter(r => r[2] === "employee"); // show all employees
+  } else if(role === "customer") {
+    userData = rows.filter(r => r[0] === username); // customer's own rows
+  }
+
+  // Calculate summary
+  let totalShifts = 0, totalUpad = 0, totalBalance = 0;
+  detailsTableBody.innerHTML = "";
+
+  userData.forEach(r => {
+    const date = r[8];
+    const morning = parseInt(r[9]) || 0;
+    const evening = parseInt(r[10]) || 0;
+    const night = parseInt(r[11]) || 0;
+    const customer = r[12];
+    const detail = r[13];
+    const amount = parseFloat(r[14]) || 0;
+
+    const shiftCount = morning + evening + night;
+    totalShifts += shiftCount;
+    totalUpad += amount;
+    totalBalance += shiftCount * rate - amount;
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${date}</td><td>${shiftCount}</td><td>${customer}</td><td>${detail}</td><td>${amount}</td>`;
+    detailsTableBody.appendChild(tr);
+  });
+
+  totalShiftsEl.textContent = totalShifts;
+  totalUpadEl.textContent = totalUpad;
+  totalBalanceEl.textContent = totalBalance;
+
+  loginBox.classList.add("d-none");
+  dashboard.classList.remove("d-none");
 });
 
-logoutBtn.addEventListener("click", function() {
-  userCard.classList.add("d-none");
+logoutBtn.addEventListener("click", () => {
+  dashboard.classList.add("d-none");
   loginBox.classList.remove("d-none");
   document.getElementById("loginForm").reset();
 });
-
-// Auto highlight active page
-const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
-const currentPage = window.location.pathname.split("/").pop();
-
-navLinks.forEach(link => {
-  if(link.getAttribute("href") === currentPage){
-    link.classList.add("active");
-  } else {
-    link.classList.remove("active");
-  }
-});
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
