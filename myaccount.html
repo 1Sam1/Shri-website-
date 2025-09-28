@@ -3,104 +3,156 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Account</title>
+  <title>SHRI — My Account</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ff9966, #ff5e62);
-      color: #fff;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #fff8f0;
+    }
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(to right, #ff512f, #f09819);
+    }
+    .navbar-brand img {
+      height: 50px;
+    }
+    .navbar-nav .nav-link {
+      color: white !important;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    /* Login box */
+    .login-container {
+      max-width: 400px;
+      margin: 60px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .login-container h2 {
       text-align: center;
-      padding: 50px;
+      margin-bottom: 20px;
+      color: #ff512f;
     }
-    .login-box {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 10px;
-      display: inline-block;
+    /* User card */
+    .user-card {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    input {
-      padding: 10px;
-      margin: 10px;
-      border: none;
-      border-radius: 5px;
-      width: 200px;
-    }
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      background: #fff;
-      color: #ff5e62;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #ffe6e6;
-    }
-    #result {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-    table {
-      margin: 20px auto;
-      border-collapse: collapse;
-      background: #fff;
-      color: #000;
-    }
-    table, th, td {
-      border: 1px solid #ccc;
-      padding: 10px 20px;
+    footer {
+      background: linear-gradient(to right, #ff512f, #f09819);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
 
-  <h1>My Account</h1>
-  <div class="login-box">
-    <input type="text" id="username" placeholder="Username"><br>
-    <input type="password" id="password" placeholder="Password"><br>
-    <button onclick="login()">Login</button>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/shriapp.png" alt="SHRI Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
+        <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
+      </ul>
+    </div>
   </div>
+</nav>
 
-  <div id="result"></div>
+<!-- Login Form -->
+<div class="login-container" id="loginBox">
+  <h2>My Account</h2>
+  <form id="loginForm">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" id="username" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-warning w-100">Login</button>
+  </form>
+</div>
 
-  <script>
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_X0OeIPk6jLG19sQN6ks6QhTpj62Qv7ujwb3fk-clgbFP2iVOO1q8GO-i7t90-8Hp23PkpUNiYbs/pub?output=csv"
-    async function getSheetData() {
-      const response = await fetch(sheetUrl);
-      const data = await response.text();
-      return data.split("\n").map(r => r.split(","));
-    }
+<!-- User Data -->
+<div class="user-card d-none" id="userCard">
+  <h3 class="mb-3">Welcome, <span id="displayUsername"></span></h3>
+  <ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Pali:</strong> <span id="pali"></span></li>
+    <li class="list-group-item"><strong>Upad:</strong> <span id="upad"></span></li>
+    <li class="list-group-item"><strong>Balance:</strong> <span id="balance"></span></li>
+    <li class="list-group-item"><strong>Rate:</strong> <span id="rate"></span></li>
+  </ul>
+  <button class="btn btn-danger w-100" id="logoutBtn">Logout</button>
+</div>
 
-    async function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const rows = await getSheetData();
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </div>
+</footer>
 
-      let found = false;
+<script>
+const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_X0OeIPk6jLG19sQN6ks6QhTpj62Qv7ujwb3fk-clgbFP2iVOO1q8GO-i7t90-8Hp23PkpUNiYbs/pub?output=csv";
 
-      for (let i = 1; i < rows.length; i++) { // skip header row
-        const [u, p, pali, upad, balance, rate] = rows[i];
-        if (u === username && p === password) {
-          document.getElementById("result").innerHTML = `
-            <h2>Welcome, ${u}</h2>
-            <table>
-              <tr><th>Pali</th><td>${pali}</td></tr>
-              <tr><th>Upad</th><td>${upad}</td></tr>
-              <tr><th>Balance</th><td>${balance}</td></tr>
-              <tr><th>Rate</th><td>${rate}</td></tr>
-            </table>
-          `;
-          found = true;
-          break;
-        }
+const loginBox = document.getElementById("loginBox");
+const userCard = document.getElementById("userCard");
+const logoutBtn = document.getElementById("logoutBtn");
+
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  fetch(sheetUrl)
+    .then(response => response.text())
+    .then(data => {
+      const rows = data.split("\n").map(r => r.split(","));
+      const userRow = rows.find((row, i) => i > 0 && row[0] === username && row[1] === password);
+
+      if (userRow) {
+        loginBox.classList.add("d-none");
+        userCard.classList.remove("d-none");
+
+        document.getElementById("displayUsername").innerText = username;
+        document.getElementById("pali").innerText = userRow[2];
+        document.getElementById("upad").innerText = userRow[3];
+        document.getElementById("balance").innerText = userRow[4];
+        document.getElementById("rate").innerText = userRow[5];
+      } else {
+        alert("Invalid username or password!");
       }
+    });
+});
 
-      if (!found) {
-        document.getElementById("result").innerHTML = `<p style="color:yellow;">Invalid Username or Password</p>`;
-      }
-    }
-  </script>
+logoutBtn.addEventListener("click", function() {
+  userCard.classList.add("d-none");
+  loginBox.classList.remove("d-none");
+  document.getElementById("loginForm").reset();
+});
+</script>
 
 </body>
 </html>
