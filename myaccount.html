@@ -9,10 +9,16 @@
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       background: #fff8f0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    /* Navbar */
+    /* Sticky Navbar */
     .navbar {
       background: linear-gradient(to right, #ff512f, #f09819);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     .navbar-brand img {
       height: 50px;
@@ -21,6 +27,13 @@
       color: white !important;
       margin: 0 10px;
       font-weight: 500;
+    }
+    /* Main content flex */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     /* Login box */
     .login-container {
@@ -45,12 +58,13 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    /* Footer always at bottom */
     footer {
       background: linear-gradient(to right, #ff512f, #f09819);
       color: white;
       text-align: center;
       padding: 15px;
-      margin-top: 50px;
+      margin-top: auto;
     }
   </style>
 </head>
@@ -78,33 +92,35 @@
   </div>
 </nav>
 
-<!-- Login Form -->
-<div class="login-container" id="loginBox">
-  <h2>My Account</h2>
-  <form id="loginForm">
-    <div class="mb-3">
-      <label for="username" class="form-label">Username</label>
-      <input type="text" id="username" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input type="password" id="password" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-warning w-100">Login</button>
-  </form>
-</div>
+<main>
+  <!-- Login Form -->
+  <div class="login-container" id="loginBox">
+    <h2>My Account</h2>
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-warning w-100">Login</button>
+    </form>
+  </div>
 
-<!-- User Data -->
-<div class="user-card d-none" id="userCard">
-  <h3 class="mb-3">Welcome, <span id="displayUsername"></span></h3>
-  <ul class="list-group mb-3">
-    <li class="list-group-item"><strong>Pali:</strong> <span id="pali"></span></li>
-    <li class="list-group-item"><strong>Upad:</strong> <span id="upad"></span></li>
-    <li class="list-group-item"><strong>Balance:</strong> <span id="balance"></span></li>
-    <li class="list-group-item"><strong>Rate:</strong> <span id="rate"></span></li>
-  </ul>
-  <button class="btn btn-danger w-100" id="logoutBtn">Logout</button>
-</div>
+  <!-- User Data -->
+  <div class="user-card d-none" id="userCard">
+    <h3 class="mb-3">Welcome, <span id="displayUsername"></span></h3>
+    <ul class="list-group mb-3">
+      <li class="list-group-item"><strong>Pali:</strong> <span id="pali"></span></li>
+      <li class="list-group-item"><strong>Upad:</strong> <span id="upad"></span></li>
+      <li class="list-group-item"><strong>Balance:</strong> <span id="balance"></span></li>
+      <li class="list-group-item"><strong>Rate:</strong> <span id="rate"></span></li>
+    </ul>
+    <button class="btn btn-danger w-100" id="logoutBtn">Logout</button>
+  </div>
+</main>
 
 <!-- Footer -->
 <footer>
