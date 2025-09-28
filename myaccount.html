@@ -65,8 +65,7 @@
   <div id="result"></div>
 
   <script>
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_X0OeIPk6jLG19sQN6ks6QhTpj62Qv7ujwb3fk-clgbFP2iVOO1q8GO-i7t90-8Hp23PkpUNiYbs/pub?output=csv";
-
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_X0OeIPk6jLG19sQN6ks6QhTpj62Qv7ujwb3fk-clgbFP2iVOO1q8GO-i7t90-8Hp23PkpUNiYbs/pub?output=csv"
     async function getSheetData() {
       const response = await fetch(sheetUrl);
       const data = await response.text();
