@@ -1,1 +1,197 @@
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_X0OeIPk6jLG19sQN6ks6QhTpj62Qv7ujwb3fk-clgbFP2iVOO1q8GO-i7t90-8Hp23PkpUNiYbs/pubhtml?widget=true&amp;headers=false"></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHRI — My Account</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; background: #fff8f0; display: flex; flex-direction: column; min-height: 100vh; }
+  .navbar { background: linear-gradient(to right, #ff512f, #f09819); position: sticky; top: 0; z-index: 1000; }
+  .navbar-brand img { height: 50px; }
+  .navbar-nav .nav-link { color: white !important; margin: 0 10px; font-weight: 500; }
+  main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px; }
+  .login-container, .user-card { max-width: 900px; margin: 20px auto; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .login-container h2, .user-card h2 { text-align: center; margin-bottom: 20px; color: #ff512f; }
+  footer { background: linear-gradient(to right, #ff512f, #f09819); color: white; text-align: center; padding: 15px; margin-top: auto; }
+  table { width: 100%; }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+<div class="container">
+  <a class="navbar-brand" href="index.html"><img src="images/shriapp.png" alt="SHRI Logo"></a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+      <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
+      <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
+    </ul>
+  </div>
+</div>
+</nav>
+
+<main>
+  <!-- Login Form -->
+  <div class="login-container" id="loginBox">
+    <h2>My Account Login</h2>
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" required>
+      </div>
+      <div class="mb-3 d-none" id="employeeSelectContainer">
+        <label for="employeeSelect" class="form-label">Select Employee</label>
+        <select id="employeeSelect" class="form-select"></select>
+      </div>
+      <button type="submit" class="btn btn-warning w-100">Login</button>
+    </form>
+  </div>
+
+  <!-- User Data -->
+  <div class="user-card d-none" id="userCard">
+    <h2>Welcome, <span id="displayUsername"></span></h2>
+    <div class="row text-center mb-3">
+      <div class="col"><strong>Pali:</strong> <span id="pali"></span></div>
+      <div class="col"><strong>Upad:</strong> <span id="upad"></span></div>
+      <div class="col"><strong>Balance:</strong> <span id="balance"></span></div>
+    </div>
+    <h3>Work Details</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Customer</th>
+            <th>Detail</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="detailTable"></tbody>
+      </table>
+    </div>
+    <button class="btn btn-danger w-100" id="logoutBtn">Logout</button>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+const sheetUrl = "YOUR_CSV_SHEET_URL_HERE"; // Replace with your CSV export URL
+const MASTER_PASSWORD = "SENIOR_PASS"; // replace with senior employee master password
+
+const loginBox = document.getElementById("loginBox");
+const userCard = document.getElementById("userCard");
+const logoutBtn = document.getElementById("logoutBtn");
+const employeeSelectContainer = document.getElementById("employeeSelectContainer");
+const employeeSelect = document.getElementById("employeeSelect");
+
+let allData = [];
+
+function calculateSummary(employeeName, customerView=false, customerName="") {
+  let rows = allData.slice(1).filter(row => row[4] === employeeName);
+
+  if(customerView) {
+    rows = rows.filter(row => row[6] === customerName);
+  }
+
+  const pali = rows.reduce((sum, row) => sum + ((row[1]?1:0) + (row[2]?1:0) + (row[3]?1:0)), 0);
+  const upad = rows.reduce((sum,row) => sum + (parseFloat(row[7]||0)),0);
+  const rate = parseFloat(rows[0] ? rows[8] : 0);
+  const balance = pali*rate - upad;
+
+  document.getElementById("pali").innerText = pali;
+  document.getElementById("upad").innerText = upad.toFixed(2);
+  document.getElementById("balance").innerText = balance.toFixed(2);
+
+  // Fill detail table
+  const tbody = document.getElementById("detailTable");
+  tbody.innerHTML = "";
+  rows.forEach(row => {
+    ["Morning","Evening","Night"].forEach((shift, idx) => {
+      if(row[idx]) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${row[0]}</td><td>${shift}</td><td>${row[6]}</td><td>${row[5]}</td><td>${row[7]}</td>`;
+        tbody.appendChild(tr);
+      }
+    });
+  });
+}
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  fetch(sheetUrl)
+    .then(r => r.text())
+    .then(data => {
+      allData = data.split("\n").map(r => r.split(","));
+
+      if(password === MASTER_PASSWORD){ // Senior employee
+        loginBox.classList.add("d-none");
+        employeeSelectContainer.classList.remove("d-none");
+        const employees = [...new Set(allData.slice(1).map(r => r[4]))];
+        employeeSelect.innerHTML = employees.map(e => `<option value="${e}">${e}</option>`).join("");
+        employeeSelect.addEventListener("change", () => calculateSummary(employeeSelect.value));
+        employeeSelectContainer.dispatchEvent(new Event("change"));
+        userCard.classList.remove("d-none");
+        document.getElementById("displayUsername").innerText = username + " (Senior)";
+        return;
+      }
+
+      // Normal employee
+      const userRows = allData.slice(1).filter(r => r[4] === username && r[1] === password);
+      if(userRows.length>0){
+        loginBox.classList.add("d-none");
+        userCard.classList.remove("d-none");
+        document.getElementById("displayUsername").innerText = username;
+        calculateSummary(username);
+        return;
+      }
+
+      // Customer view
+      const customerRows = allData.slice(1).filter(r => r[6] === username && r[1] === password);
+      if(customerRows.length>0){
+        loginBox.classList.add("d-none");
+        userCard.classList.remove("d-none");
+        document.getElementById("displayUsername").innerText = username + " (Customer)";
+        // show all employees where customer has assigned shifts or given upad
+        const employees = [...new Set(customerRows.map(r => r[4]))];
+        const firstEmployee = employees[0];
+        calculateSummary(firstEmployee,true,username);
+        return;
+      }
+
+      alert("Invalid username or password!");
+    });
+});
+
+logoutBtn.addEventListener("click", function(){
+  userCard.classList.add("d-none");
+  loginBox.classList.remove("d-none");
+  document.getElementById("loginForm").reset();
+  employeeSelectContainer.classList.add("d-none");
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
