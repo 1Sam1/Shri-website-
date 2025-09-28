@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — SHRI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body { font-family: "Segoe UI", Arial, sans-serif; }
+    .navbar { background: linear-gradient(to right, #ff512f, #f09819); }
+    .navbar-brand img { height: 50px; }
+    .navbar-nav .nav-link { color: white !important; margin: 0 10px; font-weight: 500; }
+    .login-box {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+    }
+    .details-box {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background: #fff8f0;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    }
+    footer { background: linear-gradient(to right, #ff512f, #f09819); color: white; text-align: center; padding: 15px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><img src="images/shriapp.png" alt="SHRI Logo"></a>
+  </div>
+</nav>
+
+<!-- Login Box -->
+<div class="login-box">
+  <h3 class="text-center">My Account</h3>
+  <form id="loginForm">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" id="username" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-warning w-100">Login</button>
+  </form>
+</div>
+
+<!-- User Details -->
+<div id="userDetails" class="details-box d-none">
+  <h4 class="mb-3">Welcome, <span id="displayName"></span> 👋</h4>
+  <p><strong>Attendance:</strong> <span id="attendance"></span></p>
+  <p><strong>Shifts:</strong> <span id="shifts"></span></p>
+  <p><strong>Advance Taken:</strong> <span id="advance"></span></p>
+  <p><strong>Salary:</strong> <span id="salary"></span></p>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!-- Script -->
+<script>
+const SHEET_ID = "YOUR_SHEET_ID"; https://docs.google.com/spreadsheets/d/e/2PACX-1vSk_X0OeIPk6jLG19sQN6ks6QhTpj62Qv7ujwb3fk-clgbFP2iVOO1q8GO-i7t90-8Hp23PkpUNiYbs/pubhtml?widget=true&amp;headers=false"
+const SHEET_NAME = "Sheet1"; // replace if different
+const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  fetch(URL)
+    .then(res => res.text())
+    .then(data => {
+      const json = JSON.parse(data.substr(47).slice(0, -2));
+      const rows = json.table.rows;
+
+      let found = false;
+      rows.forEach(row => {
+        let u = row.c[0]?.v;
+        let p = row.c[1]?.v;
+        let name = row.c[2]?.v;
+        let attendance = row.c[3]?.v;
+        let salary = row.c[4]?.v;
+        let advance = row.c[5]?.v;
+        let shifts = row.c[6]?.v;
+
+        if (u === username && p === password) {
+          found = true;
+          document.getElementById("loginForm").classList.add("d-none");
+          document.getElementById("userDetails").classList.remove("d-none");
+          document.getElementById("displayName").innerText = name;
+          document.getElementById("attendance").innerText = attendance;
+          document.getElementById("salary").innerText = salary;
+          document.getElementById("advance").innerText = advance;
+          document.getElementById("shifts").innerText = shifts;
+        }
+      });
+
+      if (!found) {
+        alert("Invalid username or password!");
+      }
+    });
+});
+</script>
+</body>
+</html>
