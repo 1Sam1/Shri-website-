@@ -2,55 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Account</title>
+  <title>SHRI — My Account</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #333;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #fff8f0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    header {
-      background: #6a1b9a;
-      color: white;
-      padding: 15px;
-      text-align: center;
+    /* Sticky Navbar */
+    .navbar {
+      background: linear-gradient(to right, #ff512f, #f09819); /* rising sun */
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    footer {
-      background: #6a1b9a;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+    .navbar-brand img {
+      height: 50px;
     }
-    .container {
-      max-width: 900px;
-      margin: 80px auto 60px auto;
-      padding: 20px;
+    .navbar-nav .nav-link {
+      color: white !important;
+      margin: 0 10px;
+      font-weight: 500;
+    }
+    .navbar-nav .nav-link.active {
+      border-bottom: 2px solid white;
+    }
+    /* Login box */
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
       background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    h2 { color: #6a1b9a; }
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff512f;
+    }
+    /* Account section */
+    .account-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
     .summary {
       display: flex;
       justify-content: space-between;
+      gap: 10px;
       margin-bottom: 20px;
-      text-align: center;
     }
     .summary div {
       flex: 1;
-      padding: 10px;
-      background: #f0e6f7;
-      margin: 5px;
-      border-radius: 6px;
+      background: #ffe0cc;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
       font-weight: bold;
+      color: #d35400;
     }
     table {
       width: 100%;
@@ -58,181 +74,212 @@
       margin-top: 15px;
     }
     th, td {
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       padding: 8px;
       text-align: center;
     }
     th {
-      background: #eee;
+      background: #ffecd9;
+      color: #e65100;
     }
-    #loginForm {
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, #ff512f, #f09819);
+      color: white;
       text-align: center;
-      margin-top: 50px;
-    }
-    #loginForm input {
-      padding: 8px;
-      margin: 5px;
+      padding: 15px;
+      margin-top: auto;
     }
     #logoutBtn {
       background: #d32f2f;
       color: white;
       border: none;
-      padding: 8px 15px;
+      padding: 8px 14px;
       border-radius: 5px;
       cursor: pointer;
+      float: right;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>My Account</h1>
-  </header>
-
-  <div class="container" id="loginSection">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required><br>
-      <input type="password" id="password" placeholder="Password" required><br>
-      <button type="submit">Login</button>
-    </form>
-  </div>
-
-  <div class="container" id="accountSection" style="display:none;">
-    <h2>Welcome, <span id="displayName"></span> (<span id="displayRole"></span>)</h2>
-    <button id="logoutBtn">Logout</button>
-
-    <div class="summary">
-      <div>Pali (Shifts): <span id="paliCount">0</span></div>
-      <div>Upad: ₹<span id="upadTotal">0</span></div>
-      <div>Balance: ₹<span id="balanceTotal">0</span></div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/shriapp.png" alt="SHRI Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
+        <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <h3>Details</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Shift</th>
-          <th>Customer</th>
-          <th>Detail</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody id="detailsBody"></tbody>
-    </table>
+<!-- Login Section -->
+<div class="login-container" id="loginSection">
+  <h2>My Account</h2>
+  <form id="loginForm">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" id="username" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" id="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-warning w-100">Login</button>
+  </form>
+</div>
+
+<!-- Account Section -->
+<div class="account-container d-none" id="accountSection">
+  <h2>
+    Welcome, <span id="displayName"></span>
+    (<span id="displayRole"></span>)
+  </h2>
+  <button id="logoutBtn">Logout</button>
+
+  <div class="summary">
+    <div>Pali (Shifts): <span id="paliCount">0</span></div>
+    <div>Upad: ₹<span id="upadTotal">0</span></div>
+    <div>Balance: ₹<span id="balanceTotal">0</span></div>
   </div>
 
-  <footer>
-    © Shri Website
-  </footer>
+  <h3>Details</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Shift</th>
+        <th>Customer</th>
+        <th>Detail</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody id="detailsBody"></tbody>
+  </table>
+</div>
 
-  <script>
-    const registrationUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=0&single=true&output=csv";
-    const dailyInputUrl   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=123456789&single=true&output=csv"; // replace gid with actual Dailyinput tab gid
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </div>
+</footer>
 
-    let users = [];
-    let dailyInputs = [];
+<script>
+  const registrationUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=0&single=true&output=csv";
+  const dailyInputUrl   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=123456789&single=true&output=csv";
 
-    async function loadCSV(url) {
-      const res = await fetch(url);
-      const text = await res.text();
-      return text.split("\n").map(row => row.split(","));
-    }
+  let users = [], dailyInputs = [];
 
-    async function init() {
-      const regData = await loadCSV(registrationUrl);
-      const dailyData = await loadCSV(dailyInputUrl);
+  async function loadCSV(url) {
+    const res = await fetch(url);
+    const text = await res.text();
+    return text.split("\n").map(r => r.split(","));
+  }
 
-      const headersReg = regData[0];
-      users = regData.slice(1).map(row => {
-        let obj = {};
-        headersReg.forEach((h,i) => obj[h.trim()] = row[i] ? row[i].trim() : "");
-        return obj;
-      });
+  async function init() {
+    const regData = await loadCSV(registrationUrl);
+    const dailyData = await loadCSV(dailyInputUrl);
 
-      const headersDaily = dailyData[0];
-      dailyInputs = dailyData.slice(1).map(row => {
-        let obj = {};
-        headersDaily.forEach((h,i) => obj[h.trim()] = row[i] ? row[i].trim() : "");
-        return obj;
-      });
-    }
-
-    document.getElementById("loginForm").addEventListener("submit", e => {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      const user = users.find(u => u.Username === username && u.Password === password);
-      if (!user) {
-        alert("Invalid username or password");
-        return;
-      }
-
-      document.getElementById("loginSection").style.display = "none";
-      document.getElementById("accountSection").style.display = "block";
-      document.getElementById("displayName").textContent = user.Name;
-      document.getElementById("displayRole").textContent = user.Role;
-
-      showUserData(user);
+    const headersReg = regData[0];
+    users = regData.slice(1).map(row => {
+      let obj = {};
+      headersReg.forEach((h,i) => obj[h.trim()] = row[i] ? row[i].trim() : "");
+      return obj;
     });
 
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      document.getElementById("loginSection").style.display = "block";
-      document.getElementById("accountSection").style.display = "none";
+    const headersDaily = dailyData[0];
+    dailyInputs = dailyData.slice(1).map(row => {
+      let obj = {};
+      headersDaily.forEach((h,i) => obj[h.trim()] = row[i] ? row[i].trim() : "");
+      return obj;
     });
+  }
 
-    function showUserData(user) {
-      let filtered = [];
-      if (user.Role === "Employee") {
-        filtered = dailyInputs.filter(d => d["Employee Username"] === user.Username);
-      } else if (user.Role === "Senior") {
-        filtered = dailyInputs; // senior sees all
-      } else if (user.Role === "Customer") {
-        filtered = dailyInputs.filter(d => d["Customer"] === user.Name);
-      }
+  document.getElementById("loginForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-      // Calculate summary
-      let paliCount = 0, upadTotal = 0, balance = 0;
-      const rate = parseFloat(user.Rate || 0);
-
-      filtered.forEach(d => {
-        if (d.Morning) paliCount++;
-        if (d.Evening) paliCount++;
-        if (d.Night) paliCount++;
-        if (d.Amount) upadTotal += parseFloat(d.Amount || 0);
-      });
-
-      balance = paliCount * rate - upadTotal;
-
-      document.getElementById("paliCount").textContent = paliCount;
-      document.getElementById("upadTotal").textContent = upadTotal.toFixed(2);
-      document.getElementById("balanceTotal").textContent = balance.toFixed(2);
-
-      // Fill details
-      const tbody = document.getElementById("detailsBody");
-      tbody.innerHTML = "";
-      filtered.forEach(d => {
-        const shifts = [];
-        if (d.Morning) shifts.push("Morning");
-        if (d.Evening) shifts.push("Evening");
-        if (d.Night) shifts.push("Night");
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${d.Date}</td>
-          <td>${shifts.join(", ")}</td>
-          <td>${d.Customer}</td>
-          <td>${d.Detail}</td>
-          <td>${d.Amount || "-"}</td>
-        `;
-        tbody.appendChild(tr);
-      });
+    const user = users.find(u => u.Username === username && u.Password === password);
+    if (!user) {
+      alert("Invalid username or password");
+      return;
     }
 
-    init();
-  </script>
+    document.getElementById("loginSection").classList.add("d-none");
+    document.getElementById("accountSection").classList.remove("d-none");
+    document.getElementById("displayName").textContent = user.Name;
+    document.getElementById("displayRole").textContent = user.Role;
 
+    showUserData(user);
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    document.getElementById("loginSection").classList.remove("d-none");
+    document.getElementById("accountSection").classList.add("d-none");
+    document.getElementById("loginForm").reset();
+  });
+
+  function showUserData(user) {
+    let filtered = [];
+    if (user.Role === "Employee") {
+      filtered = dailyInputs.filter(d => d["Employee Username"] === user.Username);
+    } else if (user.Role === "Senior") {
+      filtered = dailyInputs;
+    } else if (user.Role === "Customer") {
+      filtered = dailyInputs.filter(d => d["Customer"] === user.Name);
+    }
+
+    let paliCount = 0, upadTotal = 0, balance = 0;
+    const rate = parseFloat(user.Rate || 0);
+
+    filtered.forEach(d => {
+      if (d.Morning) paliCount++;
+      if (d.Evening) paliCount++;
+      if (d.Night) paliCount++;
+      if (d.Amount) upadTotal += parseFloat(d.Amount || 0);
+    });
+
+    balance = paliCount * rate - upadTotal;
+
+    document.getElementById("paliCount").textContent = paliCount;
+    document.getElementById("upadTotal").textContent = upadTotal.toFixed(2);
+    document.getElementById("balanceTotal").textContent = balance.toFixed(2);
+
+    const tbody = document.getElementById("detailsBody");
+    tbody.innerHTML = "";
+    filtered.forEach(d => {
+      const shifts = [];
+      if (d.Morning) shifts.push("Morning");
+      if (d.Evening) shifts.push("Evening");
+      if (d.Night) shifts.push("Night");
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${d.Date}</td>
+        <td>${shifts.join(", ")}</td>
+        <td>${d.Customer}</td>
+        <td>${d.Detail}</td>
+        <td>${d.Amount || "-"}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  init();
+</script>
 </body>
 </html>
