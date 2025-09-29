@@ -1,603 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHRI — My Account</title>
-
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Theme styles -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  :root {
-    --sun1: #ff512f;
-    --sun2: #f09819;
-    --accent: #e65100;
-    --bg: #fff8f0;
-  }
-  body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--bg);
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .navbar {
-    background: linear-gradient(90deg, var(--sun1), var(--sun2));
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  }
-  .navbar-brand img { height:44px; }
-
-  .login-card {
-    max-width: 480px;
-    margin: 72px auto 18px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  }
-  .login-card h2 { color: var(--sun1); text-align:center; margin-bottom:8px; }
-
-  .account-wrap {
-    max-width: 1100px;
-    margin: 18px auto 80px;
-    padding: 18px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  }
-
-  .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .summary-card {
-    background: linear-gradient(180deg,#fff4ec,#fff0e0);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-    border: 1px solid rgba(230,150,80,0.06);
-  }
-  .summary-card h6 { color: var(--accent); margin-bottom:4px; }
-  .summary-card p { font-size:1.15rem; margin:0; font-weight:700; }
-
-  table thead th {
-    background: #fff3e6;
-    color: var(--accent);
-  }
-
-  footer {
-    background: linear-gradient(90deg, var(--sun1), var(--sun2));
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    margin-top: auto;
-  }
-
-  @media(max-width:767px){
-    .summary-grid { grid-template-columns: 1fr; }
-    .login-card { margin: 30px 12px; }
-    .account-wrap { margin: 12px; }
-  }
+  body { font-family: "Segoe UI", Arial, sans-serif; background: #fff8f0; display:flex; flex-direction: column; min-height:100vh; }
+  .navbar { background: linear-gradient(to right, #ff512f, #f09819); position: sticky; top:0; z-index:1000; }
+  .navbar-brand img { height:50px; }
+  .navbar-nav .nav-link { color:white !important; margin:0 10px; font-weight:500; }
+  main { flex:1; display:flex; flex-direction:column; justify-content:center; padding:20px; }
+  .login-container, .user-card { max-width:600px; margin:20px auto; padding:30px; background:white; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  .login-container h2, .user-card h3 { text-align:center; margin-bottom:20px; color:#ff512f; }
+  footer { background: linear-gradient(to right, #ff512f, #f09819); color:white; text-align:center; padding:15px; margin-top:auto; }
+  table { width:100%; }
+  th, td { text-align:center; }
+  @media(max-width:576px){ .login-container,.user-card{padding:15px;} }
 </style>
 </head>
 <body>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container">
-    <a class="navbar-brand" href="index.html"><img src="images/shriapp.png" alt="SHRI"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="navCollapse" class="collapse navbar-collapse">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy</a></li>
-        <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
-      </ul>
-    </div>
-  </div>
+<div class="container">
+<a class="navbar-brand" href="index.html"><img src="images/shriapp.png" alt="SHRI Logo"></a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+<li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+<li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
+<li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
+</ul>
+</div>
+</div>
 </nav>
 
-<!-- Login -->
-<div class="login-card" id="loginCard" aria-live="polite">
-  <h2>My Account</h2>
+<main>
+<!-- Login Form -->
+<div class="login-container" id="loginBox">
+  <h2>My Account Login</h2>
   <form id="loginForm">
-    <div class="mb-3">
-      <label class="form-label">Username</label>
-      <input id="username" class="form-control" required autocomplete="username" />
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Password</label>
-      <input id="password" type="password" class="form-control" required autocomplete="current-password" />
-    </div>
-    <div class="d-grid">
-      <button class="btn btn-warning" style="background:linear-gradient(90deg,var(--sun1),var(--sun2)); border: none;" type="submit">Login</button>
-    </div>
-    <p class="small text-muted text-center mt-2 mb-0">Employee, Senior & Customer use same login form.</p>
+    <div class="mb-3"><label for="username" class="form-label">Username</label><input type="text" id="username" class="form-control" required></div>
+    <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" id="password" class="form-control" required></div>
+    <button type="submit" class="btn btn-warning w-100">Login</button>
   </form>
 </div>
 
-<!-- Account area (hidden until login) -->
-<div id="accountWrap" class="account-wrap" style="display:none;">
-  <div class="d-flex align-items-start mb-2">
-    <div class="flex-grow-1">
-      <h4 id="welcome">Welcome</h4>
-      <div class="text-muted" id="roleLabel"></div>
-    </div>
-    <div>
-      <button id="logoutBtn" class="btn btn-outline-dark">Logout</button>
-    </div>
+<!-- User Dashboard -->
+<div class="user-card d-none" id="userCard">
+  <h3>Welcome, <span id="displayUsername"></span></h3>
+
+  <!-- Top Summary -->
+  <div class="row text-center mb-4">
+    <div class="col"><strong>Pali</strong><div id="pali">0</div></div>
+    <div class="col"><strong>Upad</strong><div id="upad">0</div></div>
+    <div class="col"><strong>Balance</strong><div id="balance">0</div></div>
   </div>
 
-  <!-- senior controls -->
-  <div id="seniorControls" style="display:none" class="mb-3">
-    <label class="form-label">View Employee</label>
-    <div class="d-flex gap-2">
-      <select id="seniorEmployeeSelect" class="form-select"></select>
-      <button id="salaryPdfBtn" class="btn btn-secondary">Download Salary Slip (PDF)</button>
-    </div>
+  <!-- Employee Dropdown for Senior -->
+  <div class="mb-3 d-none" id="employeeSelectDiv">
+    <label for="employeeSelect" class="form-label">Select Employee</label>
+    <select id="employeeSelect" class="form-select"></select>
   </div>
 
-  <!-- summary -->
-  <div class="summary-grid mb-3">
-    <div class="summary-card">
-      <h6>Pali (Shifts)</h6>
-      <p id="summaryPali">0</p>
-    </div>
-    <div class="summary-card">
-      <h6>Upad (Advance)</h6>
-      <p id="summaryUpad">0</p>
-    </div>
-    <div class="summary-card">
-      <h6>Balance</h6>
-      <p id="summaryBalance">0</p>
-    </div>
-  </div>
+  <!-- Detail Table -->
+  <table class="table table-striped" id="detailTable">
+    <thead>
+      <tr><th>Date</th><th>Shift</th><th>Customer</th><th>Detail</th><th>Amount</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-  <!-- Employee details -->
-  <div id="employeeDetails">
-    <h5>Work Details</h5>
-    <div class="table-responsive">
-      <table class="table table-sm table-striped" id="employeeTable">
-        <thead>
-          <tr><th>Date</th><th>Shift</th><th>Customer</th><th>Venue / Detail</th><th>Amount</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Customer bill -->
-  <div id="customerBill" style="display:none">
-    <div class="d-flex justify-content-between align-items-center">
-      <h5>Customer Bill</h5>
-      <button id="billPdfBtn" class="btn btn-secondary">Download Bill (PDF)</button>
-    </div>
-    <div class="table-responsive mt-2">
-      <table class="table table-sm table-bordered" id="customerTable">
-        <thead>
-          <tr>
-            <th>Date</th><th>Venue</th><th>Morning</th><th>Evening</th><th>Night</th><th>Total</th><th>Rate</th><th>Amount</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-          <tr><th colspan="7" class="text-end">Grand Total</th><th id="customerGrand">0</th></tr>
-        </tfoot>
-      </table>
-    </div>
-  </div>
+  <button class="btn btn-success w-100 d-none" id="salarySlipBtn">Download Salary Slip</button>
+  <button class="btn btn-danger w-100 mt-2" id="logoutBtn">Logout</button>
 </div>
+</main>
 
-<footer>© 2025 SHRI — All rights reserved.</footer>
+<footer>
+<p>&copy; 2025 SHRI. All Rights Reserved.</p>
+</footer>
 
-<!-- libs -->
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-/* ---------- CONFIG: your CSV links ---------- */
-const REG_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSbEW2FWMXnxb8SKLMv0rxL3f0ZI8NntDpEhh9um5YAoZ7Nzki3NGFbReLqaV8Fkw/pub?gid=1862107016&single=true&output=csv";
-const DAILY_CSV= "https://docs.google.com/spreadsheets/d/e/2PACX-1vSbEW2FWMXnxb8SKLMv0rxL3f0ZI8NntDpEhh9um5YAoZ7Nzki3NGFbReLqaV8Fkw/pub?gid=1370536424&single=true&output=csv";
+const registrationCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1862107016&single=true&output=csv";
+const dailyCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1370536424&single=true&output=csv";
 
-/* ---------- Utility helpers ---------- */
-function pickField(obj, candidates){ // return actual key name present (case-insensitive)
-  for(const c of candidates){
-    if (c in obj && obj[c] !== undefined) return c;
-    const found = Object.keys(obj).find(k => k.toLowerCase() === c.toLowerCase());
-    if(found) return found;
-  }
-  return null;
-}
-function safeNum(v){
-  if (v === undefined || v === null) return 0;
-  v = String(v).trim();
-  if (!v) return 0;
-  if (v.toLowerCase() === "blank") return 0;
-  const n = parseFloat(v.replace(/,/g,'').replace(/[^\d.-]/g,''));
-  return isNaN(n) ? 0 : n;
-}
+let registrationData=[], dailyData=[];
+let currentUser=null;
 
-/* ---------- Data containers ---------- */
-let REG = []; // normalized registration rows
-let DAILY = []; // normalized daily rows
-let currentUser = null; // normalized reg object
-let viewEmployee = null; // username currently being viewed (for senior)
+function fetchCsv(url){ return fetch(url).then(r=>r.text()); }
 
-/* ---------- Load CSVs and normalize fields ---------- */
-async function loadData(){
-  try{
-    // use PapaParse to download+parse with header true
-    const reg = await new Promise((res,rej)=> Papa.parse(REG_CSV, {download:true, header:true, skipEmptyLines:true, complete: r=>res(r.data), error:rej}));
-    const daily= await new Promise((res,rej)=> Papa.parse(DAILY_CSV,{download:true, header:true, skipEmptyLines:true, complete:r=>res(r.data), error:rej}));
-    // normalize registration rows to {username, password, role, name, rate, eReferral, cReferral, ...}
-    REG = reg.map(row => {
-      // pick common keys
-      const usernameKey = pickField(row,['Username','username','Employee','employee','employee username','User']);
-      const passwordKey = pickField(row,['Password','password','Pass','PASS']);
-      const roleKey     = pickField(row,['Role','role']);
-      const nameKey     = pickField(row,['Name','name']);
-      const rateKey     = pickField(row,['Rate','rate','customer rate']);
-      const eRefKey     = pickField(row,['e-refferal','e-referral','eReferral','e_referral']);
-      const cRefKey     = pickField(row,['c-refferal','c-referral','cReferral','c_referral']);
-      const paliKey     = pickField(row,['pali','Pali','total shifts']);
-      const upadKey     = pickField(row,['upad','Upad','advance','advance amount']);
-      const advanceKey  = pickField(row,['advance','Advance']);
-      const lastBalKey  = pickField(row,['Last Month Balance','Last Balance','last balance']);
-      const billKey     = pickField(row,['bill','Bill','total bill']);
-      const customerKey = pickField(row,['customer','Customer','customer username']);
+function parseCsv(data){ return data.trim().split("\n").map(r=>r.split(",")); }
 
-      const username = usernameKey ? (row[usernameKey] || '').toString().trim() : (customerKey? (row[customerKey] || '').toString().trim() : '');
-      const password = passwordKey ? (row[passwordKey] || '').toString().trim() : (username || '');
-      // infer role
-      let role = roleKey ? ((row[roleKey]||'').toString().trim().toLowerCase()) : '';
-      if(!role){
-        // If row has a customerKey with non-empty value or contains 'bill' or 'advance' fields that feel customer-specific, infer customer
-        if(customerKey && (row[customerKey] || '').toString().trim() !== '') role = 'customer';
-        // else if username field exists and some referral fields present maybe employee
-        else role = 'employee';
-      }
-      role = role.toLowerCase().includes('senior') ? 'senior' : (role.toLowerCase().includes('cust') ? 'customer' : 'employee');
+function calculatePali(row){ return ['Morning','Evening','Night'].reduce((sum,col,i)=>{ return sum + (row[i+1] && !isNaN(row[i+1])?parseInt(row[i+1]):0); },0); }
 
-      return {
-        raw: row,
-        username: username,
-        password: password,
-        role: role,
-        name: nameKey ? (row[nameKey]||'').toString().trim() : (username||''),
-        rate: safeNum(rateKey ? row[rateKey] : row['Rate']),
-        eReferral: safeNum(eRefKey ? row[eRefKey] : row['e-refferal']),
-        cReferral: safeNum(cRefKey ? row[cRefKey] : row['c-refferal']),
-        pali: safeNum(paliKey ? row[paliKey] : 0),
-        upad: safeNum(upadKey ? row[upadKey] : row[advanceKey]),
-        lastBalance: safeNum(lastBalKey ? row[lastBalKey] : 0),
-        bill: safeNum(billKey ? row[billKey] : 0),
-        customerField: customerKey ? (row[customerKey]||'').toString().trim() : ''
-      };
-    });
-
-    // normalize daily rows to fixed fields
-    DAILY = daily.map(row => {
-      const dateKey = pickField(row,['Date','date']);
-      const empKey  = pickField(row,['Employee Username','Employee','Name','employee username','employee']);
-      const morning = pickField(row,['Morning','morning','M']);
-      const evening = pickField(row,['Evening','evening','E']);
-      const night   = pickField(row,['Night','night','N']);
-      const custKey = pickField(row,['Customer','customer']);
-      const detail  = pickField(row,['Detail','detail','Venue','details','notes']);
-      const amount  = pickField(row,['Amount','amount','AMOUNT','advance']);
-
-      return {
-        raw: row,
-        Date: dateKey ? (row[dateKey]||'').toString().trim() : '',
-        EmployeeUsername: empKey ? (row[empKey]||'').toString().trim() : '',
-        Morning: morning ? (row[morning]||'').toString().trim() : '',
-        Evening: evening ? (row[evening]||'').toString().trim() : '',
-        Night: night ? (row[night]||'').toString().trim() : '',
-        Customer: custKey ? (row[custKey]||'').toString().trim() : '',
-        Detail: detail ? (row[detail]||'').toString().trim() : '',
-        Amount: amount ? (row[amount]||'').toString().trim() : ''
-      };
-    });
-
-    // done — ready
-    console.log('Loaded', REG.length, 'registration rows and', DAILY.length, 'daily rows');
-  } catch(err){
-    console.error('Failed to load CSVs', err);
-    alert('Failed to load CSVs. Please check CSV publish URLs and CORS/public access.');
-  }
-}
-
-/* ---------- Login & role handling ---------- */
-function findUserByCredentials(username, password){
-  if(!username) return null;
-  return REG.find(r=> r.username === username && (r.password === password || (!r.password && r.username === password)));
-}
-
-document.getElementById('loginForm').addEventListener('submit', (ev)=>{
-  ev.preventDefault();
-  const uname = document.getElementById('username').value.trim();
-  const pass  = document.getElementById('password').value.trim();
-  const user = findUserByCredentials(uname, pass);
-  if(!user){
-    alert('Username or password incorrect (check Registration sheet).');
-    return;
-  }
-  currentUser = user;
-  showAccountForCurrentUser();
-});
-
-/* logout */
-document.getElementById('logoutBtn').addEventListener('click', ()=>{
-  currentUser = null;
-  viewEmployee = null;
-  document.getElementById('accountWrap').style.display = 'none';
-  document.getElementById('loginCard').style.display = '';
-});
-
-/* ---------- Render views ---------- */
-function showAccountForCurrentUser(){
-  document.getElementById('loginCard').style.display = 'none';
-  document.getElementById('accountWrap').style.display = '';
-  document.getElementById('welcome').textContent = `Welcome, ${currentUser.name || currentUser.username}`;
-  document.getElementById('roleLabel').textContent = (currentUser.role || 'employee').toUpperCase();
-
-  if(currentUser.role === 'senior'){
-    // show dropdown
-    document.getElementById('seniorControls').style.display = '';
-    populateSeniorDropdown();
-    // select senior's own username if present else first
-    const sel = document.getElementById('seniorEmployeeSelect');
-    if(currentUser.username && Array.from(sel.options).some(o => o.value === currentUser.username)){
-      sel.value = currentUser.username;
-      viewEmployee = currentUser.username;
-    } else {
-      viewEmployee = sel.options.length ? sel.options[0].value : currentUser.username;
-    }
-    renderEmployeeView(viewEmployee);
-  } else if(currentUser.role === 'customer'){
-    // show customer bill
-    document.getElementById('seniorControls').style.display = 'none';
-    document.getElementById('employeeDetails').style.display = 'none';
-    document.getElementById('customerBill').style.display = '';
-    renderCustomerView(currentUser.username);
-  } else {
-    // employee
-    document.getElementById('seniorControls').style.display = 'none';
-    document.getElementById('customerBill').style.display = 'none';
-    document.getElementById('employeeDetails').style.display = '';
-    viewEmployee = currentUser.username;
-    renderEmployeeView(viewEmployee);
-  }
-}
-
-/* ---------- Senior dropdown ---------- */
-function populateSeniorDropdown(){
-  const sel = document.getElementById('seniorEmployeeSelect');
-  sel.innerHTML = '';
-  // list registration users which are employees
-  REG.filter(r => r.role === 'employee').forEach(r => {
-    const o = document.createElement('option');
-    o.value = r.username;
-    o.textContent = r.name || r.username;
-    sel.appendChild(o);
-  });
-  sel.addEventListener('change', ()=> {
-    viewEmployee = sel.value;
-    renderEmployeeView(viewEmployee);
-  });
-  // attach pdf button
-  document.getElementById('salaryPdfBtn').onclick = ()=> {
-    if(viewEmployee) generateSalaryPDF(viewEmployee);
-    else alert('Select an employee first.');
-  }
-}
-
-/* ---------- Employee view rendering ---------- */
-function renderEmployeeView(username){
-  // compute pali, upad, balance and fill detail rows
-  const regRow = REG.find(r => r.username === username);
-  const rows = DAILY.filter(d => (d.EmployeeUsername === username) || (d.EmployeeUsername === (regRow ? regRow.name : '')));
-  let totalPali = 0, totalUpad = 0;
-  const tbody = document.querySelector('#employeeTable tbody');
-  tbody.innerHTML = '';
-
-  rows.forEach(r => {
-    const m = safeNum(r.Morning);
-    const e = safeNum(r.Evening);
-    const n = safeNum(r.Night);
-    const shifts = m + e + n;
-    totalPali += shifts;
-    const amt = safeNum(r.Amount);
-    totalUpad += amt;
-
-    // display shift names (if any) or numeric counts
-    let shiftStr = [];
-    if(m) shiftStr.push(`Morning${m>1? '×'+m:''}`);
-    if(e) shiftStr.push(`Evening${e>1? '×'+e:''}`);
-    if(n) shiftStr.push(`Night${n>1? '×'+n:''}`);
-    if(shiftStr.length===0 && r.Amount) shiftStr = ['-'];
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${r.Date || ''}</td>
-                    <td>${shiftStr.join(', ')}</td>
-                    <td>${r.Customer || ''}</td>
-                    <td>${r.Detail || ''}</td>
-                    <td>${amt? amt.toFixed(2) : '-'}</td>`;
+function updateDashboard(user){
+  const username=user[0], role=user[13], rate=parseFloat(user[3]);
+  const tbody=document.querySelector("#detailTable tbody");
+  tbody.innerHTML="";
+  let pali=0, upad=0, balance=0;
+  let filtered=dailyData.filter(r=>r[4]===username);
+  filtered.forEach(r=>{
+    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s+" ":"").join("").trim();
+    pali+=calculatePali(r);
+    upad+=r[7]?parseFloat(r[7]):0;
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${r[0]}</td><td>${shifts}</td><td>${r[6]}</td><td>${r[5]}</td><td>${r[7]||0}</td>`;
     tbody.appendChild(tr);
   });
+  balance=pali*rate-upad;
+  document.getElementById("pali").innerText=pali;
+  document.getElementById("upad").innerText=upad;
+  document.getElementById("balance").innerText=balance;
 
-  const rate = regRow ? regRow.rate : 0;
-  // include e-referral + c-referral in balance per your spec
-  const eRef = regRow ? regRow.eReferral : 0;
-  const cRef = regRow ? regRow.cReferral : 0;
-  const balance = (totalPali * rate) - totalUpad + eRef + cRef + (regRow ? regRow.lastBalance : 0);
-
-  document.getElementById('summaryPali').textContent = totalPali;
-  document.getElementById('summaryUpad').textContent = totalUpad.toFixed(2);
-  document.getElementById('summaryBalance').textContent = balance.toFixed(2);
+  // Senior role handling
+  if(role.toLowerCase()=="senior"){
+    document.getElementById("employeeSelectDiv").classList.remove("d-none");
+    const select=document.getElementById("employeeSelect");
+    select.innerHTML='<option value="">Select Employee</option>';
+    registrationData.forEach(r=>{ if(r[13].toLowerCase()=="employee") select.innerHTML+=`<option value="${r[0]}">${r[0]}</option>`; });
+    select.addEventListener("change",()=>{ 
+      const emp=registrationData.find(u=>u[0]===select.value);
+      if(emp) updateDashboard(emp);
+    });
+    document.getElementById("salarySlipBtn").classList.remove("d-none");
+    document.getElementById("salarySlipBtn").onclick=()=>generatePdf(filtered, username, rate, upad, balance, pali);
+  }else{ document.getElementById("employeeSelectDiv").classList.add("d-none"); document.getElementById("salarySlipBtn").classList.add("d-none"); }
 }
 
-/* ---------- Customer view ---------- */
-function renderCustomerView(customerUsername){
-  // find rate from REG
-  const custReg = REG.find(r => r.username === customerUsername || r.name === customerUsername);
-  const rate = custReg ? custReg.rate : 0;
-  // filter daily rows where Customer matches username or name
-  const rows = DAILY.filter(r => {
-    const c = (r.Customer || '').trim();
-    return c === customerUsername || (custReg && c === custReg.name);
-  });
-
-  // group by Date + Venue(Detail)
-  const groups = {};
-  rows.forEach(r => {
-    const key = `${r.Date||''}||${(r.Detail||'').trim()}`;
-    if(!groups[key]) groups[key] = {Date: r.Date||'', Venue: r.Detail||'', Morning:0, Evening:0, Night:0, total:0};
-    groups[key].Morning += safeNum(r.Morning);
-    groups[key].Evening += safeNum(r.Evening);
-    groups[key].Night += safeNum(r.Night);
-  });
-
-  const tbody = document.querySelector('#customerTable tbody');
-  tbody.innerHTML = '';
-  let grand = 0;
-  Object.values(groups).forEach(g => {
-    g.total = g.Morning + g.Evening + g.Night;
-    const amount = g.total * rate;
-    grand += amount;
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${g.Date}</td>
-                    <td>${g.Venue}</td>
-                    <td>${g.Morning}</td>
-                    <td>${g.Evening}</td>
-                    <td>${g.Night}</td>
-                    <td>${g.total}</td>
-                    <td>${rate.toFixed(2)}</td>
-                    <td>${amount.toFixed(2)}</td>`;
-    tbody.appendChild(tr);
-  });
-
-  document.getElementById('customerGrand').textContent = grand.toFixed(2);
-  // set summary cards too
-  const totalShifts = Object.values(groups).reduce((s,g)=> s + g.total, 0);
-  document.getElementById('summaryPali').textContent = totalShifts;
-  document.getElementById('summaryUpad').textContent = (custReg ? custReg.advance || 0 : 0).toFixed(2);
-  document.getElementById('summaryBalance').textContent = (grand - (custReg ? custReg.advance || 0 : 0)).toFixed(2);
-
-  // attach bill pdf button
-  document.getElementById('billPdfBtn').onclick = ()=> generateCustomerBillPDF(customerUsername);
-}
-
-/* ---------- PDF generation ---------- */
-function generateSalaryPDF(employeeUsername){
-  const emp = REG.find(r => r.username === employeeUsername || r.name === employeeUsername);
-  if(!emp) { alert('Employee not found'); return; }
-  // compute summary
-  const rows = DAILY.filter(d => d.EmployeeUsername === employeeUsername || d.EmployeeUsername === emp.name);
-  let totalPali = 0, totalUpad = 0;
-  const detailRows = [];
-  rows.forEach(r => {
-    const m = safeNum(r.Morning), e = safeNum(r.Evening), n = safeNum(r.Night);
-    const total = m + e + n;
-    totalPali += total;
-    const amt = safeNum(r.Amount);
-    totalUpad += amt;
-    // push per-date details
-    detailRows.push([r.Date||'', (m?('M×'+m):'') + (e?(' E×'+e):'') + (n?(' N×'+n):''), r.Customer||'', r.Detail||'', amt? amt.toFixed(2) : '-' ]);
-  });
-  const rate = emp.rate || 0;
-  const eRef = emp.eReferral || 0;
-  const cRef = emp.cReferral || 0;
-  const balance = (totalPali * rate) - totalUpad + eRef + cRef + (emp.lastBalance || 0);
-
-  // generate PDF
+function generatePdf(data, username, rate, upad, balance, pali){
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  doc.setFontSize(16);
-  doc.text('Salary Slip - SHRI', 14, 18);
-  doc.setFontSize(11);
-  doc.text(`Employee: ${emp.name || emp.username}`, 14, 28);
-  doc.text(`Username: ${emp.username}`, 14, 34);
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 28);
-
-  doc.autoTable({
-    startY: 44,
-    head: [['Total Shifts','Rate','Upad','E-ref','C-ref','Balance']],
-    body: [[ totalPali.toString(), rate.toFixed(2), totalUpad.toFixed(2), eRef.toFixed(2), cRef.toFixed(2), balance.toFixed(2) ]]
+  doc.setFontSize(16); doc.text(`Salary Slip: ${username}`, 20,20);
+  doc.setFontSize(12); doc.text(`Pali (Shifts): ${pali}`, 20,30);
+  doc.text(`Rate: ${rate}`, 20,36);
+  doc.text(`Upad: ${upad}`, 20,42);
+  doc.text(`Balance: ${balance}`, 20,48);
+  doc.text("Details:",20,58);
+  let y=64;
+  data.forEach(r=>{
+    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s:"").filter(s=>s).join(" ");
+    doc.text(`${r[0]} | ${shifts} | ${r[6]} | ${r[5]} | ${r[7]||0}`,20,y); y+=6;
   });
-
-  doc.autoTable({
-    startY: doc.lastAutoTable ? doc.lastAutoTable.finalY + 8 : 80,
-    head: [['Date','Shifts','Customer','Venue/Detail','Amount']],
-    body: detailRows
-  });
-
-  doc.save(`${emp.username}_salary_slip.pdf`);
+  doc.save(`Salary_Slip_${username}.pdf`);
 }
 
-function generateCustomerBillPDF(customerUsername){
-  const cust = REG.find(r => r.username === customerUsername || r.name === customerUsername);
-  const rate = cust ? cust.rate : 0;
-  const rows = DAILY.filter(r => {
-    const c = (r.Customer||'').trim();
-    return c === customerUsername || (cust && c === cust.name);
-  });
+document.getElementById("loginForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  const username=document.getElementById("username").value.trim();
+  const password=document.getElementById("password").value.trim();
+  const user=registrationData.find(r=>r[0]===username && r[1]===password);
+  if(user){ currentUser=user;
+    document.getElementById("loginBox").classList.add("d-none");
+    document.getElementById("userCard").classList.remove("d-none");
+    document.getElementById("displayUsername").innerText=username;
+    updateDashboard(user);
+  }else{ alert("Invalid username or password!"); }
+});
 
-  const groups = {};
-  rows.forEach(r => {
-    const key = `${r.Date||''}||${(r.Detail||'').trim()}`;
-    if(!groups[key]) groups[key] = {Date:r.Date||'', Venue:r.Detail||'', Morning:0, Evening:0, Night:0};
-    groups[key].Morning += safeNum(r.Morning);
-    groups[key].Evening += safeNum(r.Evening);
-    groups[key].Night += safeNum(r.Night);
-  });
+document.getElementById("logoutBtn").addEventListener("click",()=>{
+  currentUser=null;
+  document.getElementById("loginBox").classList.remove("d-none");
+  document.getElementById("userCard").classList.add("d-none");
+  document.getElementById("loginForm").reset();
+});
 
-  const rowsForPdf = [];
-  let grand=0;
-  Object.values(groups).forEach(g => {
-    const tot = g.Morning + g.Evening + g.Night;
-    const amt = tot * rate;
-    grand += amt;
-    rowsForPdf.push([g.Date, g.Venue, g.Morning, g.Evening, g.Night, tot, rate.toFixed(2), amt.toFixed(2)]);
-  });
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  doc.setFontSize(16);
-  doc.text('Customer Bill - SHRI', 14, 18);
-  doc.setFontSize(11);
-  doc.text(`Customer: ${cust ? (cust.name || cust.username) : customerUsername}`, 14, 28);
-  doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 28);
-
-  doc.autoTable({
-    startY: 40,
-    head: [['Date','Venue','M','E','N','Total','Rate','Amount']],
-    body: rowsForPdf,
-    foot: [['','','','','','','Grand Total', grand.toFixed(2)]]
-  });
-
-  doc.save(`${customerUsername}_bill.pdf`);
-}
-
-/* ---------- Init ---------- */
-loadData();
-
-// Expose some functions for debugging (optional)
-window._SHRI = { REG, DAILY, renderEmployeeView, renderCustomerView };
-
+Promise.all([fetchCsv(registrationCsv), fetchCsv(dailyCsv)]).then(([reg,daily])=>{
+  registrationData=parseCsv(reg);
+  dailyData=parseCsv(daily);
+});
 </script>
 </body>
 </html>
