@@ -4,176 +4,244 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHRI — My Account</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Inline Bootstrap & Custom CSS -->
 <style>
-  body { font-family: "Segoe UI", Arial, sans-serif; background: #fff8f0; display:flex; flex-direction: column; min-height:100vh; }
-  .navbar { background: linear-gradient(to right, #ff512f, #f09819); position: sticky; top:0; z-index:1000; }
-  .navbar-brand img { height:50px; }
-  .navbar-nav .nav-link { color:white !important; margin:0 10px; font-weight:500; }
-  main { flex:1; display:flex; flex-direction:column; justify-content:center; padding:20px; }
-  .login-container, .user-card { max-width:600px; margin:20px auto; padding:30px; background:white; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-  .login-container h2, .user-card h3 { text-align:center; margin-bottom:20px; color:#ff512f; }
-  footer { background: linear-gradient(to right, #ff512f, #f09819); color:white; text-align:center; padding:15px; margin-top:auto; }
-  table { width:100%; }
-  th, td { text-align:center; }
-  @media(max-width:576px){ .login-container,.user-card{padding:15px;} }
+body{font-family:"Segoe UI",Arial,sans-serif;background:#fff8f0;display:flex;flex-direction:column;min-height:100vh;margin:0}
+.container{width:90%;max-width:1200px;margin:0 auto}
+.navbar{background:linear-gradient(to right,#ff512f,#f09819);position:sticky;top:0;z-index:1000;padding:10px 0;color:white;display:flex;justify-content:space-between;align-items:center}
+.navbar img{height:50px}
+.nav-link{color:white;text-decoration:none;margin:0 10px;font-weight:500}
+.nav-link.active{font-weight:bold;text-decoration:underline}
+.login-container,.user-card{background:white;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);max-width:600px;margin:30px auto}
+.summary{display:flex;flex-wrap:wrap;justify-content:space-around;margin-bottom:20px}
+.summary div{flex:1 1 30%;text-align:center;padding:15px;margin:5px;background:#fff3e0;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.table{width:100%;margin-bottom:1rem;color:#212529;border-collapse:collapse}
+.table th,.table td{padding:.75rem;vertical-align:top;border:1px solid #dee2e6}
+.table th{text-align:left}
+.table-responsive{overflow-x:auto}
+.dropdown-select{padding:.375rem .75rem;font-size:1rem;border-radius:.25rem;border:1px solid #ced4da;width:100%;margin-bottom:1rem}
+footer{background:linear-gradient(to right,#ff512f,#f09819);color:white;text-align:center;padding:15px;margin-top:auto}
+.text-center{text-align:center}
+.btn{padding:.375rem .75rem;border-radius:.25rem;border:none;cursor:pointer}
+.btn-warning{background:#ffc107;color:#212529}
+.btn-danger{background:#dc3545;color:#fff}
+.btn-light{background:#f8f9fa;color:#212529}
+.w-100{width:100%}
+.mb-3{margin-bottom:1rem}
+.mt-3{margin-top:1rem}
+.d-none{display:none}
 </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-<div class="container">
-<a class="navbar-brand" href="index.html"><img src="images/shriapp.png" alt="SHRI Logo"></a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
-<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-<ul class="navbar-nav">
-<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-<li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-<li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
-<li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
-</ul>
-</div>
-</div>
-</nav>
-
-<main>
-<!-- Login Form -->
-<div class="login-container" id="loginBox">
-  <h2>My Account Login</h2>
-  <form id="loginForm">
-    <div class="mb-3"><label for="username" class="form-label">Username</label><input type="text" id="username" class="form-control" required></div>
-    <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" id="password" class="form-control" required></div>
-    <button type="submit" class="btn btn-warning w-100">Login</button>
-  </form>
+<div class="navbar">
+  <div><img src="images/shriapp.png" alt="SHRI Logo"></div>
+  <div>
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="services.html">Services</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+    <a class="nav-link" href="privacy.html">Privacy Policy</a>
+    <a class="nav-link active" href="myaccount.html">My Account</a>
+  </div>
 </div>
 
-<!-- User Dashboard -->
-<div class="user-card d-none" id="userCard">
-  <h3>Welcome, <span id="displayUsername"></span></h3>
+<main class="container">
 
-  <!-- Top Summary -->
-  <div class="row text-center mb-4">
-    <div class="col"><strong>Pali</strong><div id="pali">0</div></div>
-    <div class="col"><strong>Upad</strong><div id="upad">0</div></div>
-    <div class="col"><strong>Balance</strong><div id="balance">0</div></div>
+  <!-- Login -->
+  <div class="login-container" id="loginBox">
+    <h2 class="text-center" style="color:#ff512f;">My Account</h2>
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-warning w-100">Login</button>
+    </form>
   </div>
 
-  <!-- Employee Dropdown for Senior -->
-  <div class="mb-3 d-none" id="employeeSelectDiv">
-    <label for="employeeSelect" class="form-label">Select Employee</label>
-    <select id="employeeSelect" class="form-select"></select>
+  <!-- User Card -->
+  <div class="user-card d-none" id="userCard">
+
+    <!-- Senior Employee Dropdown -->
+    <select class="dropdown-select d-none" id="employeeSelect"></select>
+
+    <!-- Summary -->
+    <div class="summary">
+      <div><strong>Pali</strong><br><span id="paliCount">0</span></div>
+      <div><strong>Upad</strong><br><span id="upadTotal">0</span></div>
+      <div><strong>Balance</strong><br><span id="balanceTotal">0</span></div>
+    </div>
+
+    <!-- Detail Table -->
+    <div class="table-responsive">
+      <table class="table" id="detailTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Customer</th>
+            <th>Detail</th>
+            <th>Payment</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Salary Slip Button -->
+    <button class="btn btn-light w-100 d-none" id="downloadPDF">Download Salary Slip</button>
+
   </div>
 
-  <!-- Detail Table -->
-  <table class="table table-striped" id="detailTable">
-    <thead>
-      <tr><th>Date</th><th>Shift</th><th>Customer</th><th>Detail</th><th>Amount</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <button class="btn btn-success w-100 d-none" id="salarySlipBtn">Download Salary Slip</button>
-  <button class="btn btn-danger w-100 mt-2" id="logoutBtn">Logout</button>
-</div>
 </main>
 
 <footer>
-<p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  <p>&copy; 2025 SHRI. All Rights Reserved.</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const registrationCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1862107016&single=true&output=csv";
-const dailyCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1370536424&single=true&output=csv";
+// CSV Links
+const registrationCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1862107016&single=true&output=csv";
+const dailyInputCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1370536424&single=true&output=csv";
+
+const loginBox = document.getElementById("loginBox");
+const userCard = document.getElementById("userCard");
+const employeeSelect = document.getElementById("employeeSelect");
+const downloadPDF = document.getElementById("downloadPDF");
 
 let registrationData=[], dailyData=[];
-let currentUser=null;
 
-function fetchCsv(url){ return fetch(url).then(r=>r.text()); }
+function parseCSV(data){
+  const lines = data.trim().split("\n");
+  const headers = lines[0].split(",").map(h=>h.trim());
+  return lines.slice(1).map(line=>{
+    const cols = line.split(",").map(c=>c.trim());
+    let obj={};
+    headers.forEach((h,i)=>obj[h]=cols[i]||"");
+    return obj;
+  });
+}
 
-function parseCsv(data){ return data.trim().split("\n").map(r=>r.split(",")); }
+Promise.all([fetch(registrationCSV).then(r=>r.text()), fetch(dailyInputCSV).then(r=>r.text())])
+.then(([regTxt,dailyTxt])=>{
+  registrationData=parseCSV(regTxt);
+  dailyData=parseCSV(dailyTxt);
+});
 
-function calculatePali(row){ return ['Morning','Evening','Night'].reduce((sum,col,i)=>{ return sum + (row[i+1] && !isNaN(row[i+1])?parseInt(row[i+1]):0); },0); }
+// Login
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const user = registrationData.find(u=>u.employee===username && u.Password===password);
+  if(!user){alert("Username or password incorrect!"); return;}
 
-function updateDashboard(user){
-  const username=user[0], role=user[13], rate=parseFloat(user[3]);
+  loginBox.classList.add("d-none");
+  userCard.classList.remove("d-none");
+
+  const role = user.Role.toLowerCase();
+  if(role==="senior"){
+    employeeSelect.classList.remove("d-none");
+    downloadPDF.classList.remove("d-none");
+    employeeSelect.innerHTML = `<option value="${user.employee}">${user.employee}</option>`+
+      registrationData.filter(u=>u.Role.toLowerCase()==="employee").map(u=>`<option value="${u.employee}">${u.employee}</option>`).join("");
+    employeeSelect.addEventListener("change", ()=>renderDashboard(employeeSelect.value));
+    renderDashboard(user.employee);
+  }else if(role==="employee"){
+    renderDashboard(user.employee);
+  }else if(role==="customer"){
+    renderCustomer(user.customer);
+  }
+});
+
+function renderDashboard(username){
+  const user = registrationData.find(u=>u.employee===username);
+  const daily = dailyData.filter(d=>d.Name===username);
+
+  let paliCount=0;
+  daily.forEach(d=>{paliCount+=(d.Morning?1:0)+(d.Evening?1:0)+(d.Night?1:0)});
+  const upadTotal=daily.reduce((sum,d)=>sum+(parseFloat(d.Payment)||0),0);
+  const balanceTotal=(paliCount*parseFloat(user.rate||0)-upadTotal)+(parseFloat(user['e-refferal'])||0)+(parseFloat(user['c-refferal'])||0);
+
+  document.getElementById("paliCount").innerText=paliCount;
+  document.getElementById("upadTotal").innerText=upadTotal.toFixed(2);
+  document.getElementById("balanceTotal").innerText=balanceTotal.toFixed(2);
+
   const tbody=document.querySelector("#detailTable tbody");
   tbody.innerHTML="";
-  let pali=0, upad=0, balance=0;
-  let filtered=dailyData.filter(r=>r[4]===username);
-  filtered.forEach(r=>{
-    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s+" ":"").join("").trim();
-    pali+=calculatePali(r);
-    upad+=r[7]?parseFloat(r[7]):0;
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${r[0]}</td><td>${shifts}</td><td>${r[6]}</td><td>${r[5]}</td><td>${r[7]||0}</td>`;
-    tbody.appendChild(tr);
+  daily.forEach(d=>{
+    const shifts=[];
+    if(d.Morning) shifts.push("Morning");
+    if(d.Evening) shifts.push("Evening");
+    if(d.Night) shifts.push("Night");
+    tbody.innerHTML+=`<tr>
+      <td>${d.Date}</td>
+      <td>${shifts.join(", ")}</td>
+      <td>${d.Customer}</td>
+      <td>${d.Detail}</td>
+      <td>${d.Payment}</td>
+    </tr>`;
   });
-  balance=pali*rate-upad;
-  document.getElementById("pali").innerText=pali;
-  document.getElementById("upad").innerText=upad;
-  document.getElementById("balance").innerText=balance;
-
-  // Senior role handling
-  if(role.toLowerCase()=="senior"){
-    document.getElementById("employeeSelectDiv").classList.remove("d-none");
-    const select=document.getElementById("employeeSelect");
-    select.innerHTML='<option value="">Select Employee</option>';
-    registrationData.forEach(r=>{ if(r[13].toLowerCase()=="employee") select.innerHTML+=`<option value="${r[0]}">${r[0]}</option>`; });
-    select.addEventListener("change",()=>{ 
-      const emp=registrationData.find(u=>u[0]===select.value);
-      if(emp) updateDashboard(emp);
-    });
-    document.getElementById("salarySlipBtn").classList.remove("d-none");
-    document.getElementById("salarySlipBtn").onclick=()=>generatePdf(filtered, username, rate, upad, balance, pali);
-  }else{ document.getElementById("employeeSelectDiv").classList.add("d-none"); document.getElementById("salarySlipBtn").classList.add("d-none"); }
 }
 
-function generatePdf(data, username, rate, upad, balance, pali){
+// Customer view
+function renderCustomer(username){
+  const user = registrationData.find(u=>u.customer===username);
+  const daily = dailyData.filter(d=>d.Customer===username);
+  let totalPali=0;
+  daily.forEach(d=>{totalPali+=(d.Morning?1:0)+(d.Evening?1:0)+(d.Night?1:0)});
+  const advance=daily.reduce((sum,d)=>sum+(parseFloat(d.Payment)||0),0);
+  const rate=parseFloat(user.rate||0);
+  const bill=totalPali*rate-advance;
+
+  document.getElementById("paliCount").innerText=totalPali;
+  document.getElementById("upadTotal").innerText=advance.toFixed(2);
+  document.getElementById("balanceTotal").innerText=bill.toFixed(2);
+
+  const tbody=document.querySelector("#detailTable tbody");
+  tbody.innerHTML="";
+  daily.forEach(d=>{
+    const shifts=[];
+    if(d.Morning) shifts.push("Morning");
+    if(d.Evening) shifts.push("Evening");
+    if(d.Night) shifts.push("Night");
+    tbody.innerHTML+=`<tr>
+      <td>${d.Date}</td>
+      <td>${shifts.join(", ")}</td>
+      <td>${d.Name}</td>
+      <td>${d.Detail}</td>
+      <td>${d.Payment}</td>
+    </tr>`;
+  });
+}
+
+// Salary Slip PDF
+downloadPDF.addEventListener("click", ()=>{
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  doc.setFontSize(16); doc.text(`Salary Slip: ${username}`, 20,20);
-  doc.setFontSize(12); doc.text(`Pali (Shifts): ${pali}`, 20,30);
-  doc.text(`Rate: ${rate}`, 20,36);
-  doc.text(`Upad: ${upad}`, 20,42);
-  doc.text(`Balance: ${balance}`, 20,48);
-  doc.text("Details:",20,58);
-  let y=64;
-  data.forEach(r=>{
-    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s:"").filter(s=>s).join(" ");
-    doc.text(`${r[0]} | ${shifts} | ${r[6]} | ${r[5]} | ${r[7]||0}`,20,y); y+=6;
+  doc.setFontSize(14);
+  doc.text(`Salary Slip - ${employeeSelect.value}`, 10, 10);
+  doc.text(`Pali: ${document.getElementById("paliCount").innerText}`,10,20);
+  doc.text(`Upad: ${document.getElementById("upadTotal").innerText}`,10,30);
+  doc.text(`Balance: ${document.getElementById("balanceTotal").innerText}`,10,40);
+  let y=50;
+  const rows=document.querySelectorAll("#detailTable tbody tr");
+  rows.forEach(tr=>{
+    const cols=Array.from(tr.children).map(td=>td.innerText);
+    doc.text(cols.join(" | "),10,y);
+    y+=10;
   });
-  doc.save(`Salary_Slip_${username}.pdf`);
-}
-
-document.getElementById("loginForm").addEventListener("submit",function(e){
-  e.preventDefault();
-  const username=document.getElementById("username").value.trim();
-  const password=document.getElementById("password").value.trim();
-  const user=registrationData.find(r=>r[0]===username && r[1]===password);
-  if(user){ currentUser=user;
-    document.getElementById("loginBox").classList.add("d-none");
-    document.getElementById("userCard").classList.remove("d-none");
-    document.getElementById("displayUsername").innerText=username;
-    updateDashboard(user);
-  }else{ alert("Invalid username or password!"); }
-});
-
-document.getElementById("logoutBtn").addEventListener("click",()=>{
-  currentUser=null;
-  document.getElementById("loginBox").classList.remove("d-none");
-  document.getElementById("userCard").classList.add("d-none");
-  document.getElementById("loginForm").reset();
-});
-
-Promise.all([fetchCsv(registrationCsv), fetchCsv(dailyCsv)]).then(([reg,daily])=>{
-  registrationData=parseCsv(reg);
-  dailyData=parseCsv(daily);
+  doc.save(`${employeeSelect.value}-salary.pdf`);
 });
 </script>
+
 </body>
 </html>
