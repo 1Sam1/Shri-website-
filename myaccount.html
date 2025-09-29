@@ -1,83 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Account — SHRI</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #fff8f0;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SHRI — My Account</title>
 
-    /* Navbar */
-    .navbar {
-      background: linear-gradient(to right, #ff512f, #f09819);
-    }
-    .navbar-brand img {
-      height: 40px;
-    }
-    .navbar-nav .nav-link {
-      color: white !important;
-      font-weight: 500;
-    }
+<!-- Bootstrap for responsive layout -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    /* Login Box */
-    .login-container {
-      max-width: 400px;
-      margin: 80px auto;
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-      padding: 25px;
-    }
-    .login-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: bold;
-      color: #ff512f;
-    }
-    .btn-theme {
-      background: linear-gradient(to right, #ff512f, #f09819);
-      border: none;
-      color: #fff;
-      font-weight: 500;
-    }
-    .btn-theme:hover {
-      opacity: 0.9;
-    }
+<!-- Rising-sun theme + layout -->
+<style>
+  :root {
+    --sun-1: #ff512f;
+    --sun-2: #f09819;
+    --accent: #e65100;
+    --bg: #fff8f0;
+  }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    /* Summary Cards */
-    .summary-card {
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 15px;
-      text-align: center;
-      margin-bottom: 15px;
-      background: #fff;
-    }
-    .summary-card h5 {
-      color: #ff512f;
-      font-weight: bold;
-    }
+  /* Navbar (rising sun) */
+  .navbar {
+    background: linear-gradient(90deg, var(--sun-1), var(--sun-2));
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .navbar .navbar-brand img { height: 44px; }
 
-    /* Footer */
-    footer {
-      background: linear-gradient(to right, #ff512f, #f09819);
-      color: white;
-      text-align: center;
-      padding: 12px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
+  /* Login card */
+  .login-card {
+    max-width: 420px;
+    margin: 80px auto 30px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 26px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .login-card h2 { color: var(--sun-1); text-align:center; margin-bottom:12px; }
 
-    /* Responsive Table */
-    .table-responsive {
-      margin-top: 20px;
-    }
-  </style>
+  /* Account container */
+  .account-wrap {
+    max-width: 1100px;
+    margin: 28px auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .summary-card {
+    background: linear-gradient(180deg, #fff4ec, #fff0e0);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(230,150,80,0.08);
+  }
+  .summary-card h5 { color: var(--accent); margin-bottom:6px; }
+  .summary-card p { font-size: 1.2rem; font-weight:600; margin:0; }
+
+  /* Table */
+  table thead th {
+    background: #fff3e6;
+    color: var(--accent);
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  table tbody tr td { vertical-align: middle; }
+
+  /* footer */
+  footer {
+    background: linear-gradient(90deg, var(--sun-1), var(--sun-2));
+    color: white;
+    text-align:center;
+    padding: 12px 8px;
+    margin-top: auto;
+  }
+
+  /* small screens */
+  @media (max-width: 767px) {
+    .summary-grid { grid-template-columns: 1fr; }
+    .login-card { margin: 40px 16px; }
+    .account-wrap { margin: 16px; padding: 14px; }
+  }
+</style>
 </head>
 <body>
 
@@ -85,163 +100,602 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <img src="images/shriapp.png" alt="SHRI Logo">
+      <img src="images/shriapp.png" alt="SHRI">
     </a>
-    <div class="collapse navbar-collapse justify-content-end">
-      <ul class="navbar-nav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navMenu" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
         <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy</a></li>
+        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
         <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Login Form -->
-<div class="container" id="loginSection">
-  <div class="login-container">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" class="form-control" required>
+<!-- LOGIN CARD -->
+<div class="login-card" id="loginCard">
+  <h2>My Account</h2>
+  <form id="loginForm" class="mb-0">
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input id="loginUsername" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input id="loginPassword" type="password" class="form-control" required />
+    </div>
+    <div class="d-grid">
+      <button class="btn btn-warning" type="submit" id="loginBtn" style="background: linear-gradient(90deg,var(--sun-1),var(--sun-2)); border: none;">Login</button>
+    </div>
+    <p class="small text-center mt-2 text-muted">Employees, Seniors & Customers can use same form to login.</p>
+  </form>
+</div>
+
+<!-- ACCOUNT WRAP -->
+<div id="accountWrap" class="account-wrap" style="display:none;">
+  <div class="d-flex align-items-start mb-2">
+    <div class="flex-grow-1">
+      <h3 id="welcomeTitle">Welcome</h3>
+      <div class="text-muted" id="roleLabel"></div>
+    </div>
+    <div class="ms-3">
+      <button id="logoutBtn" class="btn btn-outline-dark">Logout</button>
+    </div>
+  </div>
+
+  <!-- For seniors: employee selector -->
+  <div id="seniorControls" class="mb-3" style="display:none;">
+    <label class="form-label">View employee</label>
+    <select id="seniorEmployeeSelect" class="form-select"></select>
+    <div class="mt-2">
+      <button id="generateSalaryBtn" class="btn btn-sm btn-secondary">Generate Salary Slip (PDF)</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-grid mb-3">
+    <div class="summary-card">
+      <h5>Pali (Shifts)</h5>
+      <p id="summaryPali">0</p>
+    </div>
+    <div class="summary-card">
+      <h5>Upad (Advance)</h5>
+      <p id="summaryUpad">0</p>
+    </div>
+    <div class="summary-card">
+      <h5>Balance</h5>
+      <p id="summaryBalance">0</p>
+    </div>
+  </div>
+
+  <!-- EMPLOYEE DETAILS TABLE -->
+  <div id="employeeDetailsWrap">
+    <h5>Work Details</h5>
+    <div class="table-responsive">
+      <table class="table table-striped" id="employeeDetailsTable">
+        <thead>
+          <tr>
+            <th>Date</th><th>Shift</th><th>Customer</th><th>Detail (Venue)</th><th>Amount</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CUSTOMER BILL -->
+  <div id="customerBillWrap" style="display:none;">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5>Customer Bill</h5>
+      <div>
+        <button id="downloadBillBtn" class="btn btn-sm btn-secondary">Download Bill (PDF)</button>
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-theme w-100">Login</button>
-    </form>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered" id="customerBillTable">
+        <thead>
+          <tr>
+            <th>Date</th><th>Venue</th><th>Morning</th><th>Evening</th><th>Night</th><th>Total Shifts</th><th>Rate</th><th>Amount</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr>
+            <th colspan="7" class="text-end">Grand Total</th>
+            <th id="customerGrandTotal">0</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 </div>
 
-<!-- Account Section -->
-<div class="container mt-4 d-none" id="accountSection">
-  <div class="row">
-    <div class="col-md-4 col-12">
-      <div class="summary-card">
-        <h5>Pali (Shifts)</h5>
-        <p id="totalShifts">0</p>
-      </div>
-    </div>
-    <div class="col-md-4 col-12">
-      <div class="summary-card">
-        <h5>Upad</h5>
-        <p id="totalUpad">₹0</p>
-      </div>
-    </div>
-    <div class="col-md-4 col-12">
-      <div class="summary-card">
-        <h5>Balance</h5>
-        <p id="balance">₹0</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Details Table -->
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead class="table-warning">
-        <tr>
-          <th>Date</th>
-          <th>Shift</th>
-          <th>Customer</th>
-          <th>Detail</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody id="detailsTable"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Footer -->
 <footer>
-  <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  &copy; 2025 SHRI — All rights reserved.
 </footer>
 
+<!-- Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-const registrationCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=0&single=true&output=csv";
-const dailyInputCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTiY6KxBt8D56NqbxolsprymBXiJcMeUuvQ7y5J1NKsevUqPXQXJFBJHeJ1tDqJ2_gWYM7hc23Mgy_k/pub?gid=123456&single=true&output=csv"; // replace gid with dailyinput tab gid
+/*
+  Full myaccount.js logic:
+  - Loads both CSVs via PapaParse (registrationCSV, dailyInputCSV)
+  - Normalizes headers and maps appropriate fields
+  - Login checks registration dataset for matching username/password
+  - Role handling:
+      - Employee: show only own data
+      - Senior: show own data + dropdown to view any employee and generate salary slip for selected
+      - Customer: grouped bill view (group by Date + Detail/Venue), counts shifts and multiplies by customer rate, generates PDF
+  NOTES:
+  - Make sure your registration CSV has either 'Role' column or customers rows (customer username in customer field).
+  - Script tolerates common header name variants.
+*/
 
-let users = [];
-let dailyData = [];
+const registrationCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSbEW2FWMXnxb8SKLMv0rxL3f0ZI8NntDpEhh9um5YAoZ7Nzki3NGFbReLqaV8Fkw/pub?gid=1862107016&single=true&output=csv";
+const dailyInputCSV   = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSbEW2FWMXnxb8SKLMv0rxL3f0ZI8NntDpEhh9um5YAoZ7Nzki3NGFbReLqaV8Fkw/pub?gid=1370536424&single=true&output=csv";
 
-function loadData() {
-  Papa.parse(registrationCSV, {
-    download: true,
-    header: true,
-    complete: function(results) {
-      users = results.data;
-    }
-  });
-  Papa.parse(dailyInputCSV, {
-    download: true,
-    header: true,
-    complete: function(results) {
-      dailyData = results.data;
-    }
+let regRows = [];   // array of objects from registration
+let dailyRows = []; // array of objects from dailyinput
+
+// mapping helper: given parsed header keys, pick the column name that matches any of possible names
+function pickField(obj, candidates) {
+  for (let c of candidates) {
+    if (c in obj && obj[c] !== undefined) return c;
+    // try case-insensitive match
+    const found = Object.keys(obj).find(k => k.toLowerCase() === c.toLowerCase());
+    if (found) return found;
+  }
+  return null;
+}
+
+// Load CSVs
+function loadCSVs() {
+  return new Promise((res, rej) => {
+    Papa.parse(dailyInputCSV, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete(results1) {
+        dailyRows = results1.data.map(r => {
+          // trim fields
+          Object.keys(r).forEach(k => r[k.trim()] = (r[k]||"").toString().trim());
+          return r;
+        });
+        Papa.parse(registrationCSV, {
+          download: true,
+          header: true,
+          skipEmptyLines: true,
+          complete(results2) {
+            regRows = results2.data.map(r => {
+              Object.keys(r).forEach(k => r[k.trim()] = (r[k]||"").toString().trim());
+              return r;
+            });
+            res();
+          },
+          error: rej
+        });
+      },
+      error: rej
+    });
   });
 }
-loadData();
 
-// Handle login
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
+// normalize a registration record to convenient fields
+function normalizeReg(r) {
+  // possible username fields: 'Username','employee','Employee','User','user'
+  const usernameField = pickField(r, ['Username','employee','Employee','user','User','username']);
+  const passwordField = pickField(r, ['Password','password','PASS','Pass']);
+  const roleField     = pickField(r, ['Role','role']);
+  const nameField     = pickField(r, ['Name','name','Employee Name','employeeName']);
+  const rateField     = pickField(r, ['Rate','rate','RATE']);
+  const customerField = pickField(r, ['customer','Customer','Customer Username','customer_username']);
 
-  const user = users.find(u => u.Username === username && u.Password === password);
+  const out = {
+    source: r,
+    username: usernameField ? r[usernameField] : (customerField ? r[customerField] : ""),
+    password: passwordField ? r[passwordField] : (usernameField ? r[usernameField] : ""),
+    role: roleField ? (r[roleField] || "").toLowerCase() : null,
+    name: nameField ? r[nameField] : (usernameField ? r[usernameField] : ""),
+    rate: rateField ? parseFloat((r[rateField]||"").replace(/,/g,'')) || 0 : 0,
+    raw: r
+  };
+  // If role missing, infer: if there's a customer field filled and username empty -> customer
+  if (!out.role) {
+    // If row contains explicit 'customer' value (a different column), treat as customer
+    if (customerField && r[customerField]) out.role = 'customer';
+    else out.role = 'employee'; // default fallback
+  }
+  // normalize to fixed role strings
+  if (out.role) {
+    const rl = out.role.toLowerCase();
+    if (rl.includes('senior')) out.role = 'senior';
+    else if (rl.includes('cust') || rl.includes('customer')) out.role = 'customer';
+    else out.role = 'employee';
+  }
+  return out;
+}
+
+// Normalize daily row fields (use common headers)
+function normalizeDaily(r) {
+  const dateField = pickField(r, ['Date','date','DATE']);
+  const employeeField = pickField(r, ['Employee Username','Employee','employee','Name','name','username']);
+  const morningField = pickField(r, ['Morning','morning','MORNING']);
+  const eveningField = pickField(r, ['Evening','evening','EVENING']);
+  const nightField = pickField(r, ['Night','night','NIGHT']);
+  const customerField = pickField(r, ['Customer','customer','CUSTOMER']);
+  const detailField = pickField(r, ['Detail','detail','Venue','Notes','details']);
+  const amountField = pickField(r, ['Amount','amount','AMOUNT','Advance']);
+
+  return {
+    raw: r,
+    Date: dateField ? r[dateField] : "",
+    EmployeeUsername: employeeField ? r[employeeField] : "",
+    Morning: morningField ? r[morningField] : "",
+    Evening: eveningField ? r[eveningField] : "",
+    Night: nightField ? r[nightField] : "",
+    Customer: customerField ? r[customerField] : "",
+    Detail: detailField ? r[detailField] : "",
+    Amount: amountField ? (r[amountField] || "") : ""
+  };
+}
+
+// Utility: parse number tolerantly
+function parseNum(str) {
+  if (!str && str !== 0) return 0;
+  const n = parseFloat(String(str).replace(/,/g,'').replace(/[^\d.-]/g,''));
+  return isNaN(n) ? 0 : n;
+}
+
+// Application state
+let REG = [];   // normalized regUsers
+let DAILY = []; // normalized daily rows
+let currentUser = null; // normalized reg user object
+let currentViewEmployee = null; // username selected (for senior viewing)
+
+// Initialize + attach handlers
+(async function initApp(){
+  try {
+    await loadCSVs();
+    // normalize registration and daily rows
+    REG = regRows.map(normalizeReg);
+    DAILY = dailyRows.map(normalizeDaily);
+
+    // attach UI handlers
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+    document.getElementById('seniorEmployeeSelect').addEventListener('change', (e)=>{
+      currentViewEmployee = e.target.value;
+      renderEmployeeView(currentViewEmployee);
+    });
+    document.getElementById('generateSalaryBtn').addEventListener('click', ()=> {
+      if (currentViewEmployee) generateSalaryPDF(currentViewEmployee);
+      else if (currentUser) generateSalaryPDF(currentUser.username);
+    });
+    document.getElementById('downloadBillBtn').addEventListener('click', ()=> {
+      if (currentUser) generateCustomerBillPDF(currentUser.username);
+    });
+    console.log('CSV loaded. Users:', REG.length, 'Daily rows:', DAILY.length);
+  } catch (err) {
+    console.error('Error loading CSVs', err);
+    alert('Failed to load data from CSV. Check console for details.');
+  }
+})();
+
+function findRegByUsernameAndPassword(username, password) {
+  // match against reg normalized username & password (tolerant)
+  return REG.find(u => {
+    if (!u) return false;
+    if (!u.username) return false;
+    const uname = String(u.username).trim();
+    const pass = String(u.password || '').trim();
+    return uname === username && pass === password;
+  });
+}
+
+function handleLogin(evt) {
+  evt.preventDefault();
+  const uname = document.getElementById('loginUsername').value.trim();
+  const pass  = document.getElementById('loginPassword').value.trim();
+  const user = findRegByUsernameAndPassword(uname, pass);
   if (!user) {
-    alert("Incorrect Username or Password");
+    alert('Username or password incorrect. Make sure you are using the credentials from Registration tab.');
     return;
   }
+  currentUser = user;
+  showAccountArea();
+  if (user.role === 'employee') {
+    currentViewEmployee = user.username;
+    renderEmployeeView(user.username);
+    showEmployeeOnlyUI();
+  } else if (user.role === 'senior') {
+    // senior: fill dropdown with employees
+    showSeniorUI();
+    populateSeniorDropdown();
+    // default select senior's own username if present or first employee
+    document.getElementById('seniorEmployeeSelect').value = user.username || document.getElementById('seniorEmployeeSelect').options[0].value;
+    currentViewEmployee = document.getElementById('seniorEmployeeSelect').value;
+    renderEmployeeView(currentViewEmployee);
+  } else if (user.role === 'customer') {
+    showCustomerUI();
+    renderCustomerBill(user.username);
+  } else {
+    // fallback treat as employee
+    currentViewEmployee = user.username;
+    renderEmployeeView(user.username);
+    showEmployeeOnlyUI();
+  }
+}
 
-  document.getElementById("loginSection").classList.add("d-none");
-  document.getElementById("accountSection").classList.remove("d-none");
+function handleLogout() {
+  currentUser = null;
+  currentViewEmployee = null;
+  document.getElementById('loginCard').style.display = '';
+  document.getElementById('accountWrap').style.display = 'none';
+  // hide special UI
+  document.getElementById('seniorControls').style.display = 'none';
+  document.getElementById('customerBillWrap').style.display = 'none';
+  document.getElementById('employeeDetailsWrap').style.display = '';
+  // clear fields
+  document.getElementById('loginForm').reset();
+  document.getElementById('summaryPali').innerText = '0';
+  document.getElementById('summaryUpad').innerText = '0';
+  document.getElementById('summaryBalance').innerText = '0';
+  document.querySelector('#employeeDetailsTable tbody').innerHTML = '';
+  document.querySelector('#customerBillTable tbody').innerHTML = '';
+  document.getElementById('customerGrandTotal').innerText = '0';
+}
 
-  loadAccount(user);
-});
+function showAccountArea() {
+  document.getElementById('loginCard').style.display = 'none';
+  document.getElementById('accountWrap').style.display = '';
+  document.getElementById('welcomeTitle').innerText = `Welcome, ${currentUser.name || currentUser.username}`;
+  document.getElementById('roleLabel').innerText = (currentUser.role || 'employee').toUpperCase();
+}
 
-// Build account
-function loadAccount(user) {
-  let shifts = 0, upad = 0, balance = 0;
-  let rate = parseFloat(user.Rate || 0);
-  const tableBody = document.getElementById("detailsTable");
-  tableBody.innerHTML = "";
+function showEmployeeOnlyUI() {
+  document.getElementById('seniorControls').style.display = 'none';
+  document.getElementById('customerBillWrap').style.display = 'none';
+  document.getElementById('employeeDetailsWrap').style.display = '';
+}
 
-  dailyData.filter(row => row["Employee Username"] === user.Username).forEach(row => {
-    let shiftCount = 0;
-    if (row.Morning) shiftCount++;
-    if (row.Evening) shiftCount++;
-    if (row.Night) shiftCount++;
-    shifts += shiftCount;
+function showSeniorUI() {
+  document.getElementById('seniorControls').style.display = '';
+  document.getElementById('customerBillWrap').style.display = 'none';
+  document.getElementById('employeeDetailsWrap').style.display = '';
+}
 
-    let amt = parseFloat(row.Amount || 0);
-    if (!isNaN(amt)) {
-      upad += amt;
+function showCustomerUI() {
+  document.getElementById('seniorControls').style.display = 'none';
+  document.getElementById('employeeDetailsWrap').style.display = 'none';
+  document.getElementById('customerBillWrap').style.display = '';
+}
+
+/* ---------- EMPLOYEE VIEW ---------- */
+function renderEmployeeView(employeeUsername) {
+  // find reg user to get rate
+  const regUser = REG.find(r => r.username === employeeUsername) || REG.find(r => r.name === employeeUsername) || currentUser;
+  const rate = regUser ? regUser.rate : 0;
+
+  // Filter daily rows for this employee
+  const rows = DAILY.filter(r => (r.EmployeeUsername || '').toString().trim() === employeeUsername);
+
+  // Some rows may use the employee's name instead of username; also check name match
+  // (optional) - but we'll keep primary match on EmployeeUsername
+
+  // Calculate summary
+  let totalPali = 0;
+  let totalUpad = 0; // sum of Amount where Amount present
+  const tbody = document.querySelector('#employeeDetailsTable tbody');
+  tbody.innerHTML = '';
+
+  rows.forEach(r => {
+    const morning = r.Morning && r.Morning.trim() !== '' ? 1 : 0;
+    const evening = r.Evening && r.Evening.trim() !== '' ? 1 : 0;
+    const night   = r.Night && r.Night.trim() !== '' ? 1 : 0;
+    const shifts = morning + evening + night;
+    totalPali += shifts;
+    const amt = parseNum(r.Amount);
+    totalUpad += amt;
+
+    if (shifts > 0 || amt > 0) {
+      // produce one or multiple rows per shift (expand shifts)
+      // For clarity we show combined shifts per date as a single row with shift names
+      const shiftNames = [];
+      if (morning) shiftNames.push('Morning');
+      if (evening) shiftNames.push('Evening');
+      if (night) shiftNames.push('Night');
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r.Date}</td>
+                      <td>${shiftNames.join(', ')}</td>
+                      <td>${r.Customer}</td>
+                      <td>${(r.Detail || '')}</td>
+                      <td>${amt ? amt : '-'}</td>`;
+      tbody.appendChild(tr);
     }
-
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${row.Date}</td>
-      <td>${row.Morning ? "Morning " : ""}${row.Evening ? "Evening " : ""}${row.Night ? "Night" : ""}</td>
-      <td>${row.Customer}</td>
-      <td>${row.Detail}</td>
-      <td>₹${amt || 0}</td>
-    `;
-    tableBody.appendChild(tr);
   });
 
-  balance = (shifts * rate) - upad;
-  document.getElementById("totalShifts").innerText = shifts;
-  document.getElementById("totalUpad").innerText = "₹" + upad;
-  document.getElementById("balance").innerText = "₹" + balance;
+  const balance = totalPali * rate - totalUpad;
+
+  document.getElementById('summaryPali').innerText = totalPali;
+  document.getElementById('summaryUpad').innerText = totalUpad.toFixed(2);
+  document.getElementById('summaryBalance').innerText = balance.toFixed(2);
 }
+
+/* ---------- POPULATE SENIOR DROPDOWN ---------- */
+function populateSeniorDropdown() {
+  const sel = document.getElementById('seniorEmployeeSelect');
+  sel.innerHTML = '';
+  // list employees from registration (role=employee)
+  REG.filter(r => r.role === 'employee').forEach(emp => {
+    const opt = document.createElement('option');
+    opt.value = emp.username;
+    opt.text = emp.name || emp.username;
+    sel.appendChild(opt);
+  });
+}
+
+/* ---------- CUSTOMER BILL VIEW ---------- */
+function renderCustomerBill(customerUsername) {
+  // Find customer registration to get rate
+  const custReg = REG.find(r => r.username === customerUsername || r.name === customerUsername);
+  const customerRate = custReg ? custReg.rate : 0;
+
+  // Filter DAILY where Customer matches customerUsername (or customer name)
+  const rows = DAILY.filter(r => {
+    const c = (r.Customer || '').toString().trim();
+    return c === customerUsername || c === (custReg ? custReg.name : '');
+  });
+
+  // Group by Date + Detail (venue)
+  const groups = {};
+  rows.forEach(r => {
+    const keyDate = r.Date || 'Unknown';
+    const keyVenue = (r.Detail || 'Unknown').trim();
+    const key = `${keyDate}||${keyVenue}`;
+    if (!groups[key]) groups[key] = { Date: keyDate, Venue: keyVenue, Morning:0, Evening:0, Night:0, totalShifts:0, amount:0 };
+    groups[key].Morning += (r.Morning && r.Morning.trim() !== '') ? 1 : 0;
+    groups[key].Evening += (r.Evening && r.Evening.trim() !== '') ? 1 : 0;
+    groups[key].Night   += (r.Night && r.Night.trim() !== '') ? 1 : 0;
+    // Amount column in daily input may be payments; but for billing we compute using rate*shifts
+  });
+
+  const tbody = document.querySelector('#customerBillTable tbody');
+  tbody.innerHTML = '';
+  let grandTotal = 0;
+  Object.values(groups).forEach(g => {
+    g.totalShifts = (g.Morning + g.Evening + g.Night);
+    g.amount = g.totalShifts * customerRate;
+    grandTotal += g.amount;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${g.Date}</td>
+                    <td>${g.Venue}</td>
+                    <td>${g.Morning}</td>
+                    <td>${g.Evening}</td>
+                    <td>${g.Night}</td>
+                    <td>${g.totalShifts}</td>
+                    <td>${customerRate}</td>
+                    <td>${g.amount.toFixed(2)}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('customerGrandTotal').innerText = grandTotal.toFixed(2);
+  // set summary fields as well
+  document.getElementById('summaryPali').innerText = Object.values(groups).reduce((s,g)=> s + g.totalShifts, 0);
+  document.getElementById('summaryUpad').innerText = '0.00';
+  document.getElementById('summaryBalance').innerText = grandTotal.toFixed(2);
+}
+
+/* ---------- PDF GENERATION ---------- */
+
+// Salary Slip: for employee username -> produce pdf of totals (pali, upad, rate, balance)
+function generateSalaryPDF(employeeUsername) {
+  const empReg = REG.find(r => r.username === employeeUsername || r.name === employeeUsername);
+  if (!empReg) return alert('Employee record not found in registration.');
+
+  // compute summary for this employee
+  const rows = DAILY.filter(r => r.EmployeeUsername === employeeUsername);
+  let totalPali = 0, totalUpad = 0;
+  rows.forEach(r => {
+    const morning = r.Morning && r.Morning.trim() !== '' ? 1 : 0;
+    const evening = r.Evening && r.Evening.trim() !== '' ? 1 : 0;
+    const night = r.Night && r.Night.trim() !== '' ? 1 : 0;
+    totalPali += (morning + evening + night);
+    totalUpad += parseNum(r.Amount);
+  });
+  const rate = empReg.rate || 0;
+  const balance = totalPali * rate - totalUpad;
+
+  // generate pdf using jsPDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(16);
+  doc.text("Salary Slip", 20, 20);
+  doc.setFontSize(11);
+  doc.text(`Employee: ${empReg.name || empReg.username}`, 20, 36);
+  doc.text(`Username: ${empReg.username}`, 20, 44);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 36);
+
+  // table
+  doc.autoTable({
+    startY: 56,
+    head: [['Total Shifts', 'Rate (per shift)', 'Total Upad', 'Balance']],
+    body: [[ totalPali.toString(), rate.toFixed(2), totalUpad.toFixed(2), balance.toFixed(2) ]]
+  });
+
+  doc.text("Generated by SHRI", 20, doc.lastAutoTable.finalY + 12);
+  doc.save(`${empReg.username}_salary_slip.pdf`);
+}
+
+// Customer bill PDF
+function generateCustomerBillPDF(customerUsername) {
+  const custReg = REG.find(r => r.username === customerUsername || r.name === customerUsername);
+  const customerRate = custReg ? custReg.rate : 0;
+
+  // Build grouped data (same as renderCustomerBill)
+  const rows = DAILY.filter(r => {
+    const c = (r.Customer || '').toString().trim();
+    return c === customerUsername || (custReg && c === custReg.name);
+  });
+
+  const groups = {};
+  rows.forEach(r => {
+    const keyDate = r.Date || 'Unknown';
+    const keyVenue = (r.Detail || 'Unknown').trim();
+    const key = `${keyDate}||${keyVenue}`;
+    if (!groups[key]) groups[key] = { Date: keyDate, Venue: keyVenue, Morning:0, Evening:0, Night:0, totalShifts:0, amount:0 };
+    groups[key].Morning += (r.Morning && r.Morning.trim() !== '') ? 1 : 0;
+    groups[key].Evening += (r.Evening && r.Evening.trim() !== '') ? 1 : 0;
+    groups[key].Night   += (r.Night && r.Night.trim() !== '') ? 1 : 0;
+  });
+
+  const rowsForPDF = [];
+  let grandTotal = 0;
+  Object.values(groups).forEach(g => {
+    g.totalShifts = g.Morning + g.Evening + g.Night;
+    g.amount = g.totalShifts * customerRate;
+    grandTotal += g.amount;
+    rowsForPDF.push([ g.Date, g.Venue, g.Morning, g.Evening, g.Night, g.totalShifts, customerRate.toFixed(2), g.amount.toFixed(2) ]);
+  });
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text("Customer Bill", 20, 20);
+  doc.setFontSize(11);
+  doc.text(`Customer: ${custReg ? (custReg.name || custReg.username) : customerUsername}`, 20, 30);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 30);
+
+  doc.autoTable({
+    startY: 40,
+    head: [['Date','Venue','M','E','N','Total','Rate','Amount']],
+    body: rowsForPDF,
+    foot: [['','','','','','', 'Grand Total', grandTotal.toFixed(2)]]
+  });
+
+  doc.save(`${customerUsername}_bill.pdf`);
+}
+
+/* ---------- Utility: parse number ---------- */
+function parseNum(s) {
+  if (!s && s !== 0) return 0;
+  const n = parseFloat(String(s).replace(/,/g,'').replace(/[^\d.-]/g,''));
+  return isNaN(n) ? 0 : n;
+}
+
 </script>
 </body>
 </html>
