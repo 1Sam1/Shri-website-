@@ -1,184 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SHRI — My Account</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  html, body { margin:0; padding:0; width:100%; font-family: "Segoe UI", Arial, sans-serif; background:#fff8f0; display:flex; flex-direction:column; min-height:100vh; }
-  /* Navbar full width */
-  .navbar { background: linear-gradient(to right, #ff512f, #f09819); position: sticky; top:0; z-index:1000; width:100%; }
-  .navbar-brand img { height:50px; }
-  .navbar-nav .nav-link { color:white !important; margin:0 10px; font-weight:500; }
-  /* Main content */
-  main { flex:1; display:flex; flex-direction:column; justify-content:center; padding:20px; }
-  /* Login & dashboard cards */
-  .login-container, .user-card { max-width:600px; margin:20px auto; padding:30px; background:white; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-  .login-container h2, .user-card h3 { text-align:center; margin-bottom:20px; color:#ff512f; }
-  /* Footer full width */
-  footer { background: linear-gradient(to right, #ff512f, #f09819); color:white; text-align:center; padding:15px; width:100%; margin-top:auto; }
-  table { width:100%; }
-  th, td { text-align:center; }
-  @media(max-width:576px){ .login-container,.user-card{padding:15px;} }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #fff8f0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .navbar {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+  }
+  .navbar-brand img {
+    height: 50px;
+  }
+  .navbar-nav .nav-link {
+    color: white !important;
+    margin: 0 10px;
+    font-weight: 500;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+  }
+  .login-container,
+  .user-card {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .login-container h2,
+  .user-card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ff512f;
+  }
+  footer {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    margin-top: auto;
+  }
+  table {
+    width: 100%;
+  }
+  th,
+  td {
+    text-align: center;
+  }
+  @media (max-width: 576px) {
+    .login-container,
+    .user-card {
+      padding: 15px;
+    }
+  }
 </style>
 </head>
 <body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark w-100">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.html"><img src="images/shriapp.png" alt="SHRI Logo"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
-        <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
-      </ul>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark w-100">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html"
+        ><img src="images/shriapp.png" alt="SHRI Logo"
+      /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="services.html">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="privacy.html">Privacy Policy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="myaccount.html">My Account</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<main>
-<!-- Login Form -->
-<div class="login-container" id="loginBox">
-  <h2>My Account Login</h2>
-  <form id="loginForm">
-    <div class="mb-3"><label for="username" class="form-label">Username</label><input type="text" id="username" class="form-control" required></div>
-    <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" id="password" class="form-control" required></div>
-    <button type="submit" class="btn btn-warning w-100">Login</button>
-  </form>
-</div>
+  <main>
+    <!-- Login Form -->
+    <div class="login-container" id="loginBox">
+      <h2>My Account Login</h2>
+      <form id="loginForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" id="username" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-warning w-100">Login</button>
+      </form>
+    </div>
 
-<!-- User Dashboard -->
-<div class="user-card d-none" id="userCard">
-  <h3>Welcome, <span id="displayUsername"></span></h3>
+    <!-- User Dashboard -->
+    <div class="user-card d-none" id="userCard">
+      <h3>
+        Welcome, <span id="displayUsername"></span>
+      </h3>
 
-  <!-- Top Summary -->
-  <div class="row text-center mb-4">
-    <div class="col"><strong>Pali</strong><div id="pali">0</div></div>
-    <div class="col"><strong>Upad</strong><div id="upad">0</div></div>
-    <div class="col"><strong>Balance</strong><div id="balance">0</div></div>
-  </div>
+      <!-- Top Summary -->
+      <div class="row text-center mb-4">
+        <div class="col">
+          <strong>Pali</strong>
+          <div id="pali">0</div>
+        </div>
+        <div class="col">
+          <strong>Upad</strong>
+          <div id="upad">0</div>
+        </div>
+        <div class="col">
+          <strong>Balance</strong>
+          <div id="balance">0</div>
+        </div>
+      </div>
 
-  <!-- Employee Dropdown for Senior -->
-  <div class="mb-3 d-none" id="employeeSelectDiv">
-    <label for="employeeSelect" class="form-label">Select Employee</label>
-    <select id="employeeSelect" class="form-select"></select>
-  </div>
+      <!-- Employee Dropdown for Senior -->
+      <div class="mb-3 d-none" id="employeeSelectDiv">
+        <label for="employeeSelect" class="form-label">Select Employee</label>
+        <select id="employeeSelect" class="form-select"></select>
+      </div>
 
-  <!-- Detail Table -->
-  <table class="table table-striped" id="detailTable">
-    <thead>
-      <tr><th>Date</th><th>Shift</th><th>Customer</th><th>Detail</th><th>Amount</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+      <!-- Detail Table -->
+      <table class="table table-striped" id="detailTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Customer</th>
+            <th>Detail</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
 
-  <button class="btn btn-success w-100 d-none" id="salarySlipBtn">Download Salary Slip</button>
-  <button class="btn btn-danger w-100 mt-2" id="logoutBtn">Logout</button>
-</div>
-</main>
+      <button class="btn btn-success w-100 d-none" id="salarySlipBtn">
+        Download Salary Slip
+      </button>
+      <button class="btn btn-danger w-100 mt-2" id="logoutBtn">Logout</button>
+    </div>
+  </main>
 
-<footer class="w-100 text-center py-1">
-  <p>&copy; 2025 SHRI. All Rights Reserved.</p>
-</footer>
+  <footer class="w-100 text-center py-1">
+    <p>&copy; 2025 SHRI. All Rights Reserved.</p>
+  </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-const registrationCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1862107016&single=true&output=csv";
-const dailyCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1370536424&single=true&output=csv";
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const registrationCsv =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1862107016&single=true&output=csv";
+    const dailyCsv =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1370536424&single=true&output=csv";
 
-let registrationData=[], dailyData=[];
-let currentUser=null;
+    let registrationData = [],
+      dailyData = [];
+    let currentUser = null;
 
-function fetchCsv(url){ return fetch(url).then(r=>r.text()); }
-function parseCsv(data){ return data.trim().split("\n").map(r=>r.split(",")); }
-function calculatePali(row){ return ['Morning','Evening','Night'].reduce((sum,col,i)=>sum+(row[i+1]&&!isNaN(row[i+1])?parseInt(row[i+1]):0),0); }
+    function fetchCsv(url) {
+      return fetch(url).then((r) => r.text());
+    }
+    function parseCsv(data) {
+      return data.trim().split("
+").map((r) => r.split(","));
+    }
+    function calculatePali(row) {
+      return ["Morning", "Evening", "Night"].reduce(
+        (sum, col, i) =>
+          sum + (row[i + 1] && !isNaN(row[i + 1]) ? parseInt(row[i + 1]) : 0),
+        0
+      );
+    }
 
-function updateDashboard(user){
-  const username=user[0], role=user[13], rate=parseFloat(user[3]);
-  const tbody=document.querySelector("#detailTable tbody");
-  tbody.innerHTML="";
-  let pali=0, upad=0, balance=0;
-  let filtered=dailyData.filter(r=>r[4]===username);
-  filtered.forEach(r=>{
-    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s:"").filter(s=>s).join(" ");
-    pali+=calculatePali(r);
-    upad+=r[7]?parseFloat(r[7]):0;
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${r[0]}</td><td>${shifts}</td><td>${r[6]}</td><td>${r[5]}</td><td>${r[7]||0}</td>`;
-    tbody.appendChild(tr);
-  });
-  balance=pali*rate-upad;
-  document.getElementById("pali").innerText=pali;
-  document.getElementById("upad").innerText=upad;
-  document.getElementById("balance").innerText=balance;
+    function updateDashboard(user) {
+      const username = user[0],
+        role = user[13],
+        rate = parseFloat(user[3]);
+      const tbody = document.querySelector("#detailTable tbody");
+      tbody.innerHTML = "";
+      let pali = 0,
+        upad = 0,
+        balance = 0;
+      let filtered = dailyData.filter((r) => r[4] === username);
+      filtered.forEach((r) => {
+        const shifts = ["Morning", "Evening", "Night"]
+          .map((s, i) => (r[i + 1] && r[i + 1] !== "" ? s : ""))
+          .filter((s) => s)
+          .join(" ");
+        pali += calculatePali(r);
+        upad += r[7] ? parseFloat(r[7]) : 0;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${r[0]}</td><td>${shifts}</td><td>${r[6]}</td><td>${r[5]}</td><td>${
+          r[7] || 0
+        }</td>`;
+        tbody.appendChild(tr);
+      });
+      balance = pali * rate - upad;
+      document.getElementById("pali").innerText = pali;
+      document.getElementById("upad").innerText = upad;
+      document.getElementById("balance").innerText = balance;
 
-  if(role.toLowerCase()=="senior"){
-    document.getElementById("employeeSelectDiv").classList.remove("d-none");
-    const select=document.getElementById("employeeSelect");
-    select.innerHTML='<option value="">Select Employee</option>';
-    registrationData.forEach(r=>{ if(r[13].toLowerCase()=="employee") select.innerHTML+=`<option value="${r[0]}">${r[0]}</option>`; });
-    select.addEventListener("change",()=>{ 
-      const emp=registrationData.find(u=>u[0]===select.value);
-      if(emp) updateDashboard(emp);
+      if (role.toLowerCase() == "senior") {
+        document.getElementById("employeeSelectDiv").classList.remove("d-none");
+        const select = document.getElementById("employeeSelect");
+        select.innerHTML = '<option value="">Select Employee</option>';
+        registrationData.forEach((r) => {
+          if (r[13].toLowerCase() == "employee")
+            select.innerHTML += `<option value="${r[0]}">${r[0]}</option>`;
+        });
+        select.addEventListener("change", () => {
+          const emp = registrationData.find((u) => u[0] === select.value);
+          if (emp) updateDashboard(emp);
+        });
+        document.getElementById("salarySlipBtn").classList.remove("d-none");
+        document.getElementById("salarySlipBtn").onclick = () =>
+          generatePdf(filtered, username, rate, upad, balance, pali);
+      } else {
+        document.getElementById("employeeSelectDiv").classList.add("d-none");
+        document.getElementById("salarySlipBtn").classList.add("d-none");
+      }
+    }
+
+    function generatePdf(data, username, rate, upad, balance, pali) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(16);
+      doc.text(`Salary Slip: ${username}`, 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Pali (Shifts): ${pali}`, 20, 30);
+      doc.text(`Rate: ${rate}`, 20, 36);
+      doc.text(`Upad: ${upad}`, 20, 42);
+      doc.text(`Balance: ${balance}`, 20, 48);
+      doc.text("Details:", 20, 58);
+      let y = 64;
+      data.forEach((r) => {
+        const shifts = ["Morning", "Evening", "Night"]
+          .map((s, i) => (r[i + 1] && r[i + 1] !== "" ? s : ""))
+          .filter((s) => s)
+          .join(" ");
+        doc.text(
+          `${r[0]} | ${shifts} | ${r[6]} | ${r[5]} | ${r[7] || 0}`,
+          20,
+          y
+        );
+        y += 6;
+      });
+      doc.save(`Salary_Slip_${username}.pdf`);
+    }
+
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+        const user = registrationData.find(
+          (r) =>
+            r[0].trim().toLowerCase() === username.toLowerCase() &&
+            r[1] === password
+        );
+        if (user) {
+          currentUser = user;
+          document.getElementById("loginBox").classList.add("d-none");
+          document.getElementById("userCard").classList.remove("d-none");
+          document.getElementById("displayUsername").innerText = username;
+          updateDashboard(user);
+        } else {
+          alert("Invalid username or password!");
+        }
+      });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      currentUser = null;
+      document.getElementById("loginBox").classList.remove("d-none");
+      document.getElementById("userCard").classList.add("d-none");
+      document.getElementById("loginForm").reset();
     });
-    document.getElementById("salarySlipBtn").classList.remove("d-none");
-    document.getElementById("salarySlipBtn").onclick=()=>generatePdf(filtered, username, rate, upad, balance, pali);
-  }else{
-    document.getElementById("employeeSelectDiv").classList.add("d-none");
-    document.getElementById("salarySlipBtn").classList.add("d-none");
-  }
-}
 
-function generatePdf(data, username, rate, upad, balance, pali){
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  doc.setFontSize(16); doc.text(`Salary Slip: ${username}`, 20,20);
-  doc.setFontSize(12);
-  doc.text(`Pali (Shifts): ${pali}`, 20,30);
-  doc.text(`Rate: ${rate}`, 20,36);
-  doc.text(`Upad: ${upad}`, 20,42);
-  doc.text(`Balance: ${balance}`, 20,48);
-  doc.text("Details:",20,58);
-  let y=64;
-  data.forEach(r=>{
-    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s:"").filter(s=>s).join(" ");
-    doc.text(`${r[0]} | ${shifts} | ${r[6]} | ${r[5]} | ${r[7]||0}`,20,y); y+=6;
-  });
-  doc.save(`Salary_Slip_${username}.pdf`);
-}
-
-document.getElementById("loginForm").addEventListener("submit",function(e){
-  e.preventDefault();
-  const username=document.getElementById("username").value.trim();
-  const password=document.getElementById("password").value.trim();
-  const user=registrationData.find(r=>r[0]===username && r[1]===password);
-  if(user){ currentUser=user;
-    document.getElementById("loginBox").classList.add("d-none");
-    document.getElementById("userCard").classList.remove("d-none");
-    document.getElementById("displayUsername").innerText=username;
-    updateDashboard(user);
-  }else{ alert("Invalid username or password!"); }
-});
-
-document.getElementById("logoutBtn").addEventListener("click",()=>{
-  currentUser=null;
-  document.getElementById("loginBox").classList.remove("d-none");
-  document.getElementById("userCard").classList.add("d-none");
-  document.getElementById("loginForm").reset();
-});
-
-Promise.all([fetchCsv(registrationCsv), fetchCsv(dailyCsv)]).then(([reg,daily])=>{
-  registrationData=parseCsv(reg);
-  dailyData=parseCsv(daily);
-});
-</script>
+    Promise.all([fetchCsv(registrationCsv), fetchCsv(dailyCsv)]).then(
+      ([reg, daily]) => {
+        registrationData = parseCsv(reg);
+        dailyData = parseCsv(daily);
+      }
+    );
+  </script>
 </body>
 </html>
