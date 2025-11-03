@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SHRI — Manpower Services</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
     }
     /* Navbar */
     .navbar {
-      background: linear-gradient(to right, #ff512f, #f09819); /* rising sun */
+      background: linear-gradient(to right, #ff512f, #f09819);
     }
     .navbar-brand img {
       height: 50px;
@@ -21,18 +22,18 @@
       margin: 0 10px;
       font-weight: 500;
     }
-    /* Hero */
+    /* Hero Section */
     .hero {
       background: url('images/event-staff.jpg') center/cover no-repeat;
-      height: 90vh;
+      height: 85vh;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      background-blend-mode: darken;
       background-color: rgba(0,0,0,0.4);
+      background-blend-mode: darken;
     }
     .hero h1 {
       font-size: 3rem;
@@ -40,31 +41,31 @@
     }
     .hero p {
       font-size: 1.3rem;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
     .hero .btn {
-      padding: 10px 25px;
+      padding: 12px 28px;
       font-size: 1.1rem;
       border-radius: 25px;
     }
-    /* Services */
-    .services {
+    /* Lead Capture Section */
+    .lead-form {
+      background: #fff6f0;
       padding: 60px 20px;
-      background: #fff8f0;
     }
-    .services h2 {
-      text-align: center;
-      margin-bottom: 40px;
+    .lead-form h2 {
+      color: #ff512f;
       font-weight: bold;
-      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
     }
-    .card {
-      border: none;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+    .lead-form form {
+      max-width: 600px;
+      margin: auto;
     }
-    .card:hover {
-      transform: translateY(-5px);
+    .form-control:focus {
+      border-color: #f09819;
+      box-shadow: 0 0 0 0.2rem rgba(240,152,25,0.25);
     }
     /* Footer */
     footer {
@@ -72,6 +73,7 @@
       color: white;
       text-align: center;
       padding: 15px;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -81,7 +83,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <img src="images/shriapp.png" alt="SHRI Logo">
+      <img src="images/shriapp.png" alt="SHRI Logo" />
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -93,7 +95,7 @@
         <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
         <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://1sam1.github.io/login-page/">My Account</a></li>
+        <li class="nav-item"><a class="nav-link" href="myaccount.html">My Account</a></li>
       </ul>
     </div>
   </div>
@@ -101,44 +103,38 @@
 
 <!-- Hero Banner -->
 <section class="hero">
-  <h1>Shivnarayan Human Resource India</h1>
-  <p>Do you have questions? Reach out to SHRI today! <p>
-   <p> Our team is here to assist you every step of the way. Whether it's staff options, pricing inquiries or scheduling, we're just a call or message away.<p>
-  <p> Get in touch now and let's start creating unforgettable memories together!</p>
-  <a href=" https://wa.me/917738792479 " class="btn btn-light">Hire Now</a>
+  <h1>Trusted Manpower Services in Mumbai</h1>
+  <p>Reliable staff for catering, hospitality, and events</p>
+  <a href="https://wa.me/917738792479" target="_blank" class="btn btn-light">Hire Now</a>
 </section>
 
-<!-- Services Section -->
-<section class="services">
+<!-- Lead Capture Form -->
+<section class="lead-form" id="get-quote">
   <div class="container">
-    <h2>Meet The Team</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card text-center p-4">
-          <img src="images/sachinkhare.jpg" class="card-img-top" alt="Catering Staff">
-          <h5 class="mt-3">Sachin Khare</h5>
-          <p> With over 12 years of experience in the Food and Beverage Industry, Sachin brings together his two biggest passions -Food & Service to create a Manpower company like no other. </p>
-     <a href=" https://wa.me/917738792479 " class="btn btn-light">Msg Sachin</a>
-          <a href=" https://x.com/Sachinskhare?t=uqKuEckuRo7mrORfThKNDg&s=09: " class="btn btn-light">twitter profile</a>
-        </div>
+    <h2>Request a Callback</h2>
+    <form>
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
       </div>
-      <div class="col-md-4">
-        <div class="card text-center p-4">
-          <img src="images/ashokrai.jpg" class="card-img-top" alt="Event Helpers">
-          <h5 class="mt-3">Ashok Rai</h5>
-          <p>Since 20 years Ashok is in the business of handling and maintaining trained professionals, reliable helpers to manage logistics, setup, and guest needs.</p>
-       <a href=" https://wa.me/919973334464 " class="btn btn-light">Msg Ashok</a>
-        </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
       </div>
-      <div class="col-md-4">
-        <div class="card text-center p-4">
-          <img src="images/surajsahani.jpg" class="card-img-top" alt="Hospitality Staff">
-          <h5 class="mt-3">Suraj Sahani</h5>
-          <p>He loves what he does and tries to give his clients a different experience for every event.</p>
-       <a href=" https://wa.me/917304682465 " class="btn btn-light">Msg Suraj</a>
-        </div>
+      <div class="mb-3">
+        <label for="service" class="form-label">Service Needed</label>
+        <select id="service" class="form-select" required>
+          <option selected disabled value="">Choose...</option>
+          <option>Event Staffing</option>
+          <option>Catering Staff</option>
+          <option>Hospitality Services</option>
+          <option>Other</option>
+        </select>
       </div>
-    </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-warning">Submit Request</button>
+      </div>
+    </form>
   </div>
 </section>
 
