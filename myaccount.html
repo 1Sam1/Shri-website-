@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHRI Workforce - My Account</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
+  <title>SHRI Workforce - My Account</title>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <style>
     * {
       box-sizing: border-box;
     }
@@ -220,236 +215,327 @@
         text-align: left;
       }
     }
-  </style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <div class="brand">
+  </style></head><body><div class="container">  <div class="brand">
     <h1>SHRI Workforce</h1>
     <p>Workforce Management System</p>
-  </div>
+  </div>  <!-- LOGIN -->  <div id="loginSection" class="card"><h2>Login</h2>
+
+<label>Email</label>
+
+<input
+  type="email"
+  id="email"
+  placeholder="Enter your email"
+  autocomplete="email"
+>
+
+<label>Password</label>
+
+<input
+  type="password"
+  id="password"
+  placeholder="Enter your password"
+  autocomplete="current-password"
+>
+
+<button id="loginButton">
+  Login
+</button>
+
+<div id="loginMessage"></div>
+
+  </div>  <!-- ACCOUNT -->  <div id="accountSection" class="hidden"><!-- PROFILE -->
+
+<div class="card">
+
+  <h2>My Account</h2>
+
+  <div id="profileDetails"></div>
+
+  <button class="logout" id="logoutButton">
+    Logout
+  </button>
+
+</div>
 
 
-  <!-- LOGIN -->
+<!-- DASHBOARD -->
 
-  <div id="loginSection" class="card">
+<div class="card">
 
-    <h2>Login</h2>
+  <h2>Dashboard</h2>
 
-    <label>Email</label>
+  <div class="dashboard-grid">
 
-    <input
-      type="email"
-      id="email"
-      placeholder="Enter your email"
-      autocomplete="email"
-    >
-
-    <label>Password</label>
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Enter your password"
-      autocomplete="current-password"
-    >
-
-    <button id="loginButton">
-      Login
-    </button>
-
-    <div id="loginMessage"></div>
-
-  </div>
-
-
-  <!-- ACCOUNT -->
-
-  <div id="accountSection" class="hidden">
-
-
-    <!-- PROFILE -->
-
-    <div class="card">
-
-      <h2>My Account</h2>
-
-      <div id="profileDetails"></div>
-
-      <button class="logout" id="logoutButton">
-        Logout
-      </button>
-
+    <div class="dashboard-item">
+      <strong id="shiftCount">0</strong>
+      <span class="small">Shifts</span>
     </div>
 
-
-    <!-- DASHBOARD -->
-
-    <div class="card">
-
-      <h2>Dashboard</h2>
-
-      <div class="dashboard-grid">
-
-        <div class="dashboard-item">
-          <strong id="shiftCount">0</strong>
-          <span class="small">Shifts</span>
-        </div>
-
-        <div class="dashboard-item">
-          <strong id="advanceCount">0</strong>
-          <span class="small">Advances</span>
-        </div>
-
-        <div class="dashboard-item">
-          <strong id="paymentCount">0</strong>
-          <span class="small">Payments</span>
-        </div>
-
-        <div class="dashboard-item">
-          <strong id="reviewCount">0</strong>
-          <span class="small">Reviews</span>
-        </div>
-
-      </div>
-
+    <div class="dashboard-item">
+      <strong id="advanceCount">0</strong>
+      <span class="small">Advances</span>
     </div>
 
-
-    <!-- EMPLOYEE MANAGEMENT -->
-
-    <div id="employeeSection" class="card hidden">
-
-      <h2>Employees</h2>
-
-      <p class="small">
-        Add, edit and manage workforce employees.
-      </p>
-
-
-      <!-- ADD / EDIT FORM -->
-
-      <form id="employeeForm">
-
-        <input
-          type="hidden"
-          id="employeeId"
-        >
-
-        <div class="form-grid">
-
-          <div>
-            <label>Employee Code</label>
-
-            <input
-              type="text"
-              id="employeeCode"
-              placeholder="EMP002"
-              required
-            >
-          </div>
-
-
-          <div>
-            <label>Full Name</label>
-
-            <input
-              type="text"
-              id="employeeName"
-              placeholder="Employee name"
-              required
-            >
-          </div>
-
-
-          <div>
-            <label>Mobile</label>
-
-            <input
-              type="tel"
-              id="employeeMobile"
-              placeholder="Mobile number"
-            >
-          </div>
-
-
-          <div>
-            <label>Status</label>
-
-            <select id="employeeStatus">
-
-              <option value="active">
-                Active
-              </option>
-
-              <option value="inactive">
-                Inactive
-              </option>
-
-            </select>
-          </div>
-
-        </div>
-
-
-        <button type="submit" id="saveEmployeeButton">
-          Add Employee
-        </button>
-
-        <button
-          type="button"
-          id="cancelEditButton"
-          class="cancel hidden"
-        >
-          Cancel Edit
-        </button>
-
-      </form>
-
-
-      <div id="employeeMessage"></div>
-
-
-      <!-- EMPLOYEE LIST -->
-
-      <div class="table-wrapper">
-
-        <table>
-
-          <thead>
-
-            <tr>
-              <th>Code</th>
-              <th>Name</th>
-              <th>Mobile</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="employeeTableBody">
-
-          </tbody>
-
-        </table>
-
-      </div>
-
+    <div class="dashboard-item">
+      <strong id="paymentCount">0</strong>
+      <span class="small">Payments</span>
     </div>
 
-
-    <div id="statusMessage"></div>
+    <div class="dashboard-item">
+      <strong id="reviewCount">0</strong>
+      <span class="small">Reviews</span>
+    </div>
 
   </div>
 
 </div>
 
 
-<script>
+<!-- EMPLOYEE MANAGEMENT -->
+
+<div id="employeeSection" class="card hidden">
+
+  <h2>Employees</h2>
+
+  <p class="small">
+    Add, edit and manage workforce employees.
+  </p>
+
+
+  <form id="employeeForm">
+
+    <input
+      type="hidden"
+      id="employeeId"
+    >
+
+    <div class="form-grid">
+
+      <div>
+        <label>Employee Code</label>
+
+        <input
+          type="text"
+          id="employeeCode"
+          placeholder="EMP002"
+          required
+        >
+      </div>
+
+
+      <div>
+        <label>Full Name</label>
+
+        <input
+          type="text"
+          id="employeeName"
+          placeholder="Employee name"
+          required
+        >
+      </div>
+
+
+      <div>
+        <label>Mobile</label>
+
+        <input
+          type="tel"
+          id="employeeMobile"
+          placeholder="Mobile number"
+        >
+      </div>
+
+
+      <div>
+        <label>Status</label>
+
+        <select id="employeeStatus">
+
+          <option value="active">
+            Active
+          </option>
+
+          <option value="inactive">
+            Inactive
+          </option>
+
+        </select>
+      </div>
+
+    </div>
+
+
+    <button type="submit" id="saveEmployeeButton">
+      Add Employee
+    </button>
+
+    <button
+      type="button"
+      id="cancelEditButton"
+      class="cancel hidden"
+    >
+      Cancel Edit
+    </button>
+
+  </form>
+
+
+  <div id="employeeMessage"></div>
+
+
+  <div class="table-wrapper">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="employeeTableBody"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+
+<!-- SUPERVISOR MANAGEMENT -->
+
+<div id="supervisorSection" class="card hidden">
+
+  <h2>Supervisors</h2>
+
+  <p class="small">
+    Add, edit and manage workforce supervisors.
+  </p>
+
+
+  <!-- SUPERVISOR FORM -->
+
+  <form id="supervisorForm">
+
+    <input
+      type="hidden"
+      id="supervisorId"
+    >
+
+    <div class="form-grid">
+
+      <div>
+        <label>Supervisor Code</label>
+
+        <input
+          type="text"
+          id="supervisorCode"
+          placeholder="SUP001"
+          required
+        >
+      </div>
+
+
+      <div>
+        <label>Full Name</label>
+
+        <input
+          type="text"
+          id="supervisorName"
+          placeholder="Supervisor name"
+          required
+        >
+      </div>
+
+
+      <div>
+        <label>Mobile</label>
+
+        <input
+          type="tel"
+          id="supervisorMobile"
+          placeholder="Mobile number"
+        >
+      </div>
+
+
+      <div>
+        <label>Status</label>
+
+        <select id="supervisorStatus">
+
+          <option value="active">
+            Active
+          </option>
+
+          <option value="inactive">
+            Inactive
+          </option>
+
+        </select>
+      </div>
+
+    </div>
+
+
+    <button
+      type="submit"
+      id="saveSupervisorButton"
+    >
+      Add Supervisor
+    </button>
+
+    <button
+      type="button"
+      id="cancelSupervisorEditButton"
+      class="cancel hidden"
+    >
+      Cancel Edit
+    </button>
+
+  </form>
+
+
+  <div id="supervisorMessage"></div>
+
+
+  <!-- SUPERVISOR LIST -->
+
+  <div class="table-wrapper">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="supervisorTableBody"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+
+<div id="statusMessage"></div>
+
+  </div></div><script>
 
   // ==========================================
   // SUPABASE
@@ -495,17 +581,34 @@
   const employeeSection =
     document.getElementById("employeeSection");
 
+  const supervisorSection =
+    document.getElementById("supervisorSection");
+
   const employeeForm =
     document.getElementById("employeeForm");
+
+  const supervisorForm =
+    document.getElementById("supervisorForm");
 
   const employeeMessage =
     document.getElementById("employeeMessage");
 
+  const supervisorMessage =
+    document.getElementById("supervisorMessage");
+
   const employeeTableBody =
     document.getElementById("employeeTableBody");
 
+  const supervisorTableBody =
+    document.getElementById("supervisorTableBody");
+
   const cancelEditButton =
     document.getElementById("cancelEditButton");
+
+  const cancelSupervisorEditButton =
+    document.getElementById(
+      "cancelSupervisorEditButton"
+    );
 
 
   // ==========================================
@@ -635,11 +738,17 @@
 
       employeeSection.classList.remove("hidden");
 
+      supervisorSection.classList.remove("hidden");
+
       await loadEmployees();
+
+      await loadSupervisors();
 
     } else {
 
       employeeSection.classList.add("hidden");
+
+      supervisorSection.classList.add("hidden");
 
     }
 
@@ -1154,7 +1263,7 @@
 
 
   // ==========================================
-  // CANCEL EDIT
+  // CANCEL EMPLOYEE EDIT
   // ==========================================
 
   cancelEditButton.addEventListener(
@@ -1168,7 +1277,7 @@
 
 
   // ==========================================
-  // RESET FORM
+  // RESET EMPLOYEE FORM
   // ==========================================
 
   function resetEmployeeForm() {
@@ -1189,6 +1298,385 @@
       "Add Employee";
 
     cancelEditButton.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  // ==========================================
+  // LOAD SUPERVISORS
+  // ==========================================
+
+  async function loadSupervisors() {
+
+    supervisorTableBody.innerHTML =
+      `<tr>
+        <td colspan="5" class="empty">
+          Loading supervisors...
+        </td>
+      </tr>`;
+
+
+    const {
+      data,
+      error
+    } = await db
+      .from("supervisors")
+      .select(
+        "id, supervisor_code, full_name, mobile, status"
+      )
+      .order("id", {
+        ascending: true
+      });
+
+
+    if (error) {
+
+      supervisorTableBody.innerHTML =
+        `<tr>
+          <td colspan="5" class="empty">
+            Could not load supervisors.
+          </td>
+        </tr>`;
+
+      console.error(error);
+
+      return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+      supervisorTableBody.innerHTML =
+        `<tr>
+          <td colspan="5" class="empty">
+            No supervisors found.
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    supervisorTableBody.innerHTML =
+      data.map(supervisor => `
+
+        <tr>
+
+          <td>
+            ${escapeHtml(supervisor.supervisor_code || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(supervisor.full_name || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(supervisor.mobile || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(supervisor.status || "")}
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="edit"
+                onclick="editSupervisor(${supervisor.id})"
+              >
+                Edit
+              </button>
+
+              <button
+                class="delete"
+                onclick="deleteSupervisor(${supervisor.id}, '${escapeJs(supervisor.full_name)}')"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }
+
+
+  // ==========================================
+  // ADD / EDIT SUPERVISOR
+  // ==========================================
+
+  supervisorForm.addEventListener(
+    "submit",
+    async (event) => {
+
+      event.preventDefault();
+
+
+      const id =
+        document.getElementById("supervisorId").value;
+
+      const supervisorCode =
+        document.getElementById("supervisorCode").value.trim();
+
+      const fullName =
+        document.getElementById("supervisorName").value.trim();
+
+      const mobile =
+        document.getElementById("supervisorMobile").value.trim();
+
+      const status =
+        document.getElementById("supervisorStatus").value;
+
+
+      if (!supervisorCode || !fullName) {
+
+        showSupervisorError(
+          "Supervisor code and name are required."
+        );
+
+        return;
+      }
+
+
+      const payload = {
+
+        supervisor_code: supervisorCode,
+
+        full_name: fullName,
+
+        mobile: mobile || null,
+
+        status: status
+
+      };
+
+
+      const saveButton =
+        document.getElementById(
+          "saveSupervisorButton"
+        );
+
+
+      saveButton.disabled = true;
+
+      saveButton.textContent =
+        id ? "Saving..." : "Adding...";
+
+
+      let result;
+
+
+      if (id) {
+
+        result =
+          await db
+            .from("supervisors")
+            .update(payload)
+            .eq("id", id);
+
+      } else {
+
+        result =
+          await db
+            .from("supervisors")
+            .insert(payload);
+
+      }
+
+
+      saveButton.disabled = false;
+
+
+      if (result.error) {
+
+        showSupervisorError(
+          result.error.message
+        );
+
+        saveButton.textContent =
+          id
+            ? "Save Changes"
+            : "Add Supervisor";
+
+        return;
+      }
+
+
+      showSupervisorSuccess(
+        id
+          ? "Supervisor updated successfully."
+          : "Supervisor added successfully."
+      );
+
+
+      resetSupervisorForm();
+
+      await loadSupervisors();
+
+    }
+  );
+
+
+  // ==========================================
+  // EDIT SUPERVISOR
+  // ==========================================
+
+  async function editSupervisor(id) {
+
+    const {
+      data,
+      error
+    } = await db
+      .from("supervisors")
+      .select(
+        "id, supervisor_code, full_name, mobile, status"
+      )
+      .eq("id", id)
+      .single();
+
+
+    if (error) {
+
+      showSupervisorError(
+        error.message
+      );
+
+      return;
+    }
+
+
+    document.getElementById(
+      "supervisorId"
+    ).value = data.id;
+
+    document.getElementById(
+      "supervisorCode"
+    ).value = data.supervisor_code || "";
+
+    document.getElementById(
+      "supervisorName"
+    ).value = data.full_name || "";
+
+    document.getElementById(
+      "supervisorMobile"
+    ).value = data.mobile || "";
+
+    document.getElementById(
+      "supervisorStatus"
+    ).value = data.status || "active";
+
+
+    document.getElementById(
+      "saveSupervisorButton"
+    ).textContent =
+      "Save Changes";
+
+
+    cancelSupervisorEditButton.classList.remove(
+      "hidden"
+    );
+
+
+    window.scrollTo({
+      top: supervisorSection.offsetTop,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  // ==========================================
+  // DELETE SUPERVISOR
+  // ==========================================
+
+  async function deleteSupervisor(
+    id,
+    supervisorName
+  ) {
+
+    const confirmed =
+      confirm(
+        `Delete ${supervisorName}?\n\nThis action cannot be undone.`
+      );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    const {
+      error
+    } = await db
+      .from("supervisors")
+      .delete()
+      .eq("id", id);
+
+
+    if (error) {
+
+      showSupervisorError(
+        error.message
+      );
+
+      return;
+    }
+
+
+    showSupervisorSuccess(
+      "Supervisor deleted successfully."
+    );
+
+
+    await loadSupervisors();
+
+  }
+
+
+  // ==========================================
+  // CANCEL SUPERVISOR EDIT
+  // ==========================================
+
+  cancelSupervisorEditButton.addEventListener(
+    "click",
+    () => {
+
+      resetSupervisorForm();
+
+    }
+  );
+
+
+  // ==========================================
+  // RESET SUPERVISOR FORM
+  // ==========================================
+
+  function resetSupervisorForm() {
+
+    supervisorForm.reset();
+
+    document.getElementById(
+      "supervisorId"
+    ).value = "";
+
+    document.getElementById(
+      "supervisorStatus"
+    ).value = "active";
+
+    document.getElementById(
+      "saveSupervisorButton"
+    ).textContent =
+      "Add Supervisor";
+
+    cancelSupervisorEditButton.classList.add(
       "hidden"
     );
 
@@ -1313,6 +1801,26 @@
   }
 
 
+  function showSupervisorSuccess(message) {
+
+    supervisorMessage.innerHTML =
+      `<div class="success">
+        ${escapeHtml(message)}
+      </div>`;
+
+  }
+
+
+  function showSupervisorError(message) {
+
+    supervisorMessage.innerHTML =
+      `<div class="error">
+        ${escapeHtml(message)}
+      </div>`;
+
+  }
+
+
   function escapeHtml(value) {
 
     return String(value)
@@ -1342,7 +1850,5 @@
 
   checkExistingSession();
 
-</script>
-
-</body>
+</script></body>
 </html>
