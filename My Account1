@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WA Workforce Parser</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6f8;
+    color: #17212b;
+}
+
+.wrap {
+    max-width: 900px;
+    margin: auto;
+    padding: 18px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08);
+}
+
+h1 {
+    margin: 0 0 6px;
+    font-size: 25px;
+}
+
+.sub {
+    color: #687782;
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-weight: 700;
+    margin: 12px 0 6px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd5db;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #fff;
+}
+
+textarea {
+    min-height: 190px;
+    resize: vertical;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+button {
+    border: 0;
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 14px;
+}
+
+.primary {
+    background: #198754;
+    color: white;
+    width: 100%;
+}
+
+.secondary {
+    background: #e9eef1;
+    color: #17212b;
+}
+
+.danger {
+    background: #ffe5e5;
+    color: #a40000;
+}
+
+.status {
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff4cc;
+    margin-top: 14px;
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+th,
+td {
+    padding: 9px;
+    border-bottom: 1px solid #e4e8eb;
+    text-align: left;
+}
+
+th {
+    background: #f5f7f8;
+}
+
+.review {
+    color: #a40000;
+    font-weight: 700;
+}
+
+.muted {
+    color: #687782;
+}
+
+.pill {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #e8f5ee;
+    color: #146c43;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+@media(max-width:650px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <!-- MAIN ENTRY CARD -->
+    <div class="card">
+
+        <h1>WA Workforce Parser</h1>
+
+        <div class="sub">
+            Enter or paste a shift/advance message and review the structured result.
+        </div>
+
+        <div class="row">
+
+            <div>
+                <label for="entryType">
+                    Entry type
+                </label>
+
+                <select id="entryType">
+
+                    <option value="shift">
+                        Shift
+                    </option>
+
+                    <option value="advance">
+                        Advance
+                    </option>
+
+                </select>
+            </div>
+
+            <div>
+
+                <label for="entryDate">
+                    Date
+                </label>
+
+                <input
+                    id="entryDate"
+                    type="date"
+                >
+
+            </div>
+
+        </div>
+
+
+        <label for="message">
+            Paste entry / WhatsApp message
+        </label>
+
+        <textarea
+            id="message"
+            placeholder="Example:
+
+Deep Caterers
+Chinchpokhali Mahajanwadi
+
+04 Morning / 08 Evening
+
+02 Shiva Marine
+02 Vishnu Cst
+02 Santosh Gupta
+01 Ramesh Pandit
+01 Gala
+02 Sameer"
+        ></textarea>
+
+
+        <button
+            class="primary"
+            onclick="processEntry()"
+        >
+            Process Entry
+        </button>
+
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+    </div>
+
+
+    <!-- RESULT -->
+    <div
+        class="card"
+        id="resultCard"
+        style="display:none;"
+    >
+
+        <h2>
+            Result
+        </h2>
+
+        <div id="result"></div>
+
+
+        <button
+            class="secondary"
+            onclick="saveEntry()"
+        >
+            Save Entry
+        </button>
+
+
+        <button
+            class="danger"
+            onclick="clearAll()"
+        >
+            Clear
+        </button>
+
+    </div>
+
+
+    <!-- SAVED ENTRIES -->
+    <div class="card">
+
+        <h2>
+            Saved Entries
+        </h2>
+
+        <div
+            id="savedEntries"
+            class="muted"
+        >
+            No entries saved yet.
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ---------------------------------------------------
+   SET TODAY'S DATE
+--------------------------------------------------- */
+
+const dateInput =
+    document.getElementById("entryDate");
+
+dateInput.value =
+    new Date().toISOString().slice(0,10);
+
+
+/* ---------------------------------------------------
+   CURRENT RESULT
+--------------------------------------------------- */
+
+let currentResult = null;
+
+
+/* ---------------------------------------------------
+   PROCESS ENTRY
+--------------------------------------------------- */
+
+function processEntry() {
+
+    const type =
+        document.getElementById("entryType").value;
+
+    const date =
+        dateInput.value;
+
+    const text =
+        document.getElementById("message")
+        .value
+        .trim();
+
+    const status =
+        document.getElementById("status");
+
+
+    if (!text) {
+
+        status.style.display = "block";
+
+        status.textContent =
+            "Please paste an entry first.";
+
+        return;
+    }
+
+
+    if (type === "shift") {
+
+        currentResult =
+            parseShift(text, date);
+
+    } else {
+
+        currentResult =
+            parseAdvance(text, date);
+
+    }
+
+
+    status.style.display = "block";
+
+
+    if (currentResult.review) {
+
+        status.textContent =
+            "Review required — the system did not confidently determine the entry.";
+
+    } else {
+
+        status.textContent =
+            "Entry processed. Please check the result before saving.";
+
+    }
+
+
+    renderResult(currentResult);
+}
+
+
+/* ---------------------------------------------------
+   SHIFT PARSER
+--------------------------------------------------- */
+
+function parseShift(text, date) {
+
+    const lines =
+        text
+        .split(/\r?\n/)
+        .map(x => x.trim())
+        .filter(Boolean);
+
+
+    let morning = 0;
+    let evening = 0;
+    let night = 0;
+
+
+    /*
+       Find Morning / Evening / Night
+    */
+
+    const morningMatches =
+        text.match(/(\d+)\s*morning/ig) || [];
+
+    const eveningMatches =
+        text.match(/(\d+)\s*evening/ig) || [];
+
+    const nightMatches =
+        text.match(/(\d+)\s*night/ig) || [];
+
+
+    morning =
+        morningMatches.reduce(
+            (sum, item) =>
+                sum + parseInt(item.match(/\d+/)[0]),
+            0
+        );
+
+
+    evening =
+        eveningMatches.reduce(
+            (sum, item) =>
+                sum + parseInt(item.match(/\d+/)[0]),
+            0
+        );
+
+
+    night =
+        nightMatches.reduce(
+            (sum, item) =>
+                sum + parseInt(item.match(/\d+/)[0]),
+            0
+        );
+
+
+    /*
+       Find line containing shift information
+    */
+
+    const shiftLine =
+        lines.findIndex(
+            x =>
+                /morning|evening|night/i.test(x)
+        );
+
+
+    let client = "";
+    let location = "";
+
+
+    /*
+       Basic client/location extraction
+    */
+
+    if (shiftLine > 0) {
+
+        client = lines[0];
+
+    }
+
+
+    if (shiftLine > 1) {
+
+        location = lines[1];
+
+    }
+
+
+    /*
+       Employee extraction
+    */
+
+    const employees = [];
+
+
+    for (
+        let i = shiftLine + 1;
+        i < lines.length;
+        i++
+    ) {
+
+        const match =
+            lines[i].match(/^(\d+)\s+(.+)$/);
+
+
+        if (
+            match &&
+            !/morning|evening|night/i
+                .test(lines[i])
+        ) {
+
+            employees.push({
+
+                employee: match[2],
+
+                requested:
+                    parseInt(match[1]),
+
+                morning: 0,
+
+                evening: 0,
+
+                night: 0
+
+            });
+
+        }
+
+    }
+
+
+    /*
+       Total shifts required
+    */
+
+    const totalRequired =
+        morning +
+        evening +
+        night;
+
+
+    const requestedTotal =
+        employees.reduce(
+            (sum, employee) =>
+                sum + employee.requested,
+            0
+        );
+
+
+    let review = false;
+    let reason = "";
+
+
+    /*
+       Missing employees
+    */
+
+    if (!employees.length) {
+
+        review = true;
+
+        reason =
+            "missing_employee_names";
+
+    }
+
+
+    /*
+       No shift structure
+    */
+
+    else if (!totalRequired) {
+
+        review = true;
+
+        reason =
+            "employee_count_does_not_match_shift_structure";
+
+    }
+
+
+    /*
+       Employee count doesn't match
+    */
+
+    else if (
+        requestedTotal !== totalRequired
+    ) {
+
+        review = true;
+
+        reason =
+            "employee_count_does_not_match_shift_structure";
+
+    }
+
+
+    /*
+       Basic allocation
+    */
+
+    else {
+
+        let remaining = {
+
+            morning: morning,
+
+            evening: evening,
+
+            night: night
+
+        };
+
+
+        /*
+           Allocate each employee across
+           available shift types.
+        */
+
+        for (
+            const employee of employees
+        ) {
+
+            let number =
+                employee.requested;
+
+
+            const order =
+                Object.keys(remaining)
+                .sort(
+                    (a,b) =>
+                        remaining[b] -
+                        remaining[a]
+                );
+
+
+            for (
+                const shift of order
+            ) {
+
+                if (
+                    number > 0 &&
+                    remaining[shift] > 0
+                ) {
+
+                    employee[shift]++;
+
+                    remaining[shift]--;
+
+                    number--;
+
+                }
+
+            }
+
+
+            /*
+               Could not confidently allocate
+            */
+
+            if (number > 0) {
+
+                review = true;
+
+                reason =
+                    "ambiguous_employee_allocation";
+
+            }
+
+        }
+
+
+        /*
+           Remaining shifts
+        */
+
+        if (
+            Object.values(remaining)
+            .some(x => x !== 0)
+        ) {
+
+            review = true;
+
+            reason =
+                "ambiguous_employee_allocation";
+
+        }
+
+    }
+
+
+    return {
+
+        type: "shift",
+
+        date: date,
+
+        client: client,
+
+        location: location,
+
+        morning: morning,
+
+        evening: evening,
+
+        night: night,
+
+        employees: employees,
+
+        originalMessage: text,
+
+        review: review,
+
+        reason: reason
+
+    };
+
+}
+
+
+/* ---------------------------------------------------
+   ADVANCE PARSER
+--------------------------------------------------- */
+
+function parseAdvance(text, date) {
+
+    /*
+       Find amount
+    */
+
+    const amountMatch =
+        text.match(
+            /(?:₹|rs\.?|inr)?\s*([0-9][0-9,]*)/i
+        );
+
+
+    const amount =
+        amountMatch
+            ? parseInt(
+                amountMatch[1]
+                .replace(/,/g,"")
+              )
+            : null;
+
+
+    /*
+       First line is treated as employee
+    */
+
+    const firstLine =
+        text
+        .split(/\r?\n/)
+        .map(x => x.trim())
+        .find(Boolean) || "";
+
+
+    const employee =
+        firstLine
+        .replace(
+            /(?:advance|total|balance|clear.*)$/i,
+            ""
+        )
+        .trim();
+
+
+    const review =
+        !employee ||
+        amount === null;
+
+
+    return {
+
+        type: "advance",
+
+        date: date,
+
+        employee: employee,
+
+        amount: amount,
+
+        detail: "",
+
+        description: text,
+
+        originalMessage: text,
+
+        review: review,
+
+        reason:
+            review
+                ? "unclear_advance_recipient"
+                : ""
+
+    };
+
+}
+
+
+/* ---------------------------------------------------
+   DISPLAY RESULT
+--------------------------------------------------- */
+
+function renderResult(result) {
+
+    document
+        .getElementById("resultCard")
+        .style.display = "block";
+
+
+    const output =
+        document.getElementById("result");
+
+
+    /*
+       ADVANCE
+    */
+
+    if (
+        result.type === "advance"
+    ) {
+
+        output.innerHTML = `
+
+            <p>
+                <span class="pill">
+                    ADVANCE
+                </span>
+            </p>
+
+            <p>
+                <b>Date:</b>
+                ${escapeHtml(result.date)}
+            </p>
+
+            <p>
+                <b>Employee:</b>
+                ${escapeHtml(
+                    result.employee ||
+                    "Not determined"
+                )}
+            </p>
+
+            <p>
+                <b>Amount:</b>
+                ${
+                    result.amount === null
+                    ? "Not determined"
+                    : "₹" + result.amount
+                }
+            </p>
+
+            <p>
+                <b>Description:</b>
+                ${escapeHtml(
+                    result.description
+                )}
+            </p>
+
+            ${
+                result.review
+
+                ? `
+                    <p class="review">
+                        ⚠ Review:
+                        ${escapeHtml(
+                            result.reason
+                        )}
+                    </p>
+                  `
+
+                : `
+                    <p>
+                        ✓ Ready for review and saving.
+                    </p>
+                  `
+            }
+
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       SHIFT TABLE
+    */
+
+    let rows =
+        result.employees
+        .map(employee => `
+
+            <tr>
+
+                <td>
+                    ${escapeHtml(
+                        employee.employee
+                    )}
+                </td>
+
+                <td>
+                    ${employee.morning}
+                </td>
+
+                <td>
+                    ${employee.evening}
+                </td>
+
+                <td>
+                    ${employee.night}
+                </td>
+
+                <td>
+                    ${employee.requested}
+                </td>
+
+            </tr>
+
+        `)
+        .join("");
+
+
+    output.innerHTML = `
+
+        <p>
+            <span class="pill">
+                SHIFT
+            </span>
+        </p>
+
+
+        <p>
+            <b>Date:</b>
+            ${escapeHtml(result.date)}
+        </p>
+
+
+        <p>
+            <b>Client:</b>
+            ${escapeHtml(
+                result.client ||
+                "Not determined"
+            )}
+        </p>
+
+
+        <p>
+            <b>Location / Details:</b>
+            ${escapeHtml(
+                result.location ||
+                "Not determined"
+            )}
+        </p>
+
+
+        <p>
+            <b>Shift structure:</b>
+
+            Morning ${result.morning}
+            /
+            Evening ${result.evening}
+            /
+            Night ${result.night}
+
+        </p>
+
+
+        ${
+            result.review
+
+            ? `
+                <p class="review">
+
+                    ⚠ Review required:
+
+                    ${escapeHtml(
+                        result.reason
+                    )}
+
+                </p>
+              `
+
+            : `
+                <p>
+                    ✓ Allocation completed
+                    for this entry.
+                </p>
+              `
+        }
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Employee
+                    </th>
+
+                    <th>
+                        Morning
+                    </th>
+
+                    <th>
+                        Evening
+                    </th>
+
+                    <th>
+                        Night
+                    </th>
+
+                    <th>
+                        Total
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${rows}
+
+            </tbody>
+
+        </table>
+
+
+        <p class="muted">
+
+            <b>
+                Original message:
+            </b>
+
+            <br>
+
+            ${escapeHtml(
+                result.originalMessage
+            ).replace(
+                /\n/g,
+                "<br>"
+            )}
+
+        </p>
+
+    `;
+
+}
+
+
+/* ---------------------------------------------------
+   SAVE ENTRY
+--------------------------------------------------- */
+
+function saveEntry() {
+
+    if (!currentResult) {
+
+        return;
+
+    }
+
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem(
+                "workforceEntries"
+            ) || "[]"
+        );
+
+
+    saved.push({
+
+        ...currentResult,
+
+        savedAt:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+
+        "workforceEntries",
+
+        JSON.stringify(saved)
+
+    );
+
+
+    renderSaved();
+
+
+    alert(
+        "Entry saved on this device."
+    );
+
+}
+
+
+/* ---------------------------------------------------
+   DISPLAY SAVED ENTRIES
+--------------------------------------------------- */
+
+function renderSaved() {
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem(
+                "workforceEntries"
+            ) || "[]"
+        );
+
+
+    const box =
+        document.getElementById(
+            "savedEntries"
+        );
+
+
+    if (!saved.length) {
+
+        box.textContent =
+            "No entries saved yet.";
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        saved
+        .map(
+            (entry,index) => `
+
+                <div
+                    style="
+                        padding:10px 0;
+                        border-bottom:
+                        1px solid #e4e8eb
+                    "
+                >
+
+                    <b>
+                        ${index + 1}.
+                        ${escapeHtml(
+                            entry.date
+                        )}
+                    </b>
+
+                    —
+                    ${entry.type.toUpperCase()}
+
+
+                    ${
+                        entry.review
+
+                        ? `
+                            <span
+                                class="review"
+                            >
+                                — REVIEW
+                            </span>
+                          `
+
+                        : ""
+                    }
+
+
+                    <br>
+
+
+                    <span
+                        class="muted"
+                    >
+                        ${escapeHtml(
+                            entry.employee ||
+                            entry.client ||
+                            ""
+                        )}
+                    </span>
+
+                </div>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* ---------------------------------------------------
+   CLEAR CURRENT ENTRY
+--------------------------------------------------- */
+
+function clearAll() {
+
+    document
+        .getElementById("message")
+        .value = "";
+
+
+    document
+        .getElementById("resultCard")
+        .style.display = "none";
+
+
+    document
+        .getElementById("status")
+        .style.display = "none";
+
+
+    currentResult = null;
+
+}
+
+
+/* ---------------------------------------------------
+   HTML SECURITY
+--------------------------------------------------- */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(
+            /[&<>"']/g,
+            character => ({
+
+                "&": "&amp;",
+
+                "<": "&lt;",
+
+                ">": "&gt;",
+
+                '"': "&quot;",
+
+                "'": "&#039;"
+
+            }[character])
+        );
+
+}
+
+
+/* ---------------------------------------------------
+   LOAD SAVED ENTRIES
+--------------------------------------------------- */
+
+renderSaved();
+
+</script>
+
+</body>
+</html>
