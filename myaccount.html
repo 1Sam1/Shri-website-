@@ -944,7 +944,59 @@
   // ==========================================
   // LOAD EMPLOYEES
   // ==========================================
+// ==========================================
+// LOAD SUPERVISOR OPTIONS
+// ==========================================
 
+async function loadSupervisorOptions() {
+
+  const supervisorSelect =
+    document.getElementById("employeeSupervisor");
+
+  supervisorSelect.innerHTML =
+    `<option value="">No Supervisor</option>`;
+
+  const {
+    data,
+    error
+  } = await db
+    .from("supervisors")
+    .select("id, supervisor_code, full_name")
+    .eq("status", "active")
+    .order("full_name", {
+      ascending: true
+    });
+
+  if (error) {
+
+    console.error(
+      "Could not load supervisors:",
+      error
+    );
+
+    return;
+  }
+
+  if (!data) {
+    return;
+  }
+
+  data.forEach(supervisor => {
+
+    const option =
+      document.createElement("option");
+
+    option.value =
+      supervisor.id;
+
+    option.textContent =
+      `${supervisor.full_name} (${supervisor.supervisor_code})`;
+
+    supervisorSelect.appendChild(option);
+
+  });
+
+}
   async function loadEmployees() {
 
     employeeTableBody.innerHTML =
