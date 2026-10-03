@@ -3,182 +3,902 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHRI — My Account</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<title>SHRI Workforce - My Account</title>
+
 <style>
-  html, body { margin:0; padding:0; width:100%; font-family: "Segoe UI", Arial, sans-serif; background:#fff8f0; display:flex; flex-direction:column; min-height:100vh; }
-  /* Navbar full width */
-  .navbar { background: linear-gradient(to right, #ff512f, #f09819); position: sticky; top:0; z-index:1000; width:100%; }
-  .navbar-brand img { height:50px; }
-  .navbar-nav .nav-link { color:white !important; margin:0 10px; font-weight:500; }
-  /* Main content */
-  main { flex:1; display:flex; flex-direction:column; justify-content:center; padding:20px; }
-  /* Login & dashboard cards */
-  .login-container, .user-card { max-width:600px; margin:20px auto; padding:30px; background:white; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-  .login-container h2, .user-card h3 { text-align:center; margin-bottom:20px; color:#ff512f; }
-  /* Footer full width */
-  footer { background: linear-gradient(to right, #ff512f, #f09819); color:white; text-align:center; padding:15px; width:100%; margin-top:auto; }
-  table { width:100%; }
-  th, td { text-align:center; }
-  @media(max-width:576px){ .login-container,.user-card{padding:15px;} }
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #17202a;
+}
+
+header {
+    background: #17202a;
+    color: white;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1050px;
+    margin: 30px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.07);
+}
+
+.login {
+    max-width: 450px;
+    margin: 50px auto;
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccd3d9;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 9px;
+    background: #17202a;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: .9;
+}
+
+.logout {
+    width: auto;
+    margin: 0;
+    background: #e9edf0;
+    color: #17202a;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.muted {
+    color: #68737d;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.stat {
+    background: #f7f8fa;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+.number {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 12px 8px;
+    border-bottom: 1px solid #e5e7e9;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #e9edf0;
+    font-size: 13px;
+}
+
+.error {
+    color: #b42318;
+    margin-top: 12px;
+    display: none;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.admin-buttons button {
+    margin-top: 0;
+}
+
+@media(max-width:600px) {
+
+    .welcome {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 9px 5px;
+    }
+}
 </style>
 </head>
+
+
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark w-100">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.html"><img src="images/shriapp.png" alt="SHRI Logo"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="privacy.html">Privacy Policy</a></li>
-        <li class="nav-item"><a class="nav-link active" href="myaccount.html">My Account</a></li>
-      </ul>
+<header>
+
+    <div class="logo">
+        SHRI Workforce
     </div>
-  </div>
-</nav>
 
-<main>
-<!-- Login Form -->
-<div class="login-container" id="loginBox">
-  <h2>My Account Login</h2>
-  <form id="loginForm">
-    <div class="mb-3"><label for="username" class="form-label">Username</label><input type="text" id="username" class="form-control" required></div>
-    <div class="mb-3"><label for="password" class="form-label">Password</label><input type="password" id="password" class="form-control" required></div>
-    <button type="submit" class="btn btn-warning w-100">Login</button>
-  </form>
+    <div id="loggedUser" class="hidden"></div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage" class="card login">
+
+    <h1>My Account</h1>
+
+    <p class="muted">
+        Sign in to view your personalised account.
+    </p>
+
+
+    <label>Account Type</label>
+
+    <select id="accountType">
+
+        <option value="employee">
+            Employee
+        </option>
+
+        <option value="supervisor">
+            Supervisor
+        </option>
+
+        <option value="client">
+            Client
+        </option>
+
+        <option value="admin">
+            Admin
+        </option>
+
+    </select>
+
+
+    <label>Mobile / Username</label>
+
+    <input
+        id="username"
+        type="text"
+        placeholder="Enter mobile number or username"
+    >
+
+
+    <label>Password</label>
+
+    <input
+        id="password"
+        type="password"
+        placeholder="Enter password"
+    >
+
+
+    <button onclick="login()">
+        Sign In
+    </button>
+
+
+    <div id="error" class="error">
+        Please enter your username and password.
+    </div>
+
 </div>
 
-<!-- User Dashboard -->
-<div class="user-card d-none" id="userCard">
-  <h3>Welcome, <span id="displayUsername"></span></h3>
 
-  <!-- Top Summary -->
-  <div class="row text-center mb-4">
-    <div class="col"><strong>Pali</strong><div id="pali">0</div></div>
-    <div class="col"><strong>Upad</strong><div id="upad">0</div></div>
-    <div class="col"><strong>Balance</strong><div id="balance">0</div></div>
-  </div>
 
-  <!-- Employee Dropdown for Senior -->
-  <div class="mb-3 d-none" id="employeeSelectDiv">
-    <label for="employeeSelect" class="form-label">Select Employee</label>
-    <select id="employeeSelect" class="form-select"></select>
-  </div>
+<!-- ================= DASHBOARD ================= -->
 
-  <!-- Detail Table -->
-  <table class="table table-striped" id="detailTable">
-    <thead>
-      <tr><th>Date</th><th>Shift</th><th>Customer</th><th>Detail</th><th>Amount</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<div id="dashboard" class="hidden">
 
-  <button class="btn btn-success w-100 d-none" id="salarySlipBtn">Download Salary Slip</button>
-  <button class="btn btn-danger w-100 mt-2" id="logoutBtn">Logout</button>
+
+    <div class="card welcome">
+
+        <div>
+
+            <h1 id="dashboardTitle">
+                Dashboard
+            </h1>
+
+            <p id="dashboardSubtitle" class="muted">
+            </p>
+
+        </div>
+
+        <button class="logout" onclick="logout()">
+            Log Out
+        </button>
+
+    </div>
+
+
+
+<!-- ================= EMPLOYEE ================= -->
+
+<div id="employeeDashboard" class="hidden">
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="muted">
+                Total Shifts
+            </div>
+
+            <div class="number">
+                24
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Morning
+            </div>
+
+            <div class="number">
+                8
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Evening
+            </div>
+
+            <div class="number">
+                11
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Night
+            </div>
+
+            <div class="number">
+                5
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Advances
+            </div>
+
+            <div class="number">
+                ₹3,500
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            My Recent Shifts
+        </h2>
+
+        <table>
+
+            <tr>
+                <th>Date</th>
+                <th>Client</th>
+                <th>Location</th>
+                <th>Shift</th>
+            </tr>
+
+            <tr>
+                <td>02 Oct 2026</td>
+                <td>Deep Caterers</td>
+                <td>Chinchpokhali Mahajanwadi</td>
+                <td>
+                    <span class="tag">
+                        Evening
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>01 Oct 2026</td>
+                <td>Press Club</td>
+                <td>South Mumbai</td>
+                <td>
+                    <span class="tag">
+                        Morning
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>30 Sep 2026</td>
+                <td>Rajyog</td>
+                <td>Mahajanwadi</td>
+                <td>
+                    <span class="tag">
+                        Night
+                    </span>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            My Advances
+        </h2>
+
+        <table>
+
+            <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Details</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>28 Sep 2026</td>
+                <td>₹500</td>
+                <td>Advance</td>
+                <td>Recorded</td>
+            </tr>
+
+            <tr>
+                <td>20 Sep 2026</td>
+                <td>₹1,000</td>
+                <td>Advance</td>
+                <td>Recorded</td>
+            </tr>
+
+        </table>
+
+    </div>
+
 </div>
-</main>
 
-<footer class="w-100 text-center py-1">
-  <p>&copy; 2025 SHRI. All Rights Reserved.</p>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ================= SUPERVISOR ================= -->
+
+<div id="supervisorDashboard" class="hidden">
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="muted">
+                Employees Managed
+            </div>
+
+            <div class="number">
+                18
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Today's Shifts
+            </div>
+
+            <div class="number">
+                12
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Advances Given
+            </div>
+
+            <div class="number">
+                ₹7,500
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Items To Review
+            </div>
+
+            <div class="number">
+                2
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            My Team
+        </h2>
+
+        <table>
+
+            <tr>
+                <th>Employee</th>
+                <th>Shift</th>
+                <th>Client</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Shiva Marine</td>
+                <td>Morning + Evening</td>
+                <td>Deep Caterers</td>
+                <td>Assigned</td>
+            </tr>
+
+            <tr>
+                <td>Vishnu CST</td>
+                <td>Evening</td>
+                <td>Deep Caterers</td>
+                <td>Assigned</td>
+            </tr>
+
+            <tr>
+                <td>Sameer</td>
+                <td>Evening + Night</td>
+                <td>Rajyog</td>
+                <td>Assigned</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= CLIENT ================= -->
+
+<div id="clientDashboard" class="hidden">
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="muted">
+                Active Jobs
+            </div>
+
+            <div class="number">
+                3
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Staff Assigned
+            </div>
+
+            <div class="number">
+                14
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Upcoming Shifts
+            </div>
+
+            <div class="number">
+                8
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            My Jobs
+        </h2>
+
+        <table>
+
+            <tr>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Morning</th>
+                <th>Evening</th>
+            </tr>
+
+            <tr>
+                <td>03 Oct 2026</td>
+                <td>Chinchpokhali Mahajanwadi</td>
+                <td>4 Staff</td>
+                <td>8 Staff</td>
+            </tr>
+
+            <tr>
+                <td>04 Oct 2026</td>
+                <td>Press Club</td>
+                <td>5 Staff</td>
+                <td>5 Staff</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            Assigned Staff
+        </h2>
+
+        <table>
+
+            <tr>
+                <th>Employee</th>
+                <th>Shift</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Shiva Marine</td>
+                <td>Morning + Evening</td>
+                <td>Assigned</td>
+            </tr>
+
+            <tr>
+                <td>Jilani Byculla</td>
+                <td>Evening</td>
+                <td>Assigned</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= ADMIN ================= -->
+
+<div id="adminDashboard" class="hidden">
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="muted">
+                Employees
+            </div>
+
+            <div class="number">
+                86
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Supervisors
+            </div>
+
+            <div class="number">
+                12
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Clients
+            </div>
+
+            <div class="number">
+                24
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Total Shifts
+            </div>
+
+            <div class="number">
+                1,248
+            </div>
+        </div>
+
+
+        <div class="stat">
+            <div class="muted">
+                Review Items
+            </div>
+
+            <div class="number">
+                7
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            Administration
+        </h2>
+
+        <div class="admin-buttons">
+
+            <button onclick="comingSoon('Employee Management')">
+                Manage Employees
+            </button>
+
+            <button onclick="comingSoon('Supervisor Management')">
+                Manage Supervisors
+            </button>
+
+            <button onclick="comingSoon('Client Management')">
+                Manage Clients
+            </button>
+
+            <button onclick="comingSoon('Shift Reports')">
+                Shift Reports
+            </button>
+
+            <button onclick="comingSoon('Advance Reports')">
+                Advance Reports
+            </button>
+
+            <button onclick="comingSoon('Review Queue')">
+                Review Queue
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
 <script>
-const registrationCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1862107016&single=true&output=csv";
-const dailyCsv = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTLdyByIkGxCAIw8k8FQD8E9Tsnbc3DYks0dNgEhJcRikon38lOsqb4ESJAOlC7HwJylivfI49wrG5A/pub?gid=1370536424&single=true&output=csv";
 
-let registrationData=[], dailyData=[];
-let currentUser=null;
+function login() {
 
-function fetchCsv(url){ return fetch(url).then(r=>r.text()); }
-function parseCsv(data){ return data.trim().split("\n").map(r=>r.split(",")); }
-function calculatePali(row){ return ['Morning','Evening','Night'].reduce((sum,col,i)=>sum+(row[i+1]&&!isNaN(row[i+1])?parseInt(row[i+1]):0),0); }
+    const role =
+        document.getElementById("accountType").value;
 
-function updateDashboard(user){
-  const username=user[0], role=user[13], rate=parseFloat(user[3]);
-  const tbody=document.querySelector("#detailTable tbody");
-  tbody.innerHTML="";
-  let pali=0, upad=0, balance=0;
-  let filtered=dailyData.filter(r=>r[4]===username);
-  filtered.forEach(r=>{
-    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s:"").filter(s=>s).join(" ");
-    pali+=calculatePali(r);
-    upad+=r[7]?parseFloat(r[7]):0;
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${r[0]}</td><td>${shifts}</td><td>${r[6]}</td><td>${r[5]}</td><td>${r[7]||0}</td>`;
-    tbody.appendChild(tr);
-  });
-  balance=pali*rate-upad;
-  document.getElementById("pali").innerText=pali;
-  document.getElementById("upad").innerText=upad;
-  document.getElementById("balance").innerText=balance;
+    const username =
+        document.getElementById("username").value.trim();
 
-  if(role.toLowerCase()=="senior"){
-    document.getElementById("employeeSelectDiv").classList.remove("d-none");
-    const select=document.getElementById("employeeSelect");
-    select.innerHTML='<option value="">Select Employee</option>';
-    registrationData.forEach(r=>{ if(r[13].toLowerCase()=="employee") select.innerHTML+=`<option value="${r[0]}">${r[0]}</option>`; });
-    select.addEventListener("change",()=>{ 
-      const emp=registrationData.find(u=>u[0]===select.value);
-      if(emp) updateDashboard(emp);
-    });
-    document.getElementById("salarySlipBtn").classList.remove("d-none");
-    document.getElementById("salarySlipBtn").onclick=()=>generatePdf(filtered, username, rate, upad, balance, pali);
-  }else{
-    document.getElementById("employeeSelectDiv").classList.add("d-none");
-    document.getElementById("salarySlipBtn").classList.add("d-none");
-  }
+    const password =
+        document.getElementById("password").value.trim();
+
+    const error =
+        document.getElementById("error");
+
+
+    if (!username || !password) {
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    error.style.display = "none";
+
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("dashboard")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("loggedUser")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("loggedUser")
+        .textContent = username;
+
+
+    document
+        .querySelectorAll("#dashboard > div:not(.welcome)")
+        .forEach(function(section) {
+
+            section.classList.add("hidden");
+
+        });
+
+
+    document
+        .getElementById(role + "Dashboard")
+        .classList.remove("hidden");
+
+
+    const titles = {
+
+        employee: "Employee Dashboard",
+
+        supervisor: "Supervisor Dashboard",
+
+        client: "Client Dashboard",
+
+        admin: "Admin Dashboard"
+
+    };
+
+
+    document
+        .getElementById("dashboardTitle")
+        .textContent = titles[role];
+
+
+    document
+        .getElementById("dashboardSubtitle")
+        .textContent =
+        "Signed in as " +
+        username +
+        " • " +
+        role.charAt(0).toUpperCase() +
+        role.slice(1);
+
 }
 
-function generatePdf(data, username, rate, upad, balance, pali){
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  doc.setFontSize(16); doc.text(`Salary Slip: ${username}`, 20,20);
-  doc.setFontSize(12);
-  doc.text(`Pali (Shifts): ${pali}`, 20,30);
-  doc.text(`Rate: ${rate}`, 20,36);
-  doc.text(`Upad: ${upad}`, 20,42);
-  doc.text(`Balance: ${balance}`, 20,48);
-  doc.text("Details:",20,58);
-  let y=64;
-  data.forEach(r=>{
-    const shifts=["Morning","Evening","Night"].map((s,i)=>r[i+1]&&r[i+1]!=""?s:"").filter(s=>s).join(" ");
-    doc.text(`${r[0]} | ${shifts} | ${r[6]} | ${r[5]} | ${r[7]||0}`,20,y); y+=6;
-  });
-  doc.save(`Salary_Slip_${username}.pdf`);
+
+
+function logout() {
+
+    document
+        .getElementById("dashboard")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("loggedUser")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("username")
+        .value = "";
+
+
+    document
+        .getElementById("password")
+        .value = "";
+
 }
 
-document.getElementById("loginForm").addEventListener("submit",function(e){
-  e.preventDefault();
-  const username=document.getElementById("username").value.trim();
-  const password=document.getElementById("password").value.trim();
-  const user=registrationData.find(r=>r[0]===username && r[1]===password);
-  if(user){ currentUser=user;
-    document.getElementById("loginBox").classList.add("d-none");
-    document.getElementById("userCard").classList.remove("d-none");
-    document.getElementById("displayUsername").innerText=username;
-    updateDashboard(user);
-  }else{ alert("Invalid username or password!"); }
-});
 
-document.getElementById("logoutBtn").addEventListener("click",()=>{
-  currentUser=null;
-  document.getElementById("loginBox").classList.remove("d-none");
-  document.getElementById("userCard").classList.add("d-none");
-  document.getElementById("loginForm").reset();
-});
 
-Promise.all([fetchCsv(registrationCsv), fetchCsv(dailyCsv)]).then(([reg,daily])=>{
-  registrationData=parseCsv(reg);
-  dailyData=parseCsv(daily);
-});
+function comingSoon(section) {
+
+    alert(
+        section +
+        " will be connected to the real database in the next stage."
+    );
+
+}
+
 </script>
+
 </body>
 </html>
