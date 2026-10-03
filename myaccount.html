@@ -1142,15 +1142,20 @@ const status =
 
       const payload = {
 
-        employee_code: employeeCode,
+  employee_code: employeeCode,
 
-        full_name: fullName,
+  full_name: fullName,
 
-        mobile: mobile || null,
+  mobile: mobile || null,
 
-        status: status
+  supervisor_id:
+    supervisorId
+      ? Number(supervisorId)
+      : null,
 
-      };
+  status: status
+
+};
 
 
       const saveButton =
