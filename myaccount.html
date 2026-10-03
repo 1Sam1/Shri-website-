@@ -1016,8 +1016,8 @@ async function loadSupervisorOptions() {
     } = await db
       .from("employees")
       .select(
-        "id, employee_code, full_name, mobile, status"
-      )
+  "id, employee_code, full_name, mobile, supervisor_id, status"
+)
       .order("id", {
         ascending: true
       });
