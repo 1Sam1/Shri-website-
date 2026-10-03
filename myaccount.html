@@ -1121,10 +1121,13 @@ async function loadSupervisorOptions() {
         document.getElementById("employeeName").value.trim();
 
       const mobile =
-        document.getElementById("employeeMobile").value.trim();
+  document.getElementById("employeeMobile").value.trim();
 
-      const status =
-        document.getElementById("employeeStatus").value;
+const supervisorId =
+  document.getElementById("employeeSupervisor").value;
+
+const status =
+  document.getElementById("employeeStatus").value;
 
 
       if (!employeeCode || !fullName) {
