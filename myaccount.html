@@ -1068,53 +1068,60 @@ if (supervisors) {
   });
 
 }
-    employeeTableBody.innerHTML =
-      data.map(employee => `
+    
+employeeTableBody.innerHTML =
+  data.map(employee => `
 
-        <tr>
+    <tr>
 
-          <td>
-            ${escapeHtml(employee.employee_code || "")}
-          </td>
+      <td>
+        ${escapeHtml(employee.employee_code || "")}
+      </td>
 
-          <td>
-            ${escapeHtml(employee.full_name || "")}
-          </td>
+      <td>
+        ${escapeHtml(employee.full_name || "")}
+      </td>
 
-          <td>
-            ${escapeHtml(employee.mobile || "")}
-          </td>
+      <td>
+        ${escapeHtml(employee.mobile || "")}
+      </td>
 
-          <td>
-            ${escapeHtml(employee.status || "")}
-          </td>
+      <td>
+        ${escapeHtml(
+          supervisorMap[employee.supervisor_id] ||
+          "Unassigned"
+        )}
+      </td>
 
-          <td>
+      <td>
+        ${escapeHtml(employee.status || "")}
+      </td>
 
-            <div class="actions">
+      <td>
 
-              <button
-                class="edit"
-                onclick="editEmployee(${employee.id})"
-              >
-                Edit
-              </button>
+        <div class="actions">
 
-              <button
-                class="delete"
-                onclick="deleteEmployee(${employee.id}, '${escapeJs(employee.full_name)}')"
-              >
-                Delete
-              </button>
+          <button
+            class="edit"
+            onclick="editEmployee(${employee.id})"
+          >
+            Edit
+          </button>
 
-            </div>
+          <button
+            class="delete"
+            onclick="deleteEmployee(${employee.id}, '${escapeJs(employee.full_name)}')"
+          >
+            Delete
+          </button>
 
-          </td>
+        </div>
 
-        </tr>
+      </td>
 
-      `).join("");
+    </tr>
 
+  `).join("");
   }
 
 
