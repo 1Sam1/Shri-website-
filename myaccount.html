@@ -748,9 +748,11 @@
 
       supervisorSection.classList.remove("hidden");
 
-      await loadEmployees();
-
       await loadSupervisors();
+
+await loadSupervisorOptions();
+
+await loadEmployees();
 
     } else {
 
