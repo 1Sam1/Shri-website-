@@ -20,21 +20,9 @@
     }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
+      max-width: 1100px;
+      margin: auto;
       padding: 20px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    }
-
-    h1, h2 {
-      margin-top: 0;
     }
 
     .brand {
@@ -48,26 +36,33 @@
 
     .brand p {
       color: #666;
-      margin-top: 0;
     }
 
-    input {
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    input,
+    select {
       width: 100%;
-      padding: 13px;
-      margin: 8px 0 14px;
+      padding: 12px;
+      margin: 7px 0 14px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
     }
 
     button {
-      width: 100%;
-      padding: 13px;
+      padding: 11px 16px;
       border: 0;
       border-radius: 8px;
       background: #111827;
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
     }
 
@@ -75,21 +70,31 @@
       opacity: 0.9;
     }
 
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     .logout {
       background: #b91c1c;
-      margin-top: 10px;
+      margin-top: 15px;
+    }
+
+    .edit {
+      background: #2563eb;
+    }
+
+    .delete {
+      background: #b91c1c;
+    }
+
+    .cancel {
+      background: #6b7280;
+      margin-left: 8px;
     }
 
     .hidden {
       display: none;
-    }
-
-    .error {
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 15px;
     }
 
     .success {
@@ -97,7 +102,15 @@
       color: #166534;
       padding: 12px;
       border-radius: 8px;
-      margin-top: 15px;
+      margin: 15px 0;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 15px 0;
     }
 
     .info-row {
@@ -125,7 +138,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 15px;
-      margin-top: 20px;
     }
 
     .dashboard-item {
@@ -146,6 +158,68 @@
       color: #666;
       font-size: 14px;
     }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background: #f8fafc;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
+
+    @media (max-width: 700px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .full {
+        grid-column: auto;
+      }
+
+      .info-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .value {
+        text-align: left;
+      }
+    }
   </style>
 </head>
 
@@ -158,12 +232,15 @@
     <p>Workforce Management System</p>
   </div>
 
+
   <!-- LOGIN -->
+
   <div id="loginSection" class="card">
 
     <h2>Login</h2>
 
     <label>Email</label>
+
     <input
       type="email"
       id="email"
@@ -172,6 +249,7 @@
     >
 
     <label>Password</label>
+
     <input
       type="password"
       id="password"
@@ -179,7 +257,9 @@
       autocomplete="current-password"
     >
 
-    <button id="loginButton">Login</button>
+    <button id="loginButton">
+      Login
+    </button>
 
     <div id="loginMessage"></div>
 
@@ -187,7 +267,11 @@
 
 
   <!-- ACCOUNT -->
+
   <div id="accountSection" class="hidden">
+
+
+    <!-- PROFILE -->
 
     <div class="card">
 
@@ -201,6 +285,8 @@
 
     </div>
 
+
+    <!-- DASHBOARD -->
 
     <div class="card">
 
@@ -233,6 +319,129 @@
     </div>
 
 
+    <!-- EMPLOYEE MANAGEMENT -->
+
+    <div id="employeeSection" class="card hidden">
+
+      <h2>Employees</h2>
+
+      <p class="small">
+        Add, edit and manage workforce employees.
+      </p>
+
+
+      <!-- ADD / EDIT FORM -->
+
+      <form id="employeeForm">
+
+        <input
+          type="hidden"
+          id="employeeId"
+        >
+
+        <div class="form-grid">
+
+          <div>
+            <label>Employee Code</label>
+
+            <input
+              type="text"
+              id="employeeCode"
+              placeholder="EMP002"
+              required
+            >
+          </div>
+
+
+          <div>
+            <label>Full Name</label>
+
+            <input
+              type="text"
+              id="employeeName"
+              placeholder="Employee name"
+              required
+            >
+          </div>
+
+
+          <div>
+            <label>Mobile</label>
+
+            <input
+              type="tel"
+              id="employeeMobile"
+              placeholder="Mobile number"
+            >
+          </div>
+
+
+          <div>
+            <label>Status</label>
+
+            <select id="employeeStatus">
+
+              <option value="active">
+                Active
+              </option>
+
+              <option value="inactive">
+                Inactive
+              </option>
+
+            </select>
+          </div>
+
+        </div>
+
+
+        <button type="submit" id="saveEmployeeButton">
+          Add Employee
+        </button>
+
+        <button
+          type="button"
+          id="cancelEditButton"
+          class="cancel hidden"
+        >
+          Cancel Edit
+        </button>
+
+      </form>
+
+
+      <div id="employeeMessage"></div>
+
+
+      <!-- EMPLOYEE LIST -->
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="employeeTableBody">
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
     <div id="statusMessage"></div>
 
   </div>
@@ -243,7 +452,7 @@
 <script>
 
   // ==========================================
-  // SUPABASE CONNECTION
+  // SUPABASE
   // ==========================================
 
   const SUPABASE_URL =
@@ -252,10 +461,7 @@
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_Ozw2zF75g3lhQX8FBkfVJg_IggHsuWP";
 
-  const { createClient } =
-    supabase;
-
-  const db = createClient(
+  const db = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
@@ -286,6 +492,21 @@
   const profileDetails =
     document.getElementById("profileDetails");
 
+  const employeeSection =
+    document.getElementById("employeeSection");
+
+  const employeeForm =
+    document.getElementById("employeeForm");
+
+  const employeeMessage =
+    document.getElementById("employeeMessage");
+
+  const employeeTableBody =
+    document.getElementById("employeeTableBody");
+
+  const cancelEditButton =
+    document.getElementById("cancelEditButton");
+
 
   // ==========================================
   // LOGIN
@@ -314,8 +535,8 @@
 
     const { error } =
       await db.auth.signInWithPassword({
-        email: email,
-        password: password
+        email,
+        password
       });
 
     loginButton.disabled = false;
@@ -328,9 +549,6 @@
 
       return;
     }
-
-    loginMessage.innerHTML =
-      '<div class="success">Login successful.</div>';
 
     await loadAccount();
 
@@ -354,6 +572,7 @@
       return;
     }
 
+
     const {
       data: profile,
       error
@@ -362,6 +581,7 @@
       .select("id, full_name, mobile, role, status")
       .eq("id", user.id)
       .single();
+
 
     if (error) {
 
@@ -374,10 +594,6 @@
       return;
     }
 
-
-    // ========================================
-    // DISPLAY PROFILE
-    // ========================================
 
     profileDetails.innerHTML = `
 
@@ -412,11 +628,20 @@
     `;
 
 
-    // ========================================
-    // LOAD DASHBOARD COUNTS
-    // ========================================
-
     await loadDashboard(profile);
+
+
+    if (profile.role === "admin") {
+
+      employeeSection.classList.remove("hidden");
+
+      await loadEmployees();
+
+    } else {
+
+      employeeSection.classList.add("hidden");
+
+    }
 
 
     loginSection.classList.add("hidden");
@@ -433,24 +658,32 @@
 
     let shiftQuery =
       db.from("shifts")
-        .select("*", { count: "exact", head: true });
+        .select("*", {
+          count: "exact",
+          head: true
+        });
 
     let advanceQuery =
       db.from("advances")
-        .select("*", { count: "exact", head: true });
+        .select("*", {
+          count: "exact",
+          head: true
+        });
 
     let paymentQuery =
       db.from("payments")
-        .select("*", { count: "exact", head: true });
+        .select("*", {
+          count: "exact",
+          head: true
+        });
 
     let reviewQuery =
       db.from("reviews")
-        .select("*", { count: "exact", head: true });
+        .select("*", {
+          count: "exact",
+          head: true
+        });
 
-
-    // ----------------------------------------
-    // EMPLOYEE
-    // ----------------------------------------
 
     if (profile.role === "employee") {
 
@@ -481,12 +714,9 @@
       }
 
       reviewQuery = null;
+
     }
 
-
-    // ----------------------------------------
-    // SUPERVISOR
-    // ----------------------------------------
 
     else if (profile.role === "supervisor") {
 
@@ -519,12 +749,9 @@
       }
 
       paymentQuery = null;
+
     }
 
-
-    // ----------------------------------------
-    // CLIENT
-    // ----------------------------------------
 
     else if (profile.role === "client") {
 
@@ -552,15 +779,8 @@
       advanceQuery = null;
       paymentQuery = null;
       reviewQuery = null;
+
     }
-
-
-    // ----------------------------------------
-    // ADMIN
-    // ----------------------------------------
-
-    // Admin intentionally keeps all queries.
-    // RLS determines what can actually be returned.
 
 
     const results = await Promise.all([
@@ -605,16 +825,390 @@
 
 
   // ==========================================
+  // LOAD EMPLOYEES
+  // ==========================================
+
+  async function loadEmployees() {
+
+    employeeTableBody.innerHTML =
+      `<tr>
+        <td colspan="5" class="empty">
+          Loading employees...
+        </td>
+      </tr>`;
+
+
+    const {
+      data,
+      error
+    } = await db
+      .from("employees")
+      .select(
+        "id, employee_code, full_name, mobile, status"
+      )
+      .order("id", {
+        ascending: true
+      });
+
+
+    if (error) {
+
+      employeeTableBody.innerHTML =
+        `<tr>
+          <td colspan="5" class="empty">
+            Could not load employees.
+          </td>
+        </tr>`;
+
+      console.error(error);
+
+      return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+      employeeTableBody.innerHTML =
+        `<tr>
+          <td colspan="5" class="empty">
+            No employees found.
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    employeeTableBody.innerHTML =
+      data.map(employee => `
+
+        <tr>
+
+          <td>
+            ${escapeHtml(employee.employee_code || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(employee.full_name || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(employee.mobile || "")}
+          </td>
+
+          <td>
+            ${escapeHtml(employee.status || "")}
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="edit"
+                onclick="editEmployee(${employee.id})"
+              >
+                Edit
+              </button>
+
+              <button
+                class="delete"
+                onclick="deleteEmployee(${employee.id}, '${escapeJs(employee.full_name)}')"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }
+
+
+  // ==========================================
+  // ADD / EDIT EMPLOYEE
+  // ==========================================
+
+  employeeForm.addEventListener(
+    "submit",
+    async (event) => {
+
+      event.preventDefault();
+
+
+      const id =
+        document.getElementById("employeeId").value;
+
+      const employeeCode =
+        document.getElementById("employeeCode").value.trim();
+
+      const fullName =
+        document.getElementById("employeeName").value.trim();
+
+      const mobile =
+        document.getElementById("employeeMobile").value.trim();
+
+      const status =
+        document.getElementById("employeeStatus").value;
+
+
+      if (!employeeCode || !fullName) {
+
+        showEmployeeError(
+          "Employee code and name are required."
+        );
+
+        return;
+      }
+
+
+      const payload = {
+
+        employee_code: employeeCode,
+
+        full_name: fullName,
+
+        mobile: mobile || null,
+
+        status: status
+
+      };
+
+
+      const saveButton =
+        document.getElementById(
+          "saveEmployeeButton"
+        );
+
+
+      saveButton.disabled = true;
+      saveButton.textContent =
+        id ? "Saving..." : "Adding...";
+
+
+      let result;
+
+
+      if (id) {
+
+        result =
+          await db
+            .from("employees")
+            .update(payload)
+            .eq("id", id);
+
+      } else {
+
+        result =
+          await db
+            .from("employees")
+            .insert(payload);
+
+      }
+
+
+      saveButton.disabled = false;
+
+
+      if (result.error) {
+
+        showEmployeeError(
+          result.error.message
+        );
+
+        saveButton.textContent =
+          id ? "Save Changes" : "Add Employee";
+
+        return;
+      }
+
+
+      showEmployeeSuccess(
+        id
+          ? "Employee updated successfully."
+          : "Employee added successfully."
+      );
+
+
+      resetEmployeeForm();
+
+      await loadEmployees();
+
+    }
+  );
+
+
+  // ==========================================
+  // EDIT EMPLOYEE
+  // ==========================================
+
+  async function editEmployee(id) {
+
+    const {
+      data,
+      error
+    } = await db
+      .from("employees")
+      .select(
+        "id, employee_code, full_name, mobile, status"
+      )
+      .eq("id", id)
+      .single();
+
+
+    if (error) {
+
+      showEmployeeError(
+        error.message
+      );
+
+      return;
+    }
+
+
+    document.getElementById("employeeId").value =
+      data.id;
+
+    document.getElementById("employeeCode").value =
+      data.employee_code || "";
+
+    document.getElementById("employeeName").value =
+      data.full_name || "";
+
+    document.getElementById("employeeMobile").value =
+      data.mobile || "";
+
+    document.getElementById("employeeStatus").value =
+      data.status || "active";
+
+
+    document.getElementById(
+      "saveEmployeeButton"
+    ).textContent =
+      "Save Changes";
+
+
+    cancelEditButton.classList.remove(
+      "hidden"
+    );
+
+
+    window.scrollTo({
+      top: employeeSection.offsetTop,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  // ==========================================
+  // DELETE EMPLOYEE
+  // ==========================================
+
+  async function deleteEmployee(
+    id,
+    employeeName
+  ) {
+
+    const confirmed =
+      confirm(
+        `Delete ${employeeName}?\n\nThis action cannot be undone.`
+      );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+
+    const {
+      error
+    } = await db
+      .from("employees")
+      .delete()
+      .eq("id", id);
+
+
+    if (error) {
+
+      showEmployeeError(
+        error.message
+      );
+
+      return;
+    }
+
+
+    showEmployeeSuccess(
+      "Employee deleted successfully."
+    );
+
+
+    await loadEmployees();
+
+  }
+
+
+  // ==========================================
+  // CANCEL EDIT
+  // ==========================================
+
+  cancelEditButton.addEventListener(
+    "click",
+    () => {
+
+      resetEmployeeForm();
+
+    }
+  );
+
+
+  // ==========================================
+  // RESET FORM
+  // ==========================================
+
+  function resetEmployeeForm() {
+
+    employeeForm.reset();
+
+    document.getElementById(
+      "employeeId"
+    ).value = "";
+
+    document.getElementById(
+      "employeeStatus"
+    ).value = "active";
+
+    document.getElementById(
+      "saveEmployeeButton"
+    ).textContent =
+      "Add Employee";
+
+    cancelEditButton.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  // ==========================================
   // LOGOUT
   // ==========================================
 
-  logoutButton.addEventListener("click", async () => {
+  logoutButton.addEventListener(
+    "click",
+    async () => {
 
-    await db.auth.signOut();
+      await db.auth.signOut();
 
-    showLogin();
+      showLogin();
 
-  });
+    }
+  );
 
 
   // ==========================================
@@ -639,7 +1233,7 @@
 
 
   // ==========================================
-  // CHECK EXISTING SESSION
+  // EXISTING SESSION
   // ==========================================
 
   async function checkExistingSession() {
@@ -647,6 +1241,7 @@
     const {
       data: { session }
     } = await db.auth.getSession();
+
 
     if (session) {
 
@@ -667,8 +1262,13 @@
 
   function showLogin() {
 
-    loginSection.classList.remove("hidden");
-    accountSection.classList.add("hidden");
+    loginSection.classList.remove(
+      "hidden"
+    );
+
+    accountSection.classList.add(
+      "hidden"
+    );
 
   }
 
@@ -676,7 +1276,9 @@
   function showStatus(message) {
 
     statusMessage.innerHTML =
-      `<div class="success">${escapeHtml(message)}</div>`;
+      `<div class="success">
+        ${escapeHtml(message)}
+      </div>`;
 
   }
 
@@ -684,7 +1286,29 @@
   function showError(message) {
 
     statusMessage.innerHTML =
-      `<div class="error">${escapeHtml(message)}</div>`;
+      `<div class="error">
+        ${escapeHtml(message)}
+      </div>`;
+
+  }
+
+
+  function showEmployeeSuccess(message) {
+
+    employeeMessage.innerHTML =
+      `<div class="success">
+        ${escapeHtml(message)}
+      </div>`;
+
+  }
+
+
+  function showEmployeeError(message) {
+
+    employeeMessage.innerHTML =
+      `<div class="error">
+        ${escapeHtml(message)}
+      </div>`;
 
   }
 
@@ -701,7 +1325,21 @@
   }
 
 
-  // Start application
+  function escapeJs(value) {
+
+    return String(value)
+      .replaceAll("\\", "\\\\")
+      .replaceAll("'", "\\'")
+      .replaceAll("\n", "\\n")
+      .replaceAll("\r", "\\r");
+
+  }
+
+
+  // ==========================================
+  // START
+  // ==========================================
+
   checkExistingSession();
 
 </script>
