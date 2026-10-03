@@ -1050,7 +1050,24 @@ async function loadSupervisorOptions() {
       return;
     }
 
+const supervisorMap = {};
 
+const {
+  data: supervisors
+} = await db
+  .from("supervisors")
+  .select("id, full_name");
+
+if (supervisors) {
+
+  supervisors.forEach(supervisor => {
+
+    supervisorMap[supervisor.id] =
+      supervisor.full_name;
+
+  });
+
+}
     employeeTableBody.innerHTML =
       data.map(employee => `
 
