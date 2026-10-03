@@ -1,902 +1,708 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHRI Workforce - My Account</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHRI Workforce - My Account</title>
 
-<style>
-* {
-    box-sizing: border-box;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #17202a;
-}
-
-header {
-    background: #17202a;
-    color: white;
-    padding: 18px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.container {
-    max-width: 1050px;
-    margin: 30px auto;
-    padding: 0 16px;
-}
-
-.card {
-    background: white;
-    border-radius: 14px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 18px rgba(0,0,0,.07);
-}
-
-.login {
-    max-width: 450px;
-    margin: 50px auto;
-}
-
-h1, h2, h3 {
-    margin-top: 0;
-}
-
-label {
-    display: block;
-    margin-top: 16px;
-    margin-bottom: 7px;
-    font-weight: bold;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #ccd3d9;
-    border-radius: 9px;
-    font-size: 16px;
-}
-
-button {
-    width: 100%;
-    padding: 13px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 9px;
-    background: #17202a;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: .9;
-}
-
-.logout {
-    width: auto;
-    margin: 0;
-    background: #e9edf0;
-    color: #17202a;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.muted {
-    color: #68737d;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-}
-
-.stat {
-    background: #f7f8fa;
-    padding: 18px;
-    border-radius: 12px;
-}
-
-.number {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-th,
-td {
-    text-align: left;
-    padding: 12px 8px;
-    border-bottom: 1px solid #e5e7e9;
-}
-
-.tag {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 20px;
-    background: #e9edf0;
-    font-size: 13px;
-}
-
-.error {
-    color: #b42318;
-    margin-top: 12px;
-    display: none;
-}
-
-.welcome {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-}
-
-.admin-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-}
-
-.admin-buttons button {
-    margin-top: 0;
-}
-
-@media(max-width:600px) {
-
-    .welcome {
-        align-items: flex-start;
-        flex-direction: column;
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    table {
-        font-size: 13px;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
     }
 
-    th,
-    td {
-        padding: 9px 5px;
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
     }
-}
-</style>
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .brand h1 {
+      margin-bottom: 5px;
+    }
+
+    .brand p {
+      color: #666;
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border: 0;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .logout {
+      background: #b91c1c;
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    .success {
+      background: #dcfce7;
+      color: #166534;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #666;
+    }
+
+    .value {
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .dashboard-item {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #e5e7eb;
+    }
+
+    .dashboard-item strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .small {
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
 </head>
-
 
 <body>
 
-<header>
-
-    <div class="logo">
-        SHRI Workforce
-    </div>
-
-    <div id="loggedUser" class="hidden"></div>
-
-</header>
-
-
 <div class="container">
 
+  <div class="brand">
+    <h1>SHRI Workforce</h1>
+    <p>Workforce Management System</p>
+  </div>
 
-<!-- ================= LOGIN ================= -->
+  <!-- LOGIN -->
+  <div id="loginSection" class="card">
 
-<div id="loginPage" class="card login">
+    <h2>Login</h2>
 
-    <h1>My Account</h1>
-
-    <p class="muted">
-        Sign in to view your personalised account.
-    </p>
-
-
-    <label>Account Type</label>
-
-    <select id="accountType">
-
-        <option value="employee">
-            Employee
-        </option>
-
-        <option value="supervisor">
-            Supervisor
-        </option>
-
-        <option value="client">
-            Client
-        </option>
-
-        <option value="admin">
-            Admin
-        </option>
-
-    </select>
-
-
-    <label>Mobile / Username</label>
-
+    <label>Email</label>
     <input
-        id="username"
-        type="text"
-        placeholder="Enter mobile number or username"
+      type="email"
+      id="email"
+      placeholder="Enter your email"
+      autocomplete="email"
     >
-
 
     <label>Password</label>
-
     <input
-        id="password"
-        type="password"
-        placeholder="Enter password"
+      type="password"
+      id="password"
+      placeholder="Enter your password"
+      autocomplete="current-password"
     >
 
+    <button id="loginButton">Login</button>
 
-    <button onclick="login()">
-        Sign In
-    </button>
+    <div id="loginMessage"></div>
 
-
-    <div id="error" class="error">
-        Please enter your username and password.
-    </div>
-
-</div>
+  </div>
 
 
+  <!-- ACCOUNT -->
+  <div id="accountSection" class="hidden">
 
-<!-- ================= DASHBOARD ================= -->
+    <div class="card">
 
-<div id="dashboard" class="hidden">
+      <h2>My Account</h2>
 
+      <div id="profileDetails"></div>
 
-    <div class="card welcome">
-
-        <div>
-
-            <h1 id="dashboardTitle">
-                Dashboard
-            </h1>
-
-            <p id="dashboardSubtitle" class="muted">
-            </p>
-
-        </div>
-
-        <button class="logout" onclick="logout()">
-            Log Out
-        </button>
+      <button class="logout" id="logoutButton">
+        Logout
+      </button>
 
     </div>
-
-
-
-<!-- ================= EMPLOYEE ================= -->
-
-<div id="employeeDashboard" class="hidden">
-
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="muted">
-                Total Shifts
-            </div>
-
-            <div class="number">
-                24
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Morning
-            </div>
-
-            <div class="number">
-                8
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Evening
-            </div>
-
-            <div class="number">
-                11
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Night
-            </div>
-
-            <div class="number">
-                5
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Advances
-            </div>
-
-            <div class="number">
-                ₹3,500
-            </div>
-        </div>
-
-    </div>
-
 
 
     <div class="card">
 
-        <h2>
-            My Recent Shifts
-        </h2>
+      <h2>Dashboard</h2>
 
-        <table>
+      <div class="dashboard-grid">
 
-            <tr>
-                <th>Date</th>
-                <th>Client</th>
-                <th>Location</th>
-                <th>Shift</th>
-            </tr>
+        <div class="dashboard-item">
+          <strong id="shiftCount">0</strong>
+          <span class="small">Shifts</span>
+        </div>
 
-            <tr>
-                <td>02 Oct 2026</td>
-                <td>Deep Caterers</td>
-                <td>Chinchpokhali Mahajanwadi</td>
-                <td>
-                    <span class="tag">
-                        Evening
-                    </span>
-                </td>
-            </tr>
+        <div class="dashboard-item">
+          <strong id="advanceCount">0</strong>
+          <span class="small">Advances</span>
+        </div>
 
-            <tr>
-                <td>01 Oct 2026</td>
-                <td>Press Club</td>
-                <td>South Mumbai</td>
-                <td>
-                    <span class="tag">
-                        Morning
-                    </span>
-                </td>
-            </tr>
+        <div class="dashboard-item">
+          <strong id="paymentCount">0</strong>
+          <span class="small">Payments</span>
+        </div>
 
-            <tr>
-                <td>30 Sep 2026</td>
-                <td>Rajyog</td>
-                <td>Mahajanwadi</td>
-                <td>
-                    <span class="tag">
-                        Night
-                    </span>
-                </td>
-            </tr>
+        <div class="dashboard-item">
+          <strong id="reviewCount">0</strong>
+          <span class="small">Reviews</span>
+        </div>
 
-        </table>
+      </div>
 
     </div>
 
 
+    <div id="statusMessage"></div>
 
-    <div class="card">
-
-        <h2>
-            My Advances
-        </h2>
-
-        <table>
-
-            <tr>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Details</th>
-                <th>Status</th>
-            </tr>
-
-            <tr>
-                <td>28 Sep 2026</td>
-                <td>₹500</td>
-                <td>Advance</td>
-                <td>Recorded</td>
-            </tr>
-
-            <tr>
-                <td>20 Sep 2026</td>
-                <td>₹1,000</td>
-                <td>Advance</td>
-                <td>Recorded</td>
-            </tr>
-
-        </table>
-
-    </div>
+  </div>
 
 </div>
-
-
-
-<!-- ================= SUPERVISOR ================= -->
-
-<div id="supervisorDashboard" class="hidden">
-
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="muted">
-                Employees Managed
-            </div>
-
-            <div class="number">
-                18
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Today's Shifts
-            </div>
-
-            <div class="number">
-                12
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Advances Given
-            </div>
-
-            <div class="number">
-                ₹7,500
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Items To Review
-            </div>
-
-            <div class="number">
-                2
-            </div>
-        </div>
-
-    </div>
-
-
-
-    <div class="card">
-
-        <h2>
-            My Team
-        </h2>
-
-        <table>
-
-            <tr>
-                <th>Employee</th>
-                <th>Shift</th>
-                <th>Client</th>
-                <th>Status</th>
-            </tr>
-
-            <tr>
-                <td>Shiva Marine</td>
-                <td>Morning + Evening</td>
-                <td>Deep Caterers</td>
-                <td>Assigned</td>
-            </tr>
-
-            <tr>
-                <td>Vishnu CST</td>
-                <td>Evening</td>
-                <td>Deep Caterers</td>
-                <td>Assigned</td>
-            </tr>
-
-            <tr>
-                <td>Sameer</td>
-                <td>Evening + Night</td>
-                <td>Rajyog</td>
-                <td>Assigned</td>
-            </tr>
-
-        </table>
-
-    </div>
-
-</div>
-
-
-
-<!-- ================= CLIENT ================= -->
-
-<div id="clientDashboard" class="hidden">
-
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="muted">
-                Active Jobs
-            </div>
-
-            <div class="number">
-                3
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Staff Assigned
-            </div>
-
-            <div class="number">
-                14
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Upcoming Shifts
-            </div>
-
-            <div class="number">
-                8
-            </div>
-        </div>
-
-    </div>
-
-
-
-    <div class="card">
-
-        <h2>
-            My Jobs
-        </h2>
-
-        <table>
-
-            <tr>
-                <th>Date</th>
-                <th>Location</th>
-                <th>Morning</th>
-                <th>Evening</th>
-            </tr>
-
-            <tr>
-                <td>03 Oct 2026</td>
-                <td>Chinchpokhali Mahajanwadi</td>
-                <td>4 Staff</td>
-                <td>8 Staff</td>
-            </tr>
-
-            <tr>
-                <td>04 Oct 2026</td>
-                <td>Press Club</td>
-                <td>5 Staff</td>
-                <td>5 Staff</td>
-            </tr>
-
-        </table>
-
-    </div>
-
-
-
-    <div class="card">
-
-        <h2>
-            Assigned Staff
-        </h2>
-
-        <table>
-
-            <tr>
-                <th>Employee</th>
-                <th>Shift</th>
-                <th>Status</th>
-            </tr>
-
-            <tr>
-                <td>Shiva Marine</td>
-                <td>Morning + Evening</td>
-                <td>Assigned</td>
-            </tr>
-
-            <tr>
-                <td>Jilani Byculla</td>
-                <td>Evening</td>
-                <td>Assigned</td>
-            </tr>
-
-        </table>
-
-    </div>
-
-</div>
-
-
-
-<!-- ================= ADMIN ================= -->
-
-<div id="adminDashboard" class="hidden">
-
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="muted">
-                Employees
-            </div>
-
-            <div class="number">
-                86
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Supervisors
-            </div>
-
-            <div class="number">
-                12
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Clients
-            </div>
-
-            <div class="number">
-                24
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Total Shifts
-            </div>
-
-            <div class="number">
-                1,248
-            </div>
-        </div>
-
-
-        <div class="stat">
-            <div class="muted">
-                Review Items
-            </div>
-
-            <div class="number">
-                7
-            </div>
-        </div>
-
-    </div>
-
-
-
-    <div class="card">
-
-        <h2>
-            Administration
-        </h2>
-
-        <div class="admin-buttons">
-
-            <button onclick="comingSoon('Employee Management')">
-                Manage Employees
-            </button>
-
-            <button onclick="comingSoon('Supervisor Management')">
-                Manage Supervisors
-            </button>
-
-            <button onclick="comingSoon('Client Management')">
-                Manage Clients
-            </button>
-
-            <button onclick="comingSoon('Shift Reports')">
-                Shift Reports
-            </button>
-
-            <button onclick="comingSoon('Advance Reports')">
-                Advance Reports
-            </button>
-
-            <button onclick="comingSoon('Review Queue')">
-                Review Queue
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-</div>
-
-</div>
-
 
 
 <script>
 
-function login() {
+  // ==========================================
+  // SUPABASE CONNECTION
+  // ==========================================
 
-    const role =
-        document.getElementById("accountType").value;
+  const SUPABASE_URL =
+    "https://czokudhdlgttvlisuher.supabase.co";
 
-    const username =
-        document.getElementById("username").value.trim();
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Ozw2zF75g3lhQX8FBkfVJg_IggHsuWP";
+
+  const { createClient } =
+    supabase;
+
+  const db = createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+  // ==========================================
+  // ELEMENTS
+  // ==========================================
+
+  const loginSection =
+    document.getElementById("loginSection");
+
+  const accountSection =
+    document.getElementById("accountSection");
+
+  const loginButton =
+    document.getElementById("loginButton");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
+
+  const loginMessage =
+    document.getElementById("loginMessage");
+
+  const statusMessage =
+    document.getElementById("statusMessage");
+
+  const profileDetails =
+    document.getElementById("profileDetails");
+
+
+  // ==========================================
+  // LOGIN
+  // ==========================================
+
+  loginButton.addEventListener("click", async () => {
+
+    const email =
+      document.getElementById("email").value.trim();
 
     const password =
-        document.getElementById("password").value.trim();
+      document.getElementById("password").value;
 
-    const error =
-        document.getElementById("error");
+    loginMessage.innerHTML = "";
+
+    if (!email || !password) {
+
+      loginMessage.innerHTML =
+        '<div class="error">Please enter your email and password.</div>';
+
+      return;
+    }
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Logging in...";
+
+    const { error } =
+      await db.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+    loginButton.disabled = false;
+    loginButton.textContent = "Login";
+
+    if (error) {
+
+      loginMessage.innerHTML =
+        `<div class="error">${escapeHtml(error.message)}</div>`;
+
+      return;
+    }
+
+    loginMessage.innerHTML =
+      '<div class="success">Login successful.</div>';
+
+    await loadAccount();
+
+  });
 
 
-    if (!username || !password) {
+  // ==========================================
+  // LOAD ACCOUNT
+  // ==========================================
 
-        error.style.display = "block";
+  async function loadAccount() {
 
-        return;
+    const {
+      data: { user }
+    } = await db.auth.getUser();
+
+    if (!user) {
+
+      showLogin();
+
+      return;
+    }
+
+    const {
+      data: profile,
+      error
+    } = await db
+      .from("profiles")
+      .select("id, full_name, mobile, role, status")
+      .eq("id", user.id)
+      .single();
+
+    if (error) {
+
+      showError(
+        "Your login works, but your profile could not be loaded."
+      );
+
+      console.error(error);
+
+      return;
     }
 
 
-    error.style.display = "none";
+    // ========================================
+    // DISPLAY PROFILE
+    // ========================================
+
+    profileDetails.innerHTML = `
+
+      <div class="info-row">
+        <span class="label">Name</span>
+        <span class="value">
+          ${escapeHtml(profile.full_name || "")}
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Email</span>
+        <span class="value">
+          ${escapeHtml(user.email || "")}
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Role</span>
+        <span class="value">
+          ${escapeHtml(profile.role || "")}
+        </span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Status</span>
+        <span class="value">
+          ${escapeHtml(profile.status || "")}
+        </span>
+      </div>
+
+    `;
 
 
-    document
-        .getElementById("loginPage")
-        .classList.add("hidden");
+    // ========================================
+    // LOAD DASHBOARD COUNTS
+    // ========================================
+
+    await loadDashboard(profile);
 
 
-    document
-        .getElementById("dashboard")
-        .classList.remove("hidden");
+    loginSection.classList.add("hidden");
+    accountSection.classList.remove("hidden");
+
+  }
 
 
-    document
-        .getElementById("loggedUser")
-        .classList.remove("hidden");
+  // ==========================================
+  // DASHBOARD
+  // ==========================================
+
+  async function loadDashboard(profile) {
+
+    let shiftQuery =
+      db.from("shifts")
+        .select("*", { count: "exact", head: true });
+
+    let advanceQuery =
+      db.from("advances")
+        .select("*", { count: "exact", head: true });
+
+    let paymentQuery =
+      db.from("payments")
+        .select("*", { count: "exact", head: true });
+
+    let reviewQuery =
+      db.from("reviews")
+        .select("*", { count: "exact", head: true });
 
 
-    document
-        .getElementById("loggedUser")
-        .textContent = username;
+    // ----------------------------------------
+    // EMPLOYEE
+    // ----------------------------------------
+
+    if (profile.role === "employee") {
+
+      const { data: employee } =
+        await db
+          .from("employees")
+          .select("id")
+          .eq("profile_id", profile.id)
+          .single();
+
+      if (employee) {
+
+        shiftQuery =
+          shiftQuery.eq("employee_id", employee.id);
+
+        advanceQuery =
+          advanceQuery.eq("employee_id", employee.id);
+
+        paymentQuery =
+          paymentQuery.eq("employee_id", employee.id);
+
+      } else {
+
+        shiftQuery = null;
+        advanceQuery = null;
+        paymentQuery = null;
+
+      }
+
+      reviewQuery = null;
+    }
 
 
-    document
-        .querySelectorAll("#dashboard > div:not(.welcome)")
-        .forEach(function(section) {
+    // ----------------------------------------
+    // SUPERVISOR
+    // ----------------------------------------
 
-            section.classList.add("hidden");
+    else if (profile.role === "supervisor") {
 
-        });
+      const { data: supervisor } =
+        await db
+          .from("supervisors")
+          .select("id")
+          .eq("profile_id", profile.id)
+          .single();
 
+      if (supervisor) {
 
-    document
-        .getElementById(role + "Dashboard")
-        .classList.remove("hidden");
+        shiftQuery =
+          shiftQuery.eq(
+            "supervisor_id",
+            supervisor.id
+          );
 
+        advanceQuery =
+          advanceQuery.eq(
+            "sender_supervisor_id",
+            supervisor.id
+          );
 
-    const titles = {
+      } else {
 
-        employee: "Employee Dashboard",
+        shiftQuery = null;
+        advanceQuery = null;
 
-        supervisor: "Supervisor Dashboard",
+      }
 
-        client: "Client Dashboard",
-
-        admin: "Admin Dashboard"
-
-    };
-
-
-    document
-        .getElementById("dashboardTitle")
-        .textContent = titles[role];
-
-
-    document
-        .getElementById("dashboardSubtitle")
-        .textContent =
-        "Signed in as " +
-        username +
-        " • " +
-        role.charAt(0).toUpperCase() +
-        role.slice(1);
-
-}
+      paymentQuery = null;
+    }
 
 
+    // ----------------------------------------
+    // CLIENT
+    // ----------------------------------------
 
-function logout() {
+    else if (profile.role === "client") {
 
-    document
-        .getElementById("dashboard")
-        .classList.add("hidden");
+      const { data: client } =
+        await db
+          .from("clients")
+          .select("id")
+          .eq("profile_id", profile.id)
+          .single();
+
+      if (client) {
+
+        shiftQuery =
+          shiftQuery.eq(
+            "client_id",
+            client.id
+          );
+
+      } else {
+
+        shiftQuery = null;
+
+      }
+
+      advanceQuery = null;
+      paymentQuery = null;
+      reviewQuery = null;
+    }
 
 
-    document
-        .getElementById("loginPage")
-        .classList.remove("hidden");
+    // ----------------------------------------
+    // ADMIN
+    // ----------------------------------------
+
+    // Admin intentionally keeps all queries.
+    // RLS determines what can actually be returned.
 
 
-    document
-        .getElementById("loggedUser")
-        .classList.add("hidden");
+    const results = await Promise.all([
+
+      shiftQuery
+        ? shiftQuery
+        : Promise.resolve({ count: 0 }),
+
+      advanceQuery
+        ? advanceQuery
+        : Promise.resolve({ count: 0 }),
+
+      paymentQuery
+        ? paymentQuery
+        : Promise.resolve({ count: 0 }),
+
+      reviewQuery
+        ? reviewQuery
+        : Promise.resolve({ count: 0 })
+
+    ]);
 
 
-    document
-        .getElementById("username")
-        .value = "";
+    document.getElementById("shiftCount").textContent =
+      results[0].count ?? 0;
+
+    document.getElementById("advanceCount").textContent =
+      results[1].count ?? 0;
+
+    document.getElementById("paymentCount").textContent =
+      results[2].count ?? 0;
+
+    document.getElementById("reviewCount").textContent =
+      results[3].count ?? 0;
 
 
-    document
-        .getElementById("password")
-        .value = "";
-
-}
-
-
-
-function comingSoon(section) {
-
-    alert(
-        section +
-        " will be connected to the real database in the next stage."
+    showStatus(
+      "Database connection successful."
     );
 
-}
+  }
+
+
+  // ==========================================
+  // LOGOUT
+  // ==========================================
+
+  logoutButton.addEventListener("click", async () => {
+
+    await db.auth.signOut();
+
+    showLogin();
+
+  });
+
+
+  // ==========================================
+  // AUTH STATE
+  // ==========================================
+
+  db.auth.onAuthStateChange(
+    async (event, session) => {
+
+      if (session) {
+
+        await loadAccount();
+
+      } else {
+
+        showLogin();
+
+      }
+
+    }
+  );
+
+
+  // ==========================================
+  // CHECK EXISTING SESSION
+  // ==========================================
+
+  async function checkExistingSession() {
+
+    const {
+      data: { session }
+    } = await db.auth.getSession();
+
+    if (session) {
+
+      await loadAccount();
+
+    } else {
+
+      showLogin();
+
+    }
+
+  }
+
+
+  // ==========================================
+  // UI HELPERS
+  // ==========================================
+
+  function showLogin() {
+
+    loginSection.classList.remove("hidden");
+    accountSection.classList.add("hidden");
+
+  }
+
+
+  function showStatus(message) {
+
+    statusMessage.innerHTML =
+      `<div class="success">${escapeHtml(message)}</div>`;
+
+  }
+
+
+  function showError(message) {
+
+    statusMessage.innerHTML =
+      `<div class="error">${escapeHtml(message)}</div>`;
+
+  }
+
+
+  function escapeHtml(value) {
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  // Start application
+  checkExistingSession();
 
 </script>
 
