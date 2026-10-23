@@ -21,8 +21,6 @@ https://1sam1.github.io/Shri-website-/myaccount.html
 - `js/script.js` — shared site scripts.
 - `images/` — logos, service images, and team images.
 - `Shri.apk` — Android application package currently stored in the repository.
-- `My Account1` — separate older workforce-parser entry page (filename has no extension). Review its current purpose before renaming or removing it.
-- `test.html` — older/test account dashboard. It references published Google Sheets CSV feeds, so do not treat it as a secure login system. Review access and data exposure before linking or continuing to use it.
 
 ## Editing and publishing
 
@@ -37,4 +35,4 @@ The current `myaccount.html` uses the Supabase JavaScript client in the browser.
 
 ## Cleanup notes
 
-The legacy `My Account1`, `test.html`, and `Shri.apk` are documented here for visibility. They have **not** been renamed or deleted. Confirm whether each is still used before making any changes.
+The old `My Account1` workforce-parser page and `test.html` dashboard have been deleted. `Shri.apk` remains in the repository; confirm whether it is still needed before removing it.
